@@ -16,3 +16,7 @@
   --black-color:#000;
   --white-color:#fff;
 }
+
+.main_container{
+  border: 3px solid red;
+}
