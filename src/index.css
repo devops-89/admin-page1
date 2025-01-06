@@ -7,3 +7,12 @@
   box-sizing: border-box;
   font-family: "Poppins", serif;
 }
+
+:root {
+  --blue-color:#205A8C;
+  --orange-color:#DD800C;
+  --semi-orange:#D98B48;
+  --light-color:#F2B988;
+  --black-color:#000;
+  --white-color:#fff;
+}
