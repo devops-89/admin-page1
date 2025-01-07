@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import UsersList from "./pages/UsersList.jsx";
 
 function App() {
 
@@ -25,7 +26,12 @@ function App() {
         {
           path:"/dashboard/about",
           element:<About />
-        }
+        },
+        {
+          path:"/dashboard/users",
+          element:<UsersList />
+        },
+
       ]
     },
 
