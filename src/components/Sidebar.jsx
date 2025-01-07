@@ -44,9 +44,11 @@ const Sidebar = () => {
         "& .MuiDrawer-paper": {
           width: 240,
           boxSizing: "border-box",
-          position: "static",
-          bgcolor: "black",
-          color: "white",
+         
+          bgcolor: "var(--white-tint-color)",
+          position:"fixed",
+          top:"60px"
+         
         },
       }}
       variant="permanent"
@@ -56,118 +58,80 @@ const Sidebar = () => {
         {/* Dashboard Tab */}
         <ListItem button sx={{ "&:hover": { bgcolor: "red" } }}>
           <ListItemIcon>
-            <DashboardIcon style={{ color: "white" }} />
+            <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
-        <Divider sx={{ borderColor: "white" }} />
+        <Divider sx={{ borderColor: "gray",  }} />
 
         {/* Users Dropdown */}
-        <ListItem button onClick={handleClickUsers} sx={{ "&:hover": { bgcolor: "red" } }}>
+        <ListItem button  sx={{ "&:hover": { bgcolor: "red" } }}>
           <ListItemIcon>
-            <PeopleIcon style={{ color: "white" }} />
+            <PeopleIcon  />
           </ListItemIcon>
           <ListItemText primary="Users" />
-          {openUsers ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        <Collapse in={openUsers} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button sx={{ pl: 4, "&:hover": { bgcolor: "red" } }}>
-              <ListItemText primary="Create User" />
-            </ListItem>
-            <ListItem button sx={{ pl: 4, "&:hover": { bgcolor: "red" } }}>
-              <ListItemText primary="List Users" />
-            </ListItem>
-          </List>
-        </Collapse>
-        <Divider sx={{ borderColor: "white" }} />
+       
+        <Divider sx={{ borderColor: "gray",  }} />
 
         {/* Booking Dropdown */}
-        <ListItem button onClick={handleClickBooking} sx={{ "&:hover": { color: "red" } }}>
+        <ListItem button onClick={handleClickBooking}  sx={{ "&:hover": { bgcolor: "red" } }}>
           <ListItemIcon>
-            <EventNoteIcon style={{ color: "white" }} />
+            <EventNoteIcon  />
           </ListItemIcon>
           <ListItemText primary="Booking" />
           {openBooking ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={openBooking} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {["All", "Approved", "Pending", "Cancelled"].map((text) => (
-              <ListItem button key={text} sx={{ pl: 4, "&:hover": { color: "red" } }}>
+            {["Hotel Booking", "Flight Booking", "Cab Booking"].map((text) => (
+              <ListItem button key={text} sx={{ pl: 10, "&:hover": { color: "red" } }}>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>
         </Collapse>
-        <Divider sx={{ borderColor: "white" }} />
+       
+        <Divider sx={{ borderColor: "gray",  }} />
 
         {/* Reviews Tab */}
-        <ListItem button sx={{ "&:hover": { color: "red" } }}>
+        <ListItem button sx={{ "&:hover": { bgcolor: "red" } }}>
           <ListItemIcon>
-            <ReviewsIcon style={{ color: "white" }} />
+            <ReviewsIcon  />
           </ListItemIcon>
           <ListItemText primary="Reviews" />
         </ListItem>
-        <Divider sx={{ borderColor: "white" }} />
+        <Divider sx={{ borderColor: "gray",  }} />
 
         {/* Bookmarks Tab */}
-        <ListItem button sx={{ "&:hover": { color: "red" } }}>
+        <ListItem button sx={{ "&:hover": { bgcolor: "red" } }}>
           <ListItemIcon>
-            <BookmarksIcon style={{ color: "white" }} />
+            <BookmarksIcon  />
           </ListItemIcon>
           <ListItemText primary="Bookmarks" />
         </ListItem>
-        <Divider sx={{ borderColor: "white" }} />
+        <Divider sx={{ borderColor: "gray",  }} />
 
         {/* Messages Dropdown */}
-        <ListItem button onClick={handleClickMessages} sx={{ "&:hover": { color: "red" } }}>
+        <ListItem button  sx={{ "&:hover": { bgcolor: "red" } }}>
           <ListItemIcon>
-            <MessageIcon style={{ color: "white" }} />
+            <MessageIcon  />
           </ListItemIcon>
           <ListItemText primary="Messages" />
-          {openMessages ? <ExpandLess /> : <ExpandMore />}
+       
         </ListItem>
-        <Collapse in={openMessages} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {["Inbox", "Compose", "Starred", "Details", "Important", "Sent", "Drafts", "Trash"].map((text) => (
-              <ListItem button key={text} sx={{ pl: 4, "&:hover": { color: "red" } }}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-        <Divider sx={{ borderColor: "white" }} />
+      
+        <Divider sx={{ borderColor: "gray",  }} />
 
         {/* Profile Dropdown */}
-        <ListItem button onClick={handleClickProfile} sx={{ "&:hover": { color: "red" } }}>
+        <ListItem button  sx={{ "&:hover": { bgcolor: "red" } }}>
           <ListItemIcon>
-            <PersonIcon style={{ color: "white" }} />
+            <PersonIcon  />
           </ListItemIcon>
           <ListItemText primary="Profile" />
-          {openProfile ? <ExpandLess /> : <ExpandMore />}
+       
         </ListItem>
-        <Collapse in={openProfile} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button sx={{ pl: 4, "&:hover": { color: "red" } }}>
-              <ListItemIcon>
-                <PersonIcon style={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="View Profile" />
-            </ListItem>
-            <ListItem button sx={{ pl: 4, "&:hover": { color: "red" } }}>
-              <ListItemIcon>
-                <EditIcon style={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="Edit Profile" />
-            </ListItem>
-            <ListItem button sx={{ pl: 4, "&:hover": { color: "red" } }}>
-              <ListItemIcon>
-                <LockIcon style={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="Change Password" />
-            </ListItem>
-          </List>
-        </Collapse>
+       
       </List>
     </Drawer>
   );

@@ -10,18 +10,31 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import logoSrc from "../assets/logo.png";
 
-const Search = styled("div")(({ theme }) => ({
-  backgroundColor: "rgba(255, 255, 255, 0.2)", 
+// Utility function to determine if a color is light or dark
+const isColorDark = (color) => {
+  const rgb = getComputedStyle(document.documentElement).getPropertyValue(color);
+  const [r, g, b] = rgb
+    .replace(/[^\d,]/g, "")
+    .split(",")
+    .map(Number);
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance < 140; // Threshold for dark color
+};
+
+// Styled search box with dynamic text color
+const Search = styled("div")(({ theme, textColor }) => ({
+  backgroundColor: "rgba(22, 19, 19, 0.2)",
   padding: "0 10px",
   borderRadius: theme.shape.borderRadius,
   display: "flex",
   alignItems: "center",
   marginRight: theme.spacing(2),
-  color: "#fff", 
+  color: textColor,
   "& .MuiInputBase-input": {
-    color: "#fff", 
+    color: textColor,
   },
 }));
 
@@ -31,40 +44,51 @@ const Navbar = ({
   mailCount = 0,
   notificationCount = 0,
   avatarSrc = "/static/images/avatar/1.jpg",
+  bgcolor = "var(--white-tint-color)", // Default background color
 }) => {
+  const theme = useTheme();
+
+  // Determine item color dynamically based on background color
+  const textColor = isColorDark(bgcolor) ? "#fff" : "#000";
+
   return (
-    // <AppBar position="fixed" sx={{ bgcolor: "black",boxShadow:"none",top:0 }}>
-    <AppBar sx={{ bgcolor: "black",position:"fixed",boxShadow:"none",top:0 }}>
+    <AppBar
+      sx={{
+        bgcolor,
+        position: "fixed",
+        boxShadow: "none",
+        top: 0,
+      }}
+    >
       <Toolbar>
-      
-      <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-          <img src={logo} alt="Logo" style={{ height: 40, marginRight: 10 }} />
-          
+        {/* Logo */}
+        <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
+          <img src={logo} alt="Logo" style={{ height: 50, marginRight: 10 }} />
         </Box>
 
-      
+        {/* Items */}
         <Box display="flex" alignItems="center">
-          
-          <Search>
+          {/* Search */}
+          <Search textColor={textColor}>
             <InputBase placeholder={searchPlaceholder} />
           </Search>
 
-         
-          <IconButton color="inherit">
+          {/* Mail Icon */}
+          <IconButton sx={{ color: textColor }}>
             <Badge badgeContent={mailCount} color="error">
               <MailIcon />
             </Badge>
           </IconButton>
 
-         
-          <IconButton color="inherit">
+          {/* Notifications Icon */}
+          <IconButton sx={{ color: textColor }}>
             <Badge badgeContent={notificationCount} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
 
-     
-          <IconButton color="inherit">
+          {/* Avatar */}
+          <IconButton sx={{ color: textColor }}>
             <Avatar alt="User" src={avatarSrc} />
           </IconButton>
         </Box>
