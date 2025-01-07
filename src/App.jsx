@@ -11,9 +11,7 @@ function App() {
     {
       path:'/',
       element :  <Login/>,
-     
     },
-
     {
       path:'/dashboard',
       element : <AppLayout />,
