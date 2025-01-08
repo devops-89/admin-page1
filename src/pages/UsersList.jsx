@@ -50,18 +50,14 @@ const UsersList = () => {
     currentPage * entriesPerPage
   );
 
-  const handleEdit = (id) => {
+  const handleView = (id) => {
     console.log("Edit user:", id);
     // Add your edit logic here
   };
 
-  const handleDelete = (id) => {
-    console.log("Delete user:", id);
-    // Add your delete logic here
-  };
 
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box>
       {/* Top Controls */}
       <Box
         sx={{
@@ -144,19 +140,12 @@ const UsersList = () => {
                     variant="contained"
                     color="primary"
                     size="small"
-                    onClick={() => handleEdit(user.id)}
+                    onClick={() => handleView(user.id)}
                     style={{ marginRight: "5px" }}
                   >
-                    Edit
+                    View
                   </Button>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    Delete
-                  </Button>
+                
                 </TableCell>
               </TableRow>
             ))}
