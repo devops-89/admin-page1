@@ -17,23 +17,24 @@ import PersonIcon from "@mui/icons-material/Person";
 
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import {useTheme, useMediaQuery} from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({open,onClose}) => {
+const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
 
   // getting Media query
-   const theme=useTheme();
-    const isMobile=useMediaQuery(theme.breakpoints.down("sm"));
-    
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [openUsers, setOpenUsers] = useState(false);
   const [openBooking, setOpenBooking] = useState(false);
 
   const [openProfile, setOpenProfile] = useState(false);
 
-  console.log("Sidebar: ",open);
+  const handleClickDashboard = () => {
+    navigate("/dashboard");
+  };
 
   const handleClickUsers = () => {
     setOpenUsers(!openUsers);
@@ -45,9 +46,9 @@ const Sidebar = ({open,onClose}) => {
 
   return (
     <Drawer
-       open={open}
-       onClose={onClose}
-       variant={isMobile? "temporary":"permanent"}
+      open={open}
+      onClose={onClose}
+      variant={isMobile ? "temporary" : "permanent"}
       sx={{
         height: "100vh",
         width: 240,
@@ -61,11 +62,14 @@ const Sidebar = ({open,onClose}) => {
           top: "60px",
         },
       }}
-      
       anchor="left"
     >
       <List>
-        <ListItem button sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
+        <ListItem
+          button
+          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+          onClick={handleClickDashboard}
+        >
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
@@ -73,11 +77,10 @@ const Sidebar = ({open,onClose}) => {
         </ListItem>
         <Divider sx={{ borderColor: "gray" }} />
 
-        {/* Users Dropdown */}
         <ListItem
           button
           onClick={handleClickUsers}
-          sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}
+          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
         >
           <ListItemIcon>
             <PeopleIcon />
@@ -87,7 +90,11 @@ const Sidebar = ({open,onClose}) => {
 
         <Divider sx={{ borderColor: "gray" }} />
 
-        <ListItem button onClick={handleClickBooking}  sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
+        <ListItem
+          button
+          onClick={handleClickBooking}
+          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+        >
           <ListItemIcon>
             <EventNoteIcon />
           </ListItemIcon>
@@ -118,7 +125,10 @@ const Sidebar = ({open,onClose}) => {
                   <ListItem
                     button
                     key={text}
-                    sx={{ pl: 10, "&:hover": { color: "red", cursor:'pointer' } }}
+                    sx={{
+                      pl: 10,
+                      "&:hover": { color: "red", cursor: "pointer" },
+                    }}
                     onClick={handleSubOptionClick}
                   >
                     <ListItemText primary={text} />
@@ -131,7 +141,10 @@ const Sidebar = ({open,onClose}) => {
 
         <Divider sx={{ borderColor: "gray" }} />
 
-        <ListItem button sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
+        <ListItem
+          button
+          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+        >
           <ListItemIcon>
             <ReviewsIcon />
           </ListItemIcon>
@@ -140,7 +153,10 @@ const Sidebar = ({open,onClose}) => {
         <Divider sx={{ borderColor: "gray" }} />
 
         {/* Profile Dropdown */}
-        <ListItem button sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
+        <ListItem
+          button
+          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+        >
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>

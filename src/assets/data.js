@@ -317,6 +317,110 @@ flight_page : [
       "class": "Economy",
       "status": "Pending"
     }
+  ],
+
+  users_page : [
+    {
+      "id": 1,
+      "profileImage": "https://i.pravatar.cc/150?img=1",
+      "firstName": "First1",
+      "lastName": "Last1",
+      "username": "user1",
+      "email": "user1@example.com",
+      "phone": "123-456-7801",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "profileImage": "https://i.pravatar.cc/150?img=2",
+      "firstName": "First2",
+      "lastName": "Last2",
+      "username": "user2",
+      "email": "user2@example.com",
+      "phone": "123-456-7802",
+      "status": "Inactive"
+    },
+    {
+      "id": 3,
+      "profileImage": "https://i.pravatar.cc/150?img=3",
+      "firstName": "First3",
+      "lastName": "Last3",
+      "username": "user3",
+      "email": "user3@example.com",
+      "phone": "123-456-7803",
+      "status": "Active"
+    },
+    {
+      "id": 4,
+      "profileImage": "https://i.pravatar.cc/150?img=4",
+      "firstName": "First4",
+      "lastName": "Last4",
+      "username": "user4",
+      "email": "user4@example.com",
+      "phone": "123-456-7804",
+      "status": "Inactive"
+    },
+    {
+      "id": 5,
+      "profileImage": "https://i.pravatar.cc/150?img=5",
+      "firstName": "First5",
+      "lastName": "Last5",
+      "username": "user5",
+      "email": "user5@example.com",
+      "phone": "123-456-7805",
+      "status": "Active"
+    },
+    {
+      "id": 6,
+      "profileImage": "https://i.pravatar.cc/150?img=6",
+      "firstName": "First6",
+      "lastName": "Last6",
+      "username": "user6",
+      "email": "user6@example.com",
+      "phone": "123-456-7806",
+      "status": "Inactive"
+    },
+    {
+      "id": 7,
+      "profileImage": "https://i.pravatar.cc/150?img=7",
+      "firstName": "First7",
+      "lastName": "Last7",
+      "username": "user7",
+      "email": "user7@example.com",
+      "phone": "123-456-7807",
+      "status": "Active"
+    },
+    {
+      "id": 8,
+      "profileImage": "https://i.pravatar.cc/150?img=8",
+      "firstName": "First8",
+      "lastName": "Last8",
+      "username": "user8",
+      "email": "user8@example.com",
+      "phone": "123-456-7808",
+      "status": "Inactive"
+    },
+    {
+      "id": 9,
+      "profileImage": "https://i.pravatar.cc/150?img=9",
+      "firstName": "First9",
+      "lastName": "Last9",
+      "username": "user9",
+      "email": "user9@example.com",
+      "phone": "123-456-7809",
+      "status": "Active"
+    },
+    {
+      "id": 10,
+      "profileImage": "https://i.pravatar.cc/150?img=10",
+      "firstName": "First10",
+      "lastName": "Last10",
+      "username": "user10",
+      "email": "user10@example.com",
+      "phone": "123-456-7810",
+      "status": "Inactive"
+    }
   ]
+  
   
 };

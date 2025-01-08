@@ -15,6 +15,7 @@ import {
   InputLabel,
   Pagination,
   Box,
+  Avatar,
 } from "@mui/material";
 
 const DataTable = ({ data, columns, onActionClick }) => {
@@ -91,7 +92,7 @@ const DataTable = ({ data, columns, onActionClick }) => {
                 }}
               >
                 {columns.map((column) => (
-                  <TableCell key={column.key}>{item[column.key]}</TableCell>
+                  <TableCell key={column.key}>{[column.key]=='profileImage'?<Avatar alt={item.firstName} src={item[column.key]} /> : item[column.key]}</TableCell>
                 ))}
                 <TableCell>
                   <Button
