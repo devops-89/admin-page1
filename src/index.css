@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", serif;
+  font-family: "Poppins", serif!important;
 }
 
 :root {
@@ -16,6 +16,7 @@
   --black-color:#000;
   --white-color:#fff; 
   --white-tint-color:#f1f1f1;
+  --table-head-color:#e6e6e6;
 }
 
 

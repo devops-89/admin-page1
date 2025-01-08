@@ -20,7 +20,6 @@ import { useMediaQuery, useTheme } from "@mui/material";
 
 const Navbar = ({
   logo = logoSrc,
-  searchPlaceholder = "Search...",
   mailCount = 0,
   notificationCount = 0,
   avatarSrc = "/static/images/avatar/1.jpg",
@@ -63,14 +62,14 @@ const Navbar = ({
          
 
           {/* Mail Icon */}
-          <IconButton sx={{ color: "black" }}>
+          <IconButton sx={{ color: "var(--orange-color)" }}>
             <Badge badgeContent={mailCount} color="error">
               <MailIcon />
             </Badge>
           </IconButton>
 
           {/* Notifications Icon */}
-          <IconButton sx={{ color: "black"}}>
+          <IconButton sx={{ color: "var(--orange-color)"}}>
             <Badge badgeContent={notificationCount} color="error">
               <NotificationsIcon />
             </Badge>
