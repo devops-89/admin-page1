@@ -16,6 +16,7 @@ import {
   Pagination,
   Box,
   Avatar,
+  colors,
 } from "@mui/material";
 import Select from '@mui/material/Select';
 
@@ -53,7 +54,7 @@ const DataTable = ({ data, columns, onActionClick }) => {
           <Select
             labelId="entries-per-page-label"
             value={entriesPerPage}
-            sx={{margin:"8px"}}
+            sx={{margin:'8px'}}
             onChange={(e) => setEntriesPerPage(parseInt(e.target.value, 10))}
           >
             {[5, 10, 20, 50].map((count) => (
@@ -75,15 +76,18 @@ const DataTable = ({ data, columns, onActionClick }) => {
 
       <TableContainer component={Paper}>
         <Table>
-          <TableHead>
+          <TableHead sx={{backgroundColor:'var(--table-head-color)'}}>
             <TableRow>
               {columns.map((column) => (
-                <TableCell key={column.key}>{column.label}</TableCell>
+                <TableCell sx={{fontSize:'16px', fontWeight:'500'}} key={column.key}>{column.label}</TableCell>
               ))}
-              <TableCell>Action</TableCell>
+              <TableCell sx={{fontSize:'16px', fontWeight:'500'}}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+
+            {/* {console.log(displayedData)}  */}
+
             {displayedData.map((item) => (
               <TableRow
                 key={item.id}
@@ -99,15 +103,17 @@ const DataTable = ({ data, columns, onActionClick }) => {
                 <TableCell>
                   <Button
                     variant="contained"
-                    color="primary"
                     size="small"
                     onClick={() => onActionClick(item.id)}
-                    style={{ marginRight: "5px" }}
+                    sx={{backgroundColor:"var(--orange-color)", marginRight: "5px"}}
                   >
                     View
                   </Button>
                 </TableCell>
               </TableRow>
+
+
+
             ))}
           </TableBody>
         </Table>
@@ -118,7 +124,7 @@ const DataTable = ({ data, columns, onActionClick }) => {
           count={totalPages}
           page={currentPage}
           onChange={(_, page) => setCurrentPage(page)}
-          color="primary"
+          sx={{'& .MuiButtonBase-root':{backgroundColor:"var(--orange-color)", color:'var(--white-color)'}}}
         />
       </Box>
     </Box>

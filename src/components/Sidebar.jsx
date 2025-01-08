@@ -67,11 +67,11 @@ const Sidebar = ({ open, onClose }) => {
       <List>
         <ListItem
           button
-          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+          sx={{ "&:hover": { backgroundColor: "var(--orange-color)",color:'var(--white-color)', cursor: "pointer", '& .MuiSvgIcon-root':{color: "var(--white-color)"} } }}
           onClick={handleClickDashboard}
         >
           <ListItemIcon>
-            <DashboardIcon />
+            <DashboardIcon sx={{color:'var(--orange-color)'}}/>
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
@@ -80,12 +80,12 @@ const Sidebar = ({ open, onClose }) => {
         <ListItem
           button
           onClick={handleClickUsers}
-          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+          sx={{ "&:hover": { backgroundColor: "var(--orange-color)",color:'var(--white-color)', cursor: "pointer", '& .MuiSvgIcon-root':{color: "var(--white-color)"} } }}
         >
           <ListItemIcon>
-            <PeopleIcon />
+            <PeopleIcon sx={{color:'var(--orange-color)'}}/>
           </ListItemIcon>
-          <ListItemText primary="Users" />
+          <ListItemText primary="Users"/>
         </ListItem>
 
         <Divider sx={{ borderColor: "gray" }} />
@@ -93,10 +93,10 @@ const Sidebar = ({ open, onClose }) => {
         <ListItem
           button
           onClick={handleClickBooking}
-          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+          sx={{ "&:hover": { backgroundColor: "var(--orange-color)",color:'var(--white-color)', cursor: "pointer", '& .MuiSvgIcon-root':{color: "var(--white-color)"} } }}
         >
           <ListItemIcon>
-            <EventNoteIcon />
+            <EventNoteIcon sx={{color:'var(--orange-color)'}}/>
           </ListItemIcon>
           <ListItemText primary="Booking" />
           {openBooking ? <ExpandLess /> : <ExpandMore />}
@@ -127,7 +127,7 @@ const Sidebar = ({ open, onClose }) => {
                     key={text}
                     sx={{
                       pl: 10,
-                      "&:hover": { color: "red", cursor: "pointer" },
+                      "&:hover": { backgroundColor: "var(--orange-color)",color:'var(--white-color)', cursor: "pointer", '& .MuiSvgIcon-root':{color: "var(--white-color)"}},
                     }}
                     onClick={handleSubOptionClick}
                   >
@@ -143,10 +143,10 @@ const Sidebar = ({ open, onClose }) => {
 
         <ListItem
           button
-          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+          sx={{ "&:hover": { backgroundColor: "var(--orange-color)",color:'var(--white-color)', cursor: "pointer", '& .MuiSvgIcon-root':{color: "var(--white-color)"} } }}
         >
           <ListItemIcon>
-            <ReviewsIcon />
+            <ReviewsIcon sx={{color:'var(--orange-color)'}}/>
           </ListItemIcon>
           <ListItemText primary="Reviews" />
         </ListItem>
@@ -155,10 +155,10 @@ const Sidebar = ({ open, onClose }) => {
         {/* Profile Dropdown */}
         <ListItem
           button
-          sx={{ "&:hover": { bgcolor: "red", cursor: "pointer" } }}
+          sx={{ "&:hover": { backgroundColor: "var(--orange-color)",color:'var(--white-color)', cursor: "pointer", '& .MuiSvgIcon-root':{color: "var(--white-color)"} } }}
         >
           <ListItemIcon>
-            <PersonIcon />
+            <PersonIcon sx={{color:'var(--orange-color)'}}/>
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItem>

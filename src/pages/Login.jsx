@@ -42,7 +42,7 @@ const Login = () => {
       // console.log(result);
       const access_token = result.data.data.access_token;
       if (access_token) {
-        localStorage.setItem('token', access_token);
+        localStorage.setItem('access_token', access_token);
         setLoading(false);
         toast.success('Login Successful', {
           autoClose:3000
