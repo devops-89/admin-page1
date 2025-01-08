@@ -23,7 +23,7 @@ const Navbar = ({
   mailCount = 0,
   notificationCount = 0,
   avatarSrc = "/static/images/avatar/1.jpg",
-  bgcolor = "var(--white-tint-color)", 
+  bgcolor = "var(--table-head-color)", 
   onToggleSidebar=()=>{}
 }) => {
   
