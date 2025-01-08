@@ -8,28 +8,20 @@ import Grid from "@mui/material/Grid2";
 const AppLayout = () => {
   return (
     <Box>
-     
       <Navbar />
+      <Grid container spacing={2} sx={{ marginTop: "60px" }}>
 
-      
-      <Grid container spacing={2} sx={{marginTop:"60px"}}>
-      
-        <Grid item xs={3} md={4}>
+        <Grid item size={2}>
           <Sidebar />
         </Grid>
-
-        
-        <Grid item xs={9} md={8}>
+        <Grid item size={10}>
           <Outlet />
         </Grid>
       </Grid>
     </Box>
-
-
-      
-
-
-  );
+    
+);
 };
+ 
 
 export default AppLayout;

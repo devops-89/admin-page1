@@ -115,7 +115,11 @@ const UsersList = () => {
           </TableHead>
           <TableBody>
             {displayedUsers.map((user) => (
-              <TableRow key={user.id}>
+              <TableRow key={user.id}  sx={{
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.08)', 
+                },
+              }}>
                 <TableCell>
                   <Avatar alt={user.firstName} src={user.profileImage} />
                 </TableCell>

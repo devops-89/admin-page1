@@ -55,8 +55,7 @@ const Sidebar = () => {
       anchor="left"
     >
       <List>
-        {/* Dashboard Tab */}
-        <ListItem button sx={{ "&:hover": { bgcolor: "red" } }}>
+        <ListItem button sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
@@ -64,8 +63,7 @@ const Sidebar = () => {
         </ListItem>
         <Divider sx={{ borderColor: "gray",  }} />
 
-        {/* Users Dropdown */}
-        <ListItem button  sx={{ "&:hover": { bgcolor: "red" } }}>
+        <ListItem button  sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
           <ListItemIcon>
             <PeopleIcon  />
           </ListItemIcon>
@@ -74,8 +72,7 @@ const Sidebar = () => {
        
         <Divider sx={{ borderColor: "gray",  }} />
 
-        {/* Booking Dropdown */}
-        <ListItem button onClick={handleClickBooking}  sx={{ "&:hover": { bgcolor: "red" } }}>
+        <ListItem button onClick={handleClickBooking}  sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
           <ListItemIcon>
             <EventNoteIcon  />
           </ListItemIcon>
@@ -85,7 +82,7 @@ const Sidebar = () => {
         <Collapse in={openBooking} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {["Hotel Booking", "Flight Booking", "Cab Booking"].map((text) => (
-              <ListItem button key={text} sx={{ pl: 10, "&:hover": { color: "red" } }}>
+              <ListItem button key={text} sx={{ pl: 10, "&:hover": { color: "red",  cursor:'pointer' } }}>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
@@ -94,8 +91,7 @@ const Sidebar = () => {
        
         <Divider sx={{ borderColor: "gray",  }} />
 
-        {/* Reviews Tab */}
-        <ListItem button sx={{ "&:hover": { bgcolor: "red" } }}>
+        <ListItem button sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
           <ListItemIcon>
             <ReviewsIcon  />
           </ListItemIcon>
@@ -103,8 +99,7 @@ const Sidebar = () => {
         </ListItem>
         <Divider sx={{ borderColor: "gray",  }} />
 
-        {/* Bookmarks Tab */}
-        <ListItem button sx={{ "&:hover": { bgcolor: "red" } }}>
+        <ListItem button sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
           <ListItemIcon>
             <BookmarksIcon  />
           </ListItemIcon>
@@ -112,8 +107,7 @@ const Sidebar = () => {
         </ListItem>
         <Divider sx={{ borderColor: "gray",  }} />
 
-        {/* Messages Dropdown */}
-        <ListItem button  sx={{ "&:hover": { bgcolor: "red" } }}>
+        <ListItem button  sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
           <ListItemIcon>
             <MessageIcon  />
           </ListItemIcon>
@@ -123,8 +117,7 @@ const Sidebar = () => {
       
         <Divider sx={{ borderColor: "gray",  }} />
 
-        {/* Profile Dropdown */}
-        <ListItem button  sx={{ "&:hover": { bgcolor: "red" } }}>
+        <ListItem button  sx={{ "&:hover": { bgcolor: "red", cursor:'pointer' } }}>
           <ListItemIcon>
             <PersonIcon  />
           </ListItemIcon>
