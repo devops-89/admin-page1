@@ -10,13 +10,14 @@ import {
   Button,
   TextField,
   MenuItem,
-  Select,
+ 
   FormControl,
   InputLabel,
   Pagination,
   Box,
   Avatar,
 } from "@mui/material";
+import Select from '@mui/material/Select';
 
 const DataTable = ({ data, columns, onActionClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -52,6 +53,7 @@ const DataTable = ({ data, columns, onActionClick }) => {
           <Select
             labelId="entries-per-page-label"
             value={entriesPerPage}
+            sx={{margin:"8px"}}
             onChange={(e) => setEntriesPerPage(parseInt(e.target.value, 10))}
           >
             {[5, 10, 20, 50].map((count) => (
