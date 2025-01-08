@@ -130,7 +130,7 @@ const DataTable = ({ data, columns, onActionClick }) => {
           count={totalPages}
           page={currentPage}
           onChange={(_, page) => setCurrentPage(page)}
-          sx={{'& .MuiButtonBase-root':{backgroundColor:"var(--orange-color)", color:'var(--white-color)'}, '& .Mui-selected':{color:'var(--black-color)', backgroundColor:"var(--table-head-color)"}, '&:hover':{color:'var(--black-color)'}}}
+          sx={{'& .MuiButtonBase-root':{backgroundColor:"var(--orange-color)", color:'var(--white-color)'}, '& .Mui-selected':{color:'var(--black-color)', backgroundColor:"var(--table-head-color)"}, '& :hover':{color:'var(--black-color)'}}}
         />
       </Box>
     </Box>
