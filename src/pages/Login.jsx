@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
-
 import { useDispatch } from "react-redux";
 import { setToast } from "../redux/reducers/toast";
 import { setUserDetails } from "../redux/reducers/user";
 import { TOAST_STATUS } from "../utils/enum";
-
 import {
   TextField,
   InputAdornment,
@@ -40,12 +38,11 @@ const Login = () => {
     loginController
       .login({ identity: values.email, password: values.password })
       .then((res) => {
-    
         const access_token = res.data.data.access_token;
 
         localStorage.setItem("access_token", access_token);
-        values.email="";
-        values.password="";
+        values.email = "";
+        values.password = "";
         dispatch(setUserDetails({ ...res.data.data, isAuthenticated: true }));
         dispatch(
           setToast({
@@ -54,7 +51,7 @@ const Login = () => {
             severity: TOAST_STATUS.SUCCESS,
           })
         );
-       
+
         setLoading(false);
 
         setTimeout(() => {
@@ -65,8 +62,8 @@ const Login = () => {
         let errMessage =
           (err.response && err.response.data.message) || err.message;
 
-          values.email="";
-          values.password="";
+        values.email = "";
+        values.password = "";
         dispatch(
           setToast({
             open: true,
@@ -74,7 +71,7 @@ const Login = () => {
             severity: TOAST_STATUS.ERROR,
           })
         );
-       
+
         setLoading(false);
       });
   };
@@ -91,7 +88,6 @@ const Login = () => {
       }}
       id="login_bg"
     >
-     
       <Box
         maxWidth="xs"
         display="flex"

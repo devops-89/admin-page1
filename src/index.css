@@ -1,42 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", serif!important;
+  font-family: "Poppins", serif !important;
 }
 
 :root {
-  --blue-color:#205A8C;
-  --orange-color:#DD800C;
-  --semi-orange:#D98B48;
-  --light-color:#F2B988;
-  --black-color:#000;
-  --sidebar-color:#1d1d1d;
-  --white-color:#fff; 
-  --white-tint-color:#f1f1f1;
-  --outlet-color:#E8EDF2;
+  --blue-color: #205a8c;
+  --orange-color: #dd800c;
+  --semi-orange: #d98b48;
+  --light-color: #f2b988;
+  --black-color: #000;
+  --sidebar-color: #1d1d1d;
+  --white-color: #fff;
+  --white-tint-color: #f1f1f1;
+  --outlet-color: #e8edf2;
 }
 
-
-
-#login_bg{
- 
-    background: url('./assets/login_bg.svg');
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-size: contain;
-    background-color: var(--table-head-color);
+#login_bg {
+  background: url("./assets/login_bg.svg");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+  background-color: var(--table-head-color);
 }
 
-#form_wrapper{
+#form_wrapper {
   background-color: var(--white-color);
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0px 0px 7px #d2d0d0;
   max-width: 480px;
 }
-
-
