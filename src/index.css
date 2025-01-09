@@ -21,7 +21,12 @@
 
 
 #login_bg{
-  background-color: var(--white-tint-color);
+ 
+    background: url('./assets/login_bg.svg');
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-color: var(--table-head-color);
 }
 
 #form_wrapper{

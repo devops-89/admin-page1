@@ -10,7 +10,7 @@ import {
   Button,
   TextField,
   MenuItem,
-  Select,
+ 
   FormControl,
   InputLabel,
   Pagination,
@@ -18,6 +18,7 @@ import {
   Avatar,
   colors,
 } from "@mui/material";
+import Select from '@mui/material/Select';
 
 const DataTable = ({ data, columns, onActionClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
