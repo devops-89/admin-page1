@@ -12,6 +12,8 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 import CountUp from 'react-countup';
+import AirplanemodeInactiveIcon from '@mui/icons-material/AirplanemodeInactive';
+import DomainDisabledIcon from '@mui/icons-material/DomainDisabled';
 
 const Dashboard = () => {
 
@@ -24,9 +26,22 @@ const Dashboard = () => {
     },
     {
       icon: <ApartmentIcon sx={{fontSize:'50px'}}/>,
-      label: "Hotel List",
+      label: "Hotels",
       quantity: 12453,
       bgColor: "#e91e63",
+    },
+    
+     {
+      icon: <DomainDisabledIcon sx={{fontSize:'50px'}}/>,
+      label: "Cancel Hotels",
+      quantity: 453,
+      bgColor: "#42a5f5",
+    },
+    {
+      icon: <AirplanemodeInactiveIcon sx={{fontSize:'50px'}}/>,
+      label: "Cancel Flights",
+      quantity: 105,
+      bgColor: "#4a148c",
     },
     {
       icon: <AirlineSeatReclineNormalIcon sx={{fontSize:'50px'}}/>,
@@ -56,9 +71,9 @@ const Dashboard = () => {
 
   return (
     <Box component="section" sx={{ p: 2 }}>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {dashboardDataList.map((item, index) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} sx={{borderRadius:'4px',backgroundColor:'var(--white-color)', boxShadow:'0px 0px 8px #cac9c9'}} key={index}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{borderRadius:'4px',backgroundColor:'var(--white-color)', boxShadow:'0px 0px 8px #cac9c9'}} key={index}>
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "90px" }}
               >
@@ -81,7 +96,7 @@ const Dashboard = () => {
                  {item.icon}
                 </Box>
                 <Box sx={{display:'flex', flexDirection:'column', alignItems:'flex-start'}}>
-                <Typography variant="h6" sx={{color:'var(--black-color)'}}>{item.label}</Typography>
+                <Typography variant="h6" sx={{color:'var(--black-color)', fontSize:'18px'}}>{item.label}</Typography>
                 <Typography variant="body1" sx={{color:item.bgColor,fontWeight:600}}> <CountUp start={0} end={item.quantity} duration={2} separator="," onUpdate={(num) => Math.floor(num / 10) * 1000} /> </Typography>
                 </Box>
               </Box>
