@@ -45,7 +45,7 @@ const Login = () => {
         localStorage.setItem('access_token', access_token);
         setLoading(false);
         toast.success('Login Successful', {
-          autoClose:3000
+          autoClose:3000 
         });
         setTimeout(() => {
           navigate('/dashboard')
