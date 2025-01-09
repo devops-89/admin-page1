@@ -1,5 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+
+import { useDispatch } from "react-redux";
+import { setToast } from "../redux/reducers/toast";
+import { setUserDetails } from "../redux/reducers/user";
+import { TOAST_STATUS } from "../utils/enum";
+
 import {
   TextField,
   InputAdornment,
@@ -13,57 +18,65 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React, { useState } from "react";
 import Logo from "../assets/logo.png";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik, Field, Form } from "formik";
+
 import * as loginController from "../api/authController";
+import ToastBar from "../components/ToastBar";
+import { validationSchema } from "../utils/validationSchema";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
-  });
-
-  const handleLogin = async (values) => {
+  const handleLogin = (values) => {
     setLoading(true);
-    try {
-      const result = await loginController.login({ identity: values.email, password: values.password })
-      // console.log(result);
-      const access_token = result.data.data.access_token;
-      if (access_token) {
-        localStorage.setItem('access_token', access_token);
+
+    loginController
+      .login({ identity: values.email, password: values.password })
+      .then((res) => {
+    
+        const access_token = res.data.data.access_token;
+
+        localStorage.setItem("access_token", access_token);
+        values.email="";
+        values.password="";
+        dispatch(setUserDetails({ ...res.data.data, isAuthenticated: true }));
+        dispatch(
+          setToast({
+            open: true,
+            message: res.data.message,
+            severity: TOAST_STATUS.SUCCESS,
+          })
+        );
+       
         setLoading(false);
-        toast.success('Login Successful', {
-          autoClose:3000
-        });
+
         setTimeout(() => {
-          navigate('/dashboard')
-        }, 3000);
-      } else {
-        throw error
-      }
+          navigate("/dashboard");
+        }, 2000);
+      })
+      .catch((err) => {
+        let errMessage =
+          (err.response && err.response.data.message) || err.message;
 
-    } catch (error) {
-      setLoading(false);
-      let errorMessage = error.response.data.message || error.message
-      toast.error(errorMessage);
-     
-    } finally {
-      values.email = "";
-      values.password = "";
-    }
-
+          values.email="";
+          values.password="";
+        dispatch(
+          setToast({
+            open: true,
+            message: errMessage,
+            severity: TOAST_STATUS.ERROR,
+          })
+        );
+       
+        setLoading(false);
+      });
   };
 
   return (
@@ -78,7 +91,7 @@ const Login = () => {
       }}
       id="login_bg"
     >
-      <ToastContainer/>
+     
       <Box
         maxWidth="xs"
         display="flex"
@@ -172,12 +185,17 @@ const Login = () => {
                   "&:hover": { backgroundColor: "var(--blue-color)" },
                 }}
               >
-                 {loading ? <CircularProgress color="var(--light-color)" /> :"Login Now"}
+                {loading ? (
+                  <CircularProgress color="var(--light-color)" />
+                ) : (
+                  "Login Now"
+                )}
               </Button>
             </Form>
           )}
         </Formik>
       </Box>
+      <ToastBar />
     </Container>
   );
 };
