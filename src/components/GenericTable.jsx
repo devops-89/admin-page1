@@ -54,7 +54,7 @@ const DataTable = ({ data, columns, onActionClick }) => {
           <Select
             labelId="entries-per-page-label"
             value={entriesPerPage}
-            sx={{margin:'8px'}}
+            sx={{margin:'8px', backgroundColor:'var(--white-color)'}}
             onChange={(e) => setEntriesPerPage(parseInt(e.target.value, 10))}
           >
             {[5, 10, 20, 50].map((count) => (
@@ -71,17 +71,18 @@ const DataTable = ({ data, columns, onActionClick }) => {
           variant="outlined"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          sx={{backgroundColor:'var(--white-color)' }}
         />
       </Box>
 
       <TableContainer component={Paper}>
         <Table>
-          <TableHead sx={{backgroundColor:'var(--table-head-color)'}}>
+          <TableHead sx={{backgroundColor:'var(--sidebar-color)'}}>
             <TableRow>
               {columns.map((column) => (
-                <TableCell sx={{fontSize:'16px', fontWeight:'500'}} key={column.key}>{column.label}</TableCell>
+                <TableCell sx={{fontSize:'16px', fontWeight:'500', color:'var(--white-color)'}} key={column.key}>{column.label}</TableCell>
               ))}
-              <TableCell sx={{fontSize:'16px', fontWeight:'500'}}>Action</TableCell>
+              <TableCell sx={{fontSize:'16px', fontWeight:'500', color:'var(--white-color)'}}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
