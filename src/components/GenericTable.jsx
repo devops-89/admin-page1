@@ -10,26 +10,26 @@ import {
   Button,
   TextField,
   MenuItem,
- 
   FormControl,
   InputLabel,
   Pagination,
   Box,
   Avatar,
   colors,
+  Typography,
 } from "@mui/material";
-import Select from '@mui/material/Select';
+import Select from "@mui/material/Select";
 
-const DataTable = ({ data, columns, onActionClick }) => {
+const DataTable = ({ data, columns, onActionClick, table_heading }) => {
+ 
+
   const [searchTerm, setSearchTerm] = useState("");
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = data.filter((item) =>
     columns.some((column) =>
-      String(item[column.key])
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+      String(item[column.key]).toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
@@ -44,84 +44,143 @@ const DataTable = ({ data, columns, onActionClick }) => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: { xs: "center", sm: "center", md: "space-between" },
           alignItems: "center",
+          flexWrap: "wrap",
           marginBottom: 2,
         }}
       >
-        <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel id="entries-per-page-label">Entries</InputLabel>
-          <Select
-            labelId="entries-per-page-label"
-            value={entriesPerPage}
-            sx={{margin:'8px', backgroundColor:'var(--white-color)'}}
-            onChange={(e) => setEntriesPerPage(parseInt(e.target.value, 10))}
+        <Box>
+          <Typography
+            variant="h4"
+            sx={{
+              fontSize: "18px",
+              fontWeight: "600",
+              marginBottom: "5px",
+              textAlign: { xs: "center", sm: "center", md: "start" },
+              '@media (min-width: 831px) and (max-width: 900px)': {
+            textAlign: 'start', 
+          },
+            }}
           >
-            {[5, 10, 20, 50].map((count) => (
-              <MenuItem key={count} value={count}>
-                {count}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            {table_heading.heading}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: "15px",
+              fontWeight: "400",
+              marginBottom: "5px",
+              textAlign: { xs: "center", sm: "center", md: "start" },
+              '@media (min-width: 831px) and (max-width: 900px)': {
+            textAlign: 'start', 
+          },
+            }}
+          >
+            {table_heading.para}
+          </Typography>
+        </Box>
 
-        <TextField
-          size="small"
-          label="Search"
-          variant="outlined"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{backgroundColor:'var(--white-color)' }}
-        />
+        <Box sx={{display:'flex'}}>
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            {/* <InputLabel id="entries-per-page-label">Entries</InputLabel> */}
+            <Select
+              labelId="entries-per-page-label"
+              value={entriesPerPage}
+              sx={{
+                backgroundColor: "var(--white-color)",
+                marginRight: "10px",
+              }}
+              onChange={(e) => setEntriesPerPage(parseInt(e.target.value, 10))}
+            >
+              {[5, 10, 20, 50].map((count) => (
+                <MenuItem key={count} value={count}>
+                  {count}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <TextField
+            size="small"
+            label="Search"
+            variant="outlined"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            sx={{ backgroundColor: "var(--white-color)" }}
+          />
+        </Box>
       </Box>
 
       <TableContainer component={Paper}>
         <Table>
-          <TableHead sx={{backgroundColor:'var(--sidebar-color)'}}>
+          <TableHead sx={{ backgroundColor: "var(--sidebar-color)" }}>
             <TableRow>
               {columns.map((column) => (
-                <TableCell sx={{fontSize:'16px', fontWeight:'500', color:'var(--white-color)'}} key={column.key}>{column.label}</TableCell>
+                <TableCell
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "500",
+                    color: "var(--white-color)",
+                  }}
+                  key={column.key}
+                >
+                  {column.label}
+                </TableCell>
               ))}
-              <TableCell sx={{fontSize:'16px', fontWeight:'500', color:'var(--white-color)'}}>Action</TableCell>
+              <TableCell
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "500",
+                  color: "var(--white-color)",
+                }}
+              >
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-
             {/* {console.log(displayedData)}  */}
 
-
-            { 
-            
-            displayedData.length!=0 ? (
-            
-            displayedData.map((item) => (
-              <TableRow
-                key={item.id}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.08)",
-                  },
-                }}
-              >
-                {columns.map((column) => (
-                  <TableCell key={column.key}>{[column.key]=='profileImage'?<Avatar alt={item.firstName} src={item[column.key]} /> : item[column.key]}</TableCell>
-                ))}
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    onClick={() => onActionClick(item.id)}
-                    sx={{backgroundColor:"var(--orange-color)", marginRight: "5px"}}
-                  >
-                    View
-                  </Button>
-                </TableCell>
+            {displayedData.length != 0 ? (
+              displayedData.map((item) => (
+                <TableRow
+                  key={item.id}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  {columns.map((column) => (
+                    <TableCell key={column.key}>
+                      {[column.key] == "profileImage" ? (
+                        <Avatar alt={item.firstName} src={item[column.key]} />
+                      ) : (
+                        item[column.key]
+                      )}
+                    </TableCell>
+                  ))}
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={() => onActionClick(item.id)}
+                      sx={{
+                        backgroundColor: "var(--orange-color)",
+                        marginRight: "5px",
+                      }}
+                    >
+                      View
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell sx={{ fontSize: "16px" }}>No Data Found</TableCell>
               </TableRow>
-
-
-
-            ))): <TableRow><TableCell sx={{fontSize:'16px'}}>No Data Found</TableCell></TableRow>}
-
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -131,7 +190,17 @@ const DataTable = ({ data, columns, onActionClick }) => {
           count={totalPages}
           page={currentPage}
           onChange={(_, page) => setCurrentPage(page)}
-          sx={{'& .MuiButtonBase-root':{backgroundColor:"var(--orange-color)", color:'var(--white-color)'}, '& .Mui-selected':{color:'var(--black-color)', backgroundColor:"var(--table-head-color)"}, '& :hover':{color:'var(--black-color)'}}}
+          sx={{
+            "& .MuiButtonBase-root": {
+              backgroundColor: "var(--orange-color)",
+              color: "var(--white-color)",
+            },
+            "& .Mui-selected": {
+              color: "var(--black-color)",
+              backgroundColor: "var(--table-head-color)",
+            },
+            "& :hover": { color: "var(--black-color)" },
+          }}
         />
       </Box>
     </Box>

@@ -187,6 +187,11 @@ const UsersList = () => {
     { key: "status", label: "Status" },
   ];
 
+  const table_heading = {
+    heading : 'User Details',
+    para : 'Manage your personal details, bookings, and preferences.'
+  }
+
   const handleView = (id) => {
     console.log("View user details:", id);
   };
@@ -196,6 +201,7 @@ const UsersList = () => {
       data={data.users_page} 
       columns={columns}
       onActionClick={handleView}
+      table_heading={table_heading}
     />
   );
 };

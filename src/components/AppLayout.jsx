@@ -22,12 +22,12 @@ const AppLayout = () => {
 
       <Grid container spacing={2} sx={{ marginTop: "80px", backgroundColor:'var(--outlet-color)'}}>
 
-        <Grid item size={{xs:12,sm:3,md:2}}>
+        <Grid item size={{xs:12,sm:0, md:0, lg:2}}>
           <Sidebar open={sidebarOpen} onClose={toggleSidebar} />
         </Grid>
 
 
-        <Grid item size={{xs:12,sm:9,md:10}} sx={{ padding:{xs:"10px",sm:"20px",md:"30px"}}}>
+        <Grid item size={{xs:12, sm:12, md:12, lg:10}} sx={{ padding:{xs:"10px",sm:"20px",md:"30px"}}}>
           <Outlet />
         </Grid>
       </Grid>

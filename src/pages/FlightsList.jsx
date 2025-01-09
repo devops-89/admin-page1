@@ -177,7 +177,13 @@ const FlightsList = () => {
     console.log("View flight Detail:", id);
   };
 
-  return <GenericTable data={data.flight_page} columns={columns} onActionClick={handleView} />;
+  const table_heading = {
+    heading : 'Flight Reservations',
+    para : 'Explore, book, and track your flights conveniently.'
+  }
+
+
+  return <GenericTable data={data.flight_page} columns={columns} onActionClick={handleView} table_heading={table_heading} />;
 };
 
 export default FlightsList;

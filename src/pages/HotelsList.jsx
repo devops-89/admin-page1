@@ -172,7 +172,13 @@ const HotelsList = () => {
     console.log("View hotel Detail:", id);
   };
 
-  return <GenericTable data={data.hotel_page} columns={columns} onActionClick={handleView} />;
+  const table_heading = {
+    heading : 'Hotel Bookings',
+    para : 'Browse, book, and manage your hotel stays with ease.'
+  }
+
+
+  return <GenericTable data={data.hotel_page} columns={columns} onActionClick={handleView} table_heading={table_heading} />;
 };
 
 export default HotelsList;

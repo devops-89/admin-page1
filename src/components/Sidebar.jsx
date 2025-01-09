@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const [openBooking, setOpenBooking] = useState(false);
 

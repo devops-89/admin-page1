@@ -174,11 +174,16 @@ const CabsList = () => {
     { key: "status", label: "Status" },
   ];
 
+  const table_heading = {
+    heading : 'Cab Services',
+    para : 'Book and manage your cab rides for a seamless travel experience.'
+  }
+
   const handleView = (id) => {
     console.log("View cab Detail:", id);
   };
 
-  return <GenericTable data={data.cab_page} columns={columns} onActionClick={handleView} />;
+  return <GenericTable data={data.cab_page} columns={columns} onActionClick={handleView} table_heading={table_heading} />;
 };
 
 export default CabsList;
