@@ -23,7 +23,7 @@ const Navbar = ({
   mailCount = 0,
   notificationCount = 0,
   avatarSrc = "/static/images/avatar/1.jpg",
-  bgcolor = "var(--table-head-color)", 
+  bgcolor = "var(--white-color)", 
   onToggleSidebar=()=>{}
 }) => {
   
@@ -43,6 +43,7 @@ const Navbar = ({
         position: "fixed",
         boxShadow: "none",
         top: 0,
+        py:1
       }}
     >
       <Toolbar>

@@ -52,9 +52,9 @@ const Sidebar = ({ open, onClose }) => {
         "& .MuiDrawer-paper": {
           width: 240,
           boxSizing: "border-box",
-          bgcolor: "var(--table-head-color)",
+          bgcolor: "var(--sidebar-color)",
           position: "fixed",
-          top: "60px",
+          top: { xs:'72px', sm:'78px', md:"80px"},
         },
       }}
       anchor="left"
@@ -63,6 +63,7 @@ const Sidebar = ({ open, onClose }) => {
         <ListItem
           button
           sx={{
+            color:'var(--white-color)',
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -73,7 +74,7 @@ const Sidebar = ({ open, onClose }) => {
           onClick={() => handleNavigation("/dashboard")}
         >
           <ListItemIcon>
-            <DashboardIcon sx={{ color: "var(--orange-color)" }} />
+            <DashboardIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
@@ -82,6 +83,7 @@ const Sidebar = ({ open, onClose }) => {
           button
           onClick={() => handleNavigation("/dashboard/users")}
           sx={{
+            color:'var(--white-color)',
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -91,7 +93,7 @@ const Sidebar = ({ open, onClose }) => {
           }}
         >
           <ListItemIcon>
-            <PeopleIcon sx={{ color: "var(--orange-color)" }} />
+            <PeopleIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
           <ListItemText primary="Users" />
         </ListItem>
@@ -100,6 +102,7 @@ const Sidebar = ({ open, onClose }) => {
           button
           onClick={handleToggleBooking}
           sx={{
+            color:'var(--white-color)',
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -109,7 +112,7 @@ const Sidebar = ({ open, onClose }) => {
           }}
         >
           <ListItemIcon>
-            <EventNoteIcon sx={{ color: "var(--orange-color)" }} />
+            <EventNoteIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
           <ListItemText primary="Booking" />
           {openBooking ? <ExpandLess /> : <ExpandMore />}
@@ -121,7 +124,8 @@ const Sidebar = ({ open, onClose }) => {
                 button
                 key={index}
                 sx={{
-                  pl: 5,
+                  pl:5,
+                  color:'var(--white-color)',
                   "&:hover": {
                     backgroundColor: "var(--orange-color)",
                     color: "var(--white-color)",
@@ -131,7 +135,7 @@ const Sidebar = ({ open, onClose }) => {
                 }}
                 onClick={() => handleNavigation(item.path)}
               >
-                <ListItemIcon sx={{ color: "var(--orange-color)", minWidth:'35px' }}>{item.icon}</ListItemIcon>
+                <ListItemIcon sx={{ color: "var(--white-color)", minWidth:'35px' }}>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
@@ -142,6 +146,7 @@ const Sidebar = ({ open, onClose }) => {
           button
           onClick={() => handleNavigation("/dashboard/reviews")}
           sx={{
+            color:'var(--white-color)',
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -151,7 +156,7 @@ const Sidebar = ({ open, onClose }) => {
           }}
         >
           <ListItemIcon>
-            <ReviewsIcon sx={{ color: "var(--orange-color)" }} />
+            <ReviewsIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
           <ListItemText primary="Reviews" />
         </ListItem>
@@ -160,6 +165,7 @@ const Sidebar = ({ open, onClose }) => {
           button
           onClick={() => handleNavigation("/dashboard/profile")}
           sx={{
+            color:'var(--white-color)',
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -169,7 +175,7 @@ const Sidebar = ({ open, onClose }) => {
           }}
         >
           <ListItemIcon>
-            <PersonIcon sx={{ color: "var(--orange-color)" }} />
+            <PersonIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItem>

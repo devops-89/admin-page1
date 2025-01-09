@@ -20,7 +20,7 @@ const AppLayout = () => {
       <Navbar onToggleSidebar={toggleSidebar} />
 
 
-      <Grid container spacing={2} sx={{ marginTop: "60px", }}>
+      <Grid container spacing={2} sx={{ marginTop: "80px", backgroundColor:'var(--outlet-color)'}}>
 
         <Grid item size={{xs:12,sm:3,md:2}}>
           <Sidebar open={sidebarOpen} onClose={toggleSidebar} />
