@@ -19,17 +19,18 @@ import {
   Typography,
 } from "@mui/material";
 import Select from "@mui/material/Select";
-
+import { useDebounce } from "../hooks/debounce";
 const DataTable = ({ data, columns, onActionClick, table_heading }) => {
  
 
   const [searchTerm, setSearchTerm] = useState("");
+  const debounceSearchTerm=useDebounce(searchTerm,500);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = data.filter((item) =>
     columns.some((column) =>
-      String(item[column.key]).toLowerCase().includes(searchTerm.toLowerCase())
+      String(item[column.key]).toLowerCase().includes(debounceSearchTerm.toLowerCase())
     )
   );
 

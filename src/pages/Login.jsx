@@ -18,7 +18,8 @@ import React, { useState } from "react";
 import Logo from "../assets/logo.png";
 import { Formik, Field, Form } from "formik";
 
-import * as loginController from "../api/authController";
+
+import { AuthenticationController } from "../api/authController";
 import ToastBar from "../components/ToastBar";
 import { validationSchema } from "../utils/validationSchema";
 
@@ -35,7 +36,7 @@ const Login = () => {
   const handleLogin = (values) => {
     setLoading(true);
 
-    loginController
+   AuthenticationController
       .login({ identity: values.email, password: values.password })
       .then((res) => {
         const access_token = res.data.data.access_token;
