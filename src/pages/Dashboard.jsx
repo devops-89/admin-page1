@@ -10,8 +10,10 @@ import LocalAirportIcon from "@mui/icons-material/LocalAirport";
 import StoreMallDirectoryIcon from "@mui/icons-material/StoreMallDirectory";
 import CountUp from "react-countup";
 import { useNavigate } from "react-router-dom";
-import AirplanemodeInactiveIcon from '@mui/icons-material/AirplanemodeInactive';
-import DomainDisabledIcon from '@mui/icons-material/DomainDisabled';
+import AirplanemodeInactiveIcon from "@mui/icons-material/AirplanemodeInactive";
+import DomainDisabledIcon from "@mui/icons-material/DomainDisabled";
+import DashboardTable from "../components/DashboardTable";
+import { dashboardTableData, tables } from "../assets/data.js";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -31,16 +33,16 @@ const Dashboard = () => {
       bgColor: "#e91e63",
       href: "/dashboard/hotels",
     },
-    
-     {
-      icon: <DomainDisabledIcon sx={{fontSize:'50px'}}/>,
+
+    {
+      icon: <DomainDisabledIcon sx={{ fontSize: "50px" }} />,
       label: "Cancel Hotels",
       quantity: 453,
       bgColor: "#42a5f5",
       href: "/dashboard/cancel-hotels",
     },
     {
-      icon: <AirplanemodeInactiveIcon sx={{fontSize:'50px'}}/>,
+      icon: <AirplanemodeInactiveIcon sx={{ fontSize: "50px" }} />,
       label: "Cancel Flights",
       quantity: 105,
       bgColor: "#4a148c",
@@ -77,68 +79,95 @@ const Dashboard = () => {
   ];
 
   return (
-    <Box component="section" sx={{ p: 2 }}>
-      <Grid container spacing={2}>
-        {dashboardDataList.map((item, index) => (
-          <Grid
-            size={{ xs: 12, sm: 6, md: 3 }}
-            sx={{
-              borderRadius: "4px",
-              backgroundColor: "var(--white-color)",
-              boxShadow: "0px 0px 8px #cac9c9",
-              cursor: "pointer",
-            }}
-            key={index}
-            onClick={() => navigate(item.href)}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", height: "90px" }}>
+    <>
+      <Box component="section" sx={{ py: 2 }}>
+        <Grid container spacing={2}>
+          {dashboardDataList.map((item, index) => (
+            <Grid
+              size={{ xs: 12, sm: 6, md: 3 }}
+              sx={{
+                borderRadius: "4px",
+                backgroundColor: "var(--white-color)",
+                boxShadow: "0px 0px 8px #cac9c9",
+                cursor: "pointer",
+              }}
+              key={index}
+              onClick={() => navigate(item.href)}
+            >
               <Box
-                sx={{
-                  width: "40%",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: item.bgColor,
-                  color: "white",
-                  borderRadius: "4px",
-                  m: "0px",
-                  mr: 2,
-                  borderTopRightRadius: "0px",
-                  borderBottomRightRadius: "0px",
-                }}
+                sx={{ display: "flex", alignItems: "center", height: "90px" }}
               >
-                {item.icon}
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                }}
-              >
-                <Typography variant="h6" sx={{ color: "var(--black-color)" , fontSize:'18px'}}>
-                  {item.label}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{ color: item.bgColor, fontWeight: 600 }}
+                <Box
+                  sx={{
+                    width: "40%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: item.bgColor,
+                    color: "white",
+                    borderRadius: "4px",
+                    m: "0px",
+                    mr: 2,
+                    borderTopRightRadius: "0px",
+                    borderBottomRightRadius: "0px",
+                  }}
                 >
-                  {" "}
-                  <CountUp
-                    start={0}
-                    end={item.quantity}
-                    duration={2}
-                    separator=","
-                    onUpdate={(num) => Math.floor(num / 10) * 1000}
-                  />{" "}
-                </Typography>
+                  {item.icon}
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{ color: "var(--black-color)", fontSize: "18px" }}
+                  >
+                    {item.label}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{ color: item.bgColor, fontWeight: 600 }}
+                  >
+                    {" "}
+                    <CountUp
+                      start={0}
+                      end={item.quantity}
+                      duration={2}
+                      separator=","
+                      onUpdate={(num) => Math.floor(num / 10) * 1000}
+                    />{" "}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      {/* Tables  */}
+
+      <Box component="section" sx={{ py: 2 }}>
+        <Grid container spacing={2}>
+          {tables.map((table, index) => {
+            //  {console.log( dashboardTableData[table.table_body])}
+            return (
+              <DashboardTable
+                key={index}
+                title={table.heading}
+                description={table.subheading}
+                customSize={table.customSize}
+                columns={table.columns}
+                table_body={dashboardTableData[table.table_body]}
+              />
+            );
+          })}
+        </Grid>
+      </Box>
+    </>
   );
 };
 
