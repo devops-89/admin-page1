@@ -1,6 +1,8 @@
 import React from "react";
 import GenericTable from "../components/GenericTable.jsx";
 import { data } from "../assets/data.js";
+import { useState } from "react";
+import FullScreenDialog from "../components/FullScreenDialog.jsx";
 
 const FlightsList = () => {
   const columns = [
@@ -14,9 +16,15 @@ const FlightsList = () => {
     { key: "class", label: "Class" },
     { key: "status", label: "Status" },
   ];
-  const handleView = (id) => {
-    console.log("View flight Detail:", id);
-  };
+ 
+   const [openDialog, setOpenDialog] = useState(false);
+   const [selectedId, setSelectedId] = useState(null);
+   
+ 
+   const handleView = (id) => {
+     setSelectedId("flightList_"+id); 
+     setOpenDialog(true); 
+   };
 
   const table_heading = {
     heading: "Flight Reservations",
@@ -24,12 +32,20 @@ const FlightsList = () => {
   };
 
   return (
+    <>
     <GenericTable
       data={data.flight_page}
       columns={columns}
       onActionClick={handleView}
       table_heading={table_heading}
     />
+    <FullScreenDialog
+    open={openDialog}
+    onClose={() => setOpenDialog(false)}
+    selectedId={selectedId}
+  />
+  </>
+    
   );
 };
 

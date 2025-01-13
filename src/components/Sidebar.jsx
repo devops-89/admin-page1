@@ -26,6 +26,8 @@ const Sidebar = ({ open, onClose }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const [openBooking, setOpenBooking] = useState(false);
+  const [openUsers,setOpenUsers]=useState(false);
+  const [openPackages,setOpenPackages]=useState(false);
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -33,11 +35,25 @@ const Sidebar = ({ open, onClose }) => {
   };
 
   const handleToggleBooking = () => setOpenBooking(!openBooking);
+  const handleToggleUsers=()=> setOpenUsers(!openUsers);
+  const handleTogglePackages=()=>setOpenPackages(!openPackages);
 
   const bookingSubItems = [
     { label: "Hotel Booking", icon: <HotelIcon />, path: "/dashboard/hotels" },
     { label: "Flight Booking", icon: <FlightIcon />, path: "/dashboard/flights" },
     { label: "Cab Booking", icon: <LocalTaxiIcon />, path: "/dashboard/cabs" },
+  ];
+
+  const packagesSubItems=[
+    { label: "All Packages", icon: <HotelIcon />, path: "/dashboard/hotels" },
+    { label: "Add Packages", icon: <FlightIcon />, path: "/dashboard/flights" },
+ 
+  ]
+
+  const usersSubItems = [
+    { label: "Users", icon: <HotelIcon />, path: "/dashboard/users" },
+    { label: "Hotlers", icon: <FlightIcon />, path: "/dashboard/hotelers/all" },
+   
   ];
 
   return (
@@ -79,9 +95,13 @@ const Sidebar = ({ open, onClose }) => {
           <ListItemText primary="Dashboard" />
         </ListItem>
 
-        <ListItem
+      
+
+     
+
+         <ListItem
           button
-          onClick={() => handleNavigation("/dashboard/users")}
+          onClick={handleToggleUsers}
           sx={{
             color:'var(--white-color)',
             "&:hover": {
@@ -93,10 +113,36 @@ const Sidebar = ({ open, onClose }) => {
           }}
         >
           <ListItemIcon>
-            <PeopleIcon sx={{ color: "var(--white-color)" }} />
+          <PeopleIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
           <ListItemText primary="Users" />
+          {openUsers ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
+        <Collapse in={openUsers} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {usersSubItems.map((item, index) => (
+              <ListItem
+                button
+                key={index}
+                sx={{
+                  pl:5,
+                  color:'var(--white-color)',
+                  "&:hover": {
+                    backgroundColor: "var(--orange-color)",
+                    color: "var(--white-color)",
+                    cursor: "pointer",
+                    "& .MuiSvgIcon-root": { color: "var(--white-color)" },
+                  },
+                }}
+                onClick={() => handleNavigation(item.path)}
+              >
+                <ListItemIcon sx={{ color: "var(--white-color)", minWidth:'35px' }}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItem>
+            ))}
+          </List>
+        </Collapse>
+
 
         <ListItem
           button
@@ -144,7 +190,7 @@ const Sidebar = ({ open, onClose }) => {
 
         <ListItem
           button
-          onClick={() => handleNavigation("/dashboard/reviews")}
+          onClick={handleTogglePackages}
           sx={{
             color:'var(--white-color)',
             "&:hover": {
@@ -158,8 +204,33 @@ const Sidebar = ({ open, onClose }) => {
           <ListItemIcon>
             <ReviewsIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
-          <ListItemText primary="Reviews" />
+          <ListItemText primary="Packages" />
+          {openPackages? <ExpandLess /> : <ExpandMore />}
         </ListItem>
+        <Collapse in={openBooking} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {bookingSubItems.map((item, index) => (
+              <ListItem
+                button
+                key={index}
+                sx={{
+                  pl:5,
+                  color:'var(--white-color)',
+                  "&:hover": {
+                    backgroundColor: "var(--orange-color)",
+                    color: "var(--white-color)",
+                    cursor: "pointer",
+                    "& .MuiSvgIcon-root": { color: "var(--white-color)" },
+                  },
+                }}
+                onClick={() => handleNavigation(item.path)}
+              >
+                <ListItemIcon sx={{ color: "var(--white-color)", minWidth:'35px' }}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItem>
+            ))}
+          </List>
+        </Collapse>
 
         <ListItem
           button

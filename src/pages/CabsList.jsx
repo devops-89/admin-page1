@@ -1,6 +1,8 @@
 import React from "react";
 import GenericTable from "../components/GenericTable.jsx";
 import { data } from "../assets/data.js";
+import { useState } from "react";
+import FullScreenDialog from "../components/FullScreenDialog.jsx";
 
 const CabsList = () => {
   const columns = [
@@ -19,17 +21,30 @@ const CabsList = () => {
     para: "Book and manage your cab rides for a seamless travel experience.",
   };
 
-  const handleView = (id) => {
-    console.log("View cab Detail:", id);
-  };
+ 
+   const [openDialog, setOpenDialog] = useState(false);
+   const [selectedId, setSelectedId] = useState(null);
+   
+ 
+   const handleView = (id) => {
+     setSelectedId("cabList_"+id); 
+     setOpenDialog(true); 
+   };
 
   return (
+    <>
     <GenericTable
       data={data.cab_page}
       columns={columns}
       onActionClick={handleView}
       table_heading={table_heading}
     />
+    <FullScreenDialog
+    open={openDialog}
+    onClose={() => setOpenDialog(false)}
+    selectedId={selectedId}
+  />
+  </>
   );
 };
 

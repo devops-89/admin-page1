@@ -1,6 +1,9 @@
 import React from "react";
-import GenericTable from "../components/GenericTable.jsx";
-import { data } from "../assets/data.js";
+import GenericTable from "../../components/GenericTable.jsx";
+import { data } from "../../assets/data.js";
+import FullScreenDialog from "../../components/FullScreenDialog.jsx";
+import { useState } from "react";
+
 
 const UsersList = () => {
   const columns = [
@@ -14,22 +17,35 @@ const UsersList = () => {
     { key: "status", label: "Status" },
   ];
 
+   const [openDialog, setOpenDialog] = useState(false);
+    const [selectedId, setSelectedId] = useState(null);
+
+    const handleView = (id) => {
+      setSelectedId("usersList_"+id); 
+      setOpenDialog(true); 
+    };
+
   const table_heading = {
     heading: "User Details",
     para: "Manage your personal details, bookings, and preferences.",
   };
 
-  const handleView = (id) => {
-    console.log("View user details:", id);
-  };
-
+ 
   return (
+    <>
     <GenericTable
       data={data.users_page}
       columns={columns}
       onActionClick={handleView}
       table_heading={table_heading}
+      actionPath="/dashboard/users/user-details"
     />
+    <FullScreenDialog
+    open={openDialog}
+    onClose={() => setOpenDialog(false)}
+    selectedId={selectedId}
+  />
+  </>
   );
 };
 

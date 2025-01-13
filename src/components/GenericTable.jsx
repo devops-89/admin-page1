@@ -20,9 +20,10 @@ import {
 } from "@mui/material";
 import Select from "@mui/material/Select";
 import { useDebounce } from "../hooks/debounce";
-const DataTable = ({ data, columns, onActionClick, table_heading }) => {
+import { useNavigate } from "react-router-dom";
+const DataTable = ({ data, columns, onActionClick, table_heading,actionPath="/dashboard" }) => {
  
-
+  const navigate=useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const debounceSearchTerm=useDebounce(searchTerm,500);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -34,11 +35,15 @@ const DataTable = ({ data, columns, onActionClick, table_heading }) => {
     )
   );
 
+  
+
   const totalPages = Math.ceil(filteredData.length / entriesPerPage);
   const displayedData = filteredData.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
+
+  
 
   return (
     <Box>
@@ -130,6 +135,7 @@ const DataTable = ({ data, columns, onActionClick, table_heading }) => {
                 </TableCell>
               ))}
               <TableCell
+             
                 sx={{
                   fontSize: "16px",
                   fontWeight: "500",
@@ -166,7 +172,10 @@ const DataTable = ({ data, columns, onActionClick, table_heading }) => {
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={() => onActionClick(item.id)}
+                      onClick={(_,id=item.id)=>{
+                       
+                         navigate(actionPath);
+                      }}
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
