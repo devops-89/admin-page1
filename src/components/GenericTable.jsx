@@ -179,6 +179,9 @@ const DataTable = ({ data, columns, onActionClick, table_heading,actionPath="/da
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
+                        "&:hover":{
+                          backgroundColor:'var(--blue-color)'
+                        }
                       }}
                     >
                       View

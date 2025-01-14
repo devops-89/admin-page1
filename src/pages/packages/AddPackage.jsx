@@ -52,7 +52,7 @@ const AddPackage = () => {
                             },
                         }}
                     >
-                        Add Hotel Details
+                        Add Package Details
                     </Typography>
                     <Typography
                         variant="body1"
@@ -66,7 +66,7 @@ const AddPackage = () => {
                             },
                         }}
                     >
-                        Provide the essential information to showcase your hotel and attract potential guests.
+                        Experience luxury and comfort with our specially curated hotel packages.
                     </Typography>
                 </Box>
             </Grid>
@@ -80,13 +80,13 @@ const AddPackage = () => {
                             <Grid sx={{ backgroundColor: 'var(--white-color)', padding: '20px', display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
 
                                 <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor="hotel-name" sx={{ fontWeight: 500 }}>
-                                        Hotel Name
+                                    <FormLabel htmlFor="package-name" sx={{ fontWeight: 500 }}>
+                                        Package Name
                                     </FormLabel>
                                     <TextField
-                                        id="hotel-name"
+                                        id="package-name"
                                         variant="outlined"
-                                        placeholder="Hotel Name"
+                                        placeholder="Package Name"
                                         fullWidth
                                         required
                                         sx={{
@@ -115,18 +115,17 @@ const AddPackage = () => {
                                         }}
                                     >
                                         <FormLabel
-                                            id="hotel-type-label"
+                                            htmlFor="package-type"
                                             sx={{
                                                 '&.Mui-focused': {
                                                     color: 'var(--black-color)',
                                                 },
                                             }}
                                         >
-                                            Hotel Type
+                                            Package Type
                                         </FormLabel>
                                         <Select
-                                            labelId="hotel-type-label"
-                                            id="hotel-type"
+                                            id="package-type"
                                             variant="outlined"
                                             sx={{
                                                 marginTop: 1,
@@ -138,45 +137,23 @@ const AddPackage = () => {
                                                 },
                                             }}
                                         >
-                                            <MenuItem value="luxury">Luxury</MenuItem>
-                                            <MenuItem value="budget">Budget</MenuItem>
-                                            <MenuItem value="boutique">Boutique</MenuItem>
+                                            <MenuItem value="standard">Standard</MenuItem>
+                                            <MenuItem value="deluxe">Deluxe</MenuItem>
+                                            <MenuItem value="premium">Premium</MenuItem>
                                         </Select>
                                     </FormControl>
 
                                 </Grid>
 
-                                <Grid size={{ sx: 12, sm: 12 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor="hotel-headline" sx={{ fontWeight: 500 }}>
-                                        Hotel Headline
-                                    </FormLabel>
-                                    <TextField
-                                        id="hotel-headline"
-                                        variant="outlined"
-                                        placeholder="Hotel Headline"
-                                        fullWidth
-                                        required
-                                        sx={{
-                                            marginTop: 1,
-                                            color: 'var(--black-color)',
-                                            '& .MuiOutlinedInput-root': {
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: 'var(--orange-color)',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </Grid>
-
 
                                 <Grid item xs={12} sx={{ width: "100%" }}>
-                                    <FormLabel sx={{ fontWeight: 500 }}>
-                                        Hotel Description
+                                    <FormLabel sx={{ fontWeight: 500 }} htmlFor="package-description">
+                                        Package Description
                                     </FormLabel>
                                     <TextField
-                                        id="hotel-description"
+                                        id="package-description"
                                         variant="outlined"
-                                        placeholder="Enter a description of the hotel"
+                                        placeholder="Enter a description of the Package"
                                         multiline
                                         rows={4}
                                         fullWidth
@@ -198,13 +175,15 @@ const AddPackage = () => {
                             <Grid sx={{ backgroundColor: 'var(--white-color)', padding: '20px', display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
 
                                 <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor="hotel-number" sx={{ fontWeight: 500 }}>
-                                        Hotel Number
+                                    <FormLabel htmlFor="group-size" sx={{ fontWeight: 500 }}>
+                                        Group Size
                                     </FormLabel>
                                     <TextField
-                                        id="hotel-number"
+                                        id="group-size"
                                         variant="outlined"
-                                        placeholder='Hotel Number'
+                                        placeholder='Group Size'
+                                        type='number'
+                                        inputProps={{ min: 0, max: 100 }}
                                         fullWidth
                                         required
                                         sx={{
@@ -221,14 +200,109 @@ const AddPackage = () => {
 
 
                                 <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor="address" sx={{ fontWeight: 500 }}>
-                                        Address
+                                    <FormLabel htmlFor="trip-duration" sx={{ fontWeight: 500 }}>
+                                    Trip Duration
+                                    </FormLabel>
+                                <Grid sx={{display:'flex', gap:'10px'}}>
+                                    <Grid size={{xs:12, sm:6}}>
+                                    <TextField
+                                        id="trip-duration"
+                                        variant="outlined"
+                                        placeholder='Days'
+                                        type='number'
+                                        inputProps={{ min: 0, max: 100 }}
+                                        fullWidth
+                                        required
+                                        sx={{
+                                            marginTop: 1,
+                                            color: 'var(--black-color)',
+                                            '& .MuiOutlinedInput-root': {
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: 'var(--orange-color)',
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    </Grid>
+                                    <Grid size={{xs:12, sm:6}}>
+                                    <TextField
+                                        id="trip-duration"
+                                        variant="outlined"
+                                        placeholder='Nights'
+                                        type='number'
+                                        inputProps={{ min: 0, max: 100 }}
+                                        fullWidth
+                                        required
+                                        sx={{
+                                            marginTop: 1,
+                                            color: 'var(--black-color)',
+                                            '& .MuiOutlinedInput-root': {
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: 'var(--orange-color)',
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    </Grid>
+                                    </Grid>
+                                </Grid>
+
+
+                               
+                                <Grid size={{ sx: 12, sm: 3 }} sx={{ width: "100%" }}>
+                                <FormControl
+                                        fullWidth
+                                        sx={{
+                                            color: 'var(--black-color)',
+                                            '& .MuiOutlinedInput-root': {
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: 'var(--orange-color)',
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        <FormLabel
+                                            htmlFor="package-type"
+                                            sx={{
+                                                '&.Mui-focused': {
+                                                    color: 'var(--black-color)',
+                                                },
+                                            }}
+                                        >
+                                            Category
+                                        </FormLabel>
+                                        <Select
+                                            id="category"
+                                            variant="outlined"
+                                            sx={{
+                                                marginTop: 1,
+                                                color: 'var(--black-color)',
+                                                '& .MuiOutlinedInput-root': {
+                                                    '&.Mui-focused fieldset': {
+                                                        borderColor: 'var(--orange-color)',
+                                                    },
+                                                },
+                                            }}
+                                        >
+                                            <MenuItem value="adult">Adult</MenuItem>
+                                            <MenuItem value="child">Child</MenuItem>
+                                            <MenuItem value="couple">Couple</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+
+
+                                <Grid size={{ sx: 12, sm: 3 }} sx={{ width: "100%" }}>
+                                    <FormLabel htmlFor="sale-price" sx={{ fontWeight: 500 }}>
+                                        Sale Price
                                     </FormLabel>
                                     <TextField
-                                        id="address"
+                                        id="sale-price"
                                         variant="outlined"
-                                        placeholder='Hotel Address'
+                                        placeholder='Sale Price'
                                         fullWidth
+                                        type='number'
+                                        inputProps={{ min: 0, max: 100 }}
                                         required
                                         sx={{
                                             marginTop: 1,
@@ -242,16 +316,17 @@ const AddPackage = () => {
                                     />
                                 </Grid>
 
-
-                                <Grid size={{ sx: 12, sm: 4 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor="city" sx={{ fontWeight: 500 }}>
-                                        City
+                                <Grid size={{ sx: 12, sm: 3 }} sx={{ width: "100%" }}>
+                                    <FormLabel htmlFor="regular-price" sx={{ fontWeight: 500 }}>
+                                     Regular Price
                                     </FormLabel>
                                     <TextField
-                                        id="city"
+                                        id="regular-price"
                                         variant="outlined"
-                                        placeholder='City'
+                                        placeholder='Regular Price'
                                         fullWidth
+                                        type='number'
+                                        inputProps={{ min: 0, max: 100 }}
                                         required
                                         sx={{
                                             marginTop: 1,
@@ -265,39 +340,17 @@ const AddPackage = () => {
                                     />
                                 </Grid>
 
-
-                                <Grid size={{ sx: 12, sm: 4 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor="country" sx={{ fontWeight: 500 }}>
-                                        Country
+                                <Grid size={{ sx: 12, sm: 3 }} sx={{ width: "100%" }}>
+                                    <FormLabel htmlFor="discount" sx={{ fontWeight: 500 }}>
+                                     Discount
                                     </FormLabel>
                                     <TextField
-                                        id="country"
+                                        id="discount"
                                         variant="outlined"
-                                        placeholder='Country'
+                                        placeholder='Discount'
                                         fullWidth
-                                        required
-                                        sx={{
-                                            marginTop: 1,
-                                            color: 'var(--black-color)',
-                                            '& .MuiOutlinedInput-root': {
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: 'var(--orange-color)',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </Grid>
-
-
-                                <Grid size={{ sx: 12, sm: 4 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor="pincode" sx={{ fontWeight: 500 }}>
-                                        Pincode
-                                    </FormLabel>
-                                    <TextField
-                                        id="pincode"
-                                        variant="outlined"
-                                        placeholder='Pincode'
-                                        fullWidth
+                                        type='number'
+                                        inputProps={{ min: 0, max: 100 }}
                                         required
                                         sx={{
                                             marginTop: 1,
@@ -323,7 +376,7 @@ const AddPackage = () => {
                                             Select Amenities
                                         </FormLabel>
                                         <Grid sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                            <Grid size={{ xs: 12, sm: 6, md: 4 }} sx={{ width: '100%' }}>
+                                            <Grid size={{ xs: 12, sm: 6}} sx={{ width: '100%' }}>
                                                 <FormControlLabel
                                                     control={
                                                         <Checkbox sx={{
@@ -332,10 +385,10 @@ const AddPackage = () => {
                                                             },
                                                         }} />
                                                     }
-                                                    label="24-hour Security"
+                                                    label="Dinner"
                                                 />
                                             </Grid>
-                                            <Grid size={{ xs: 12, sm: 6, md: 4 }} sx={{ width: '100%' }}>
+                                            <Grid size={{ xs: 12, sm: 6}} sx={{ width: '100%' }}>
                                                 <FormControlLabel
                                                     control={
                                                         <Checkbox sx={{
@@ -344,81 +397,11 @@ const AddPackage = () => {
                                                             },
                                                         }} />
                                                     }
-                                                    label="Air Conditioning"
+                                                    label="Breakfast"
                                                 />
                                             </Grid>
-                                            <Grid size={{ xs: 12, sm: 6, md: 4 }} sx={{ width: '100%' }}>
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox sx={{
-                                                            '&.Mui-checked .MuiSvgIcon-root': {
-                                                                color: 'var(--orange-color)',
-                                                            },
-                                                        }} />
-                                                    }
-                                                    label="Library"
-                                                />
                                             </Grid>
-                                            <Grid size={{ xs: 12, sm: 6, md: 4 }} sx={{ width: '100%' }}>
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox sx={{
-                                                            '&.Mui-checked .MuiSvgIcon-root': {
-                                                                color: 'var(--orange-color)',
-                                                            },
-                                                        }} />
-                                                    }
-                                                    label="Parking"
-                                                />
-                                            </Grid>
-                                            <Grid size={{ xs: 12, sm: 6, md: 4 }} sx={{ width: '100%' }}>
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox sx={{
-                                                            '&.Mui-checked .MuiSvgIcon-root': {
-                                                                color: 'var(--orange-color)',
-                                                            },
-                                                        }} />
-                                                    }
-                                                    label="Power Backup"
-                                                />
-                                            </Grid>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox sx={{
-                                                        '&.Mui-checked .MuiSvgIcon-root': {
-                                                            color: 'var(--orange-color)',
-                                                        },
-                                                    }} />
-                                                }
-                                                label="TV"
-                                            />
-                                        </Grid>
                                     </FormControl>
-                                </Grid>
-
-                                <Grid size={{ sx: 12 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor='hotel-attraction' sx={{ fontWeight: 500 }}>
-                                        Hotel Attraction
-                                    </FormLabel>
-                                    <TextField
-                                        id="hotel-attraction"
-                                        variant="outlined"
-                                        placeholder="Enter a description for hotel attraction"
-                                        multiline
-                                        rows={4}
-                                        fullWidth
-                                        required
-                                        sx={{
-                                            marginTop: 1,
-                                            color: 'var(--black-color)',
-                                            '& .MuiOutlinedInput-root': {
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: 'var(--orange-color)',
-                                                },
-                                            },
-                                        }}
-                                    />
                                 </Grid>
 
                             </Grid>
@@ -485,60 +468,7 @@ const AddPackage = () => {
                                     </Box>
                                 </Grid>
 
-                                <Grid size={{ sx: 12 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor='special-facilities' sx={{ fontWeight: 500 }}>
-                                        Special Facilites
-                                    </FormLabel>
-                                    <TextField
-                                        id="special-facilities"
-                                        variant="outlined"
-                                        placeholder="Enter a description for hotel attraction"
-                                        multiline
-                                        rows={4}
-                                        fullWidth
-                                        required
-                                        sx={{
-                                            marginTop: 1,
-                                            color: 'var(--black-color)',
-                                            '& .MuiOutlinedInput-root': {
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: 'var(--orange-color)',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </Grid>
-
-                                <Grid size={{ sx: 12 }} sx={{ width: "100%" }}>
-                                    <FormLabel htmlFor='hotel-policy' sx={{ fontWeight: 500 }}>
-                                        Hotel Policy
-                                    </FormLabel>
-                                    <TextField
-                                        id="hotel-policy"
-                                        variant="outlined"
-                                        placeholder="Enter a description for hotel attraction"
-                                        multiline
-                                        rows={4}
-                                        fullWidth
-                                        required
-                                        sx={{
-                                            marginTop: 1,
-                                            color: 'var(--black-color)',
-                                            '& .MuiOutlinedInput-root': {
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: 'var(--orange-color)',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </Grid>
-
-
-
-
-
-
-
+                              
 
                             </Grid>
 
@@ -557,20 +487,6 @@ const AddPackage = () => {
                                         onChange={(event, newValue) => {
                                             setValue(newValue);
                                         }}
-                                        sx={{ marginTop: 1 }}
-                                    />
-                                </Grid>
-
-                                <Grid sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <FormLabel htmlFor="offer-percentage" sx={{ fontWeight: 500 }}>
-                                        Booking Percentage(%)
-                                    </FormLabel>
-                                    <TextField
-                                        id="offer-percentage"
-                                        name="offer-percentage"
-                                        type="number"
-                                        placeholder='Enter Offer in %'
-                                        inputProps={{ min: 0, max: 100 }}
                                         sx={{ marginTop: 1 }}
                                     />
                                 </Grid>

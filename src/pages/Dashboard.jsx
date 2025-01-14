@@ -124,7 +124,7 @@ const Dashboard = () => {
                 >
                   <Typography
                     variant="h6"
-                    sx={{ color: "var(--black-color)", fontSize: "18px" }}
+                    sx={{ color: "var(--black-color)", fontSize: "18px", "&:hover":{color:'var(--orange-color)'} }}
                   >
                     {item.label}
                   </Typography>

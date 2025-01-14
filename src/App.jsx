@@ -18,6 +18,7 @@ import ActiveUsers from "./pages/users/ActiveUsers.jsx";
 import InactiveUsers from "./pages/users/InactiveUsers.jsx";
 import HotlerDetails from "./pages/hotelers/HotlerDetails.jsx";
 import UserDetails from "./pages/users/UserDetails.jsx";
+import AddPackage from "./pages/packages/AddPackage.jsx";
 
 
 
@@ -107,6 +108,12 @@ function App() {
           path: "/dashboard/flights",
           element: <FlightsList />,
         },
+
+        {
+          path: "/dashboard/packages",
+          element: <AddPackage />,
+        },
+
       ],
     },
     {

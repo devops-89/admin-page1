@@ -75,7 +75,7 @@ const Sidebar = ({ open, onClose }) => {
       }}
       anchor="left"
     >
-      <List>
+      <List sx={{padding:"0"}}>
         <ListItem
           button
           sx={{
