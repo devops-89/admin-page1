@@ -7,7 +7,7 @@ import {
   ListItemIcon,
   Collapse,
 } from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard"; 
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import ReviewsIcon from "@mui/icons-material/RateReview";
@@ -17,6 +17,8 @@ import LocalTaxiIcon from "@mui/icons-material/LocalTaxi";
 import PersonIcon from "@mui/icons-material/Person";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import DomainAddIcon from "@mui/icons-material/DomainAdd";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -26,8 +28,8 @@ const Sidebar = ({ open, onClose }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const [openBooking, setOpenBooking] = useState(false);
-  const [openUsers,setOpenUsers]=useState(false);
-  const [openPackages,setOpenPackages]=useState(false);
+  const [openUsers, setOpenUsers] = useState(false);
+  const [openPackages, setOpenPackages] = useState(false);
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -35,25 +37,31 @@ const Sidebar = ({ open, onClose }) => {
   };
 
   const handleToggleBooking = () => setOpenBooking(!openBooking);
-  const handleToggleUsers=()=> setOpenUsers(!openUsers);
-  const handleTogglePackages=()=>setOpenPackages(!openPackages);
+  const handleToggleUsers = () => setOpenUsers(!openUsers);
+  const handleTogglePackages = () => setOpenPackages(!openPackages);
 
   const bookingSubItems = [
     { label: "Hotel Booking", icon: <HotelIcon />, path: "/dashboard/hotels" },
-    { label: "Flight Booking", icon: <FlightIcon />, path: "/dashboard/flights" },
+    {
+      label: "Flight Booking",
+      icon: <FlightIcon />,
+      path: "/dashboard/flights",
+    },
     { label: "Cab Booking", icon: <LocalTaxiIcon />, path: "/dashboard/cabs" },
   ];
 
-  const packagesSubItems=[
+  const packagesSubItems = [
     { label: "All Packages", icon: <HotelIcon />, path: "/dashboard/hotels" },
     { label: "Add Packages", icon: <FlightIcon />, path: "/dashboard/flights" },
- 
-  ]
+  ];
 
   const usersSubItems = [
-    { label: "Users", icon: <HotelIcon />, path: "/dashboard/users" },
-    { label: "Hotlers", icon: <FlightIcon />, path: "/dashboard/hotelers/all" },
-   
+    { label: "All Users", icon: <GroupAddIcon />, path: "/dashboard/users" },
+    {
+      label: "All Hotelers",
+      icon: <DomainAddIcon />,
+      path: "/dashboard/hotelers/",
+    },
   ];
 
   return (
@@ -70,16 +78,16 @@ const Sidebar = ({ open, onClose }) => {
           boxSizing: "border-box",
           bgcolor: "var(--sidebar-color)",
           position: "fixed",
-          top: { xs:'72px', sm:'78px', md:"80px"},
+          top: { xs: "72px", sm: "78px", md: "80px" },
         },
       }}
       anchor="left"
     >
-      <List sx={{padding:"0"}}>
+      <List sx={{ padding: "0" }}>
         <ListItem
           button
           sx={{
-            color:'var(--white-color)',
+            color: "var(--white-color)",
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -95,15 +103,11 @@ const Sidebar = ({ open, onClose }) => {
           <ListItemText primary="Dashboard" />
         </ListItem>
 
-      
-
-     
-
-         <ListItem
+        <ListItem
           button
           onClick={handleToggleUsers}
           sx={{
-            color:'var(--white-color)',
+            color: "var(--white-color)",
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -113,7 +117,7 @@ const Sidebar = ({ open, onClose }) => {
           }}
         >
           <ListItemIcon>
-          <PeopleIcon sx={{ color: "var(--white-color)" }} />
+            <PeopleIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
           <ListItemText primary="Users" />
           {openUsers ? <ExpandLess /> : <ExpandMore />}
@@ -125,8 +129,8 @@ const Sidebar = ({ open, onClose }) => {
                 button
                 key={index}
                 sx={{
-                  pl:5,
-                  color:'var(--white-color)',
+                  pl: 5,
+                  color: "var(--white-color)",
                   "&:hover": {
                     backgroundColor: "var(--orange-color)",
                     color: "var(--white-color)",
@@ -136,19 +140,22 @@ const Sidebar = ({ open, onClose }) => {
                 }}
                 onClick={() => handleNavigation(item.path)}
               >
-                <ListItemIcon sx={{ color: "var(--white-color)", minWidth:'35px' }}>{item.icon}</ListItemIcon>
+                <ListItemIcon
+                  sx={{ color: "var(--white-color)", minWidth: "35px" }}
+                >
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
           </List>
         </Collapse>
 
-
         <ListItem
           button
           onClick={handleToggleBooking}
           sx={{
-            color:'var(--white-color)',
+            color: "var(--white-color)",
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -170,8 +177,8 @@ const Sidebar = ({ open, onClose }) => {
                 button
                 key={index}
                 sx={{
-                  pl:5,
-                  color:'var(--white-color)',
+                  pl: 5,
+                  color: "var(--white-color)",
                   "&:hover": {
                     backgroundColor: "var(--orange-color)",
                     color: "var(--white-color)",
@@ -181,7 +188,11 @@ const Sidebar = ({ open, onClose }) => {
                 }}
                 onClick={() => handleNavigation(item.path)}
               >
-                <ListItemIcon sx={{ color: "var(--white-color)", minWidth:'35px' }}>{item.icon}</ListItemIcon>
+                <ListItemIcon
+                  sx={{ color: "var(--white-color)", minWidth: "35px" }}
+                >
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
@@ -192,7 +203,7 @@ const Sidebar = ({ open, onClose }) => {
           button
           onClick={handleTogglePackages}
           sx={{
-            color:'var(--white-color)',
+            color: "var(--white-color)",
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",
@@ -205,17 +216,17 @@ const Sidebar = ({ open, onClose }) => {
             <ReviewsIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
           <ListItemText primary="Packages" />
-          {openPackages? <ExpandLess /> : <ExpandMore />}
+          {openPackages ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        <Collapse in={openBooking} timeout="auto" unmountOnExit>
+        <Collapse in={openPackages} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {bookingSubItems.map((item, index) => (
               <ListItem
                 button
                 key={index}
                 sx={{
-                  pl:5,
-                  color:'var(--white-color)',
+                  pl: 5,
+                  color: "var(--white-color)",
                   "&:hover": {
                     backgroundColor: "var(--orange-color)",
                     color: "var(--white-color)",
@@ -225,7 +236,11 @@ const Sidebar = ({ open, onClose }) => {
                 }}
                 onClick={() => handleNavigation(item.path)}
               >
-                <ListItemIcon sx={{ color: "var(--white-color)", minWidth:'35px' }}>{item.icon}</ListItemIcon>
+                <ListItemIcon
+                  sx={{ color: "var(--white-color)", minWidth: "35px" }}
+                >
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
@@ -236,7 +251,7 @@ const Sidebar = ({ open, onClose }) => {
           button
           onClick={() => handleNavigation("/dashboard/profile")}
           sx={{
-            color:'var(--white-color)',
+            color: "var(--white-color)",
             "&:hover": {
               backgroundColor: "var(--orange-color)",
               color: "var(--white-color)",

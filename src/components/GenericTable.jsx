@@ -11,17 +11,16 @@ import {
   TextField,
   MenuItem,
   FormControl,
-  InputLabel,
   Pagination,
   Box,
   Avatar,
-  colors,
   Typography,
 } from "@mui/material";
 import Select from "@mui/material/Select";
 import { useDebounce } from "../hooks/debounce";
 import { useNavigate } from "react-router-dom";
-const DataTable = ({ data, columns, onActionClick, table_heading,actionPath="/dashboard" }) => {
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => {
  
   const navigate=useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -160,20 +159,22 @@ const DataTable = ({ data, columns, onActionClick, table_heading,actionPath="/da
                   }}
                 >
                   {columns.map((column) => (
-                    <TableCell key={column.key}>
-                      {[column.key] == "profileImage" ? (
-                        <Avatar alt={item.firstName} src={item[column.key]} />
-                      ) : (
-                        item[column.key]
-                      )}
-                    </TableCell>
+                    <TableCell key={column.key} sx={{textAlign:'center'}}>
+                    {column.key === "avatar" ? (
+                      <Avatar
+                        src={item[column.key] || <AccountCircleIcon/>} 
+                      />
+                    ) : (
+                      item[column.key] || "-" 
+                    )}
+                  </TableCell>
                   ))}
                   <TableCell>
                     <Button
                       variant="contained"
                       size="small"
                       onClick={(_,id=item.id)=>{
-                       
+                          
                          navigate(actionPath);
                       }}
                       sx={{

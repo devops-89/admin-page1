@@ -11,6 +11,8 @@ let initialState = {
   id: "",
 };
 
+
+
 export const USER = createSlice({
   name: "user",
   initialState: initialState,
@@ -23,6 +25,11 @@ export const USER = createSlice({
     },
   },
 });
+
+
+
+
+
 
 export const { setUserDetails, removeUserDetails } = USER.actions;
 export default USER.reducer;

@@ -1,49 +1,133 @@
-import React from "react";
-import { Tabs, Tab, Box } from "@mui/material";
-import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Tabs, Tab, Box, CircularProgress } from "@mui/material";
+import AllUsers from "../users/AllUsers";
+import ActiveUsers from "../users/ActiveUsers";
+import InactiveUsers from "../users/InactiveUsers";
+import { UserController } from "../../api/userController";
+import { useDebounce } from "../../hooks/debounce";
 
 const UsersTab = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(0);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalDoc, setTotalDoc] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const debounceSearchTerm = useDebounce(searchTerm, 500);
 
-  const tabs = [
-    { label: "All Users", path: "/dashboard/users/all" },
-    { label: "Active Users", path: "/dashboard/users/active" },
-    { label: "Inactive Users", path: "/dashboard/users/inactive" },
+  const columns = [
+    { key: "avatar", label: "Profile" },
+    { key: "full_name", label: "First Name" },
+    { key: "email", label: "Email" },
+    { key: "phone_number", label: "Phone" },
+    { key: "status", label: "Status" },
+    { key: "created_at", label: "Created At" },
+    { key: "last_login", label: "Last Login" },
   ];
 
-  const activeTab = tabs.findIndex((tab) => location.pathname === tab.path);
+  const totalPages = Math.ceil(totalDoc / pageSize);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await UserController.getUserList(
+          pageSize,
+          page,
+          debounceSearchTerm
+        );
+        setData(res.data.data.docs);
+        setTotalDoc(res.data.data.totalDocs);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [page, pageSize, debounceSearchTerm]);
 
   const handleTabChange = (event, newValue) => {
-    navigate(tabs[newValue].path);
+    setActiveTab(newValue);
   };
 
   return (
-    <Box>
-      {/* Tabs */}
-      <Tabs
-        value={activeTab}
-        onChange={handleTabChange}
-        centered
-        sx={{
-          "& .MuiTabs-indicator": {
-            backgroundColor: "var(--orange-color)", // CSS variable for indicator color
-          },
-          "& .Mui-selected": {
-            color: "var(--orange-color)!important", // CSS variable for selected tab color
-          },
-        }}
-      >
-        {tabs.map((tab, index) => (
-          <Tab key={index} label={tab.label} />
-        ))}
-      </Tabs>
+    <>
+      {data.length > 0 ? (
+        <Box>
+          <Tabs
+            value={activeTab}
+            onChange={handleTabChange}
+            centered
+            sx={{
+              "& .MuiTabs-indicator": {
+                display: "none",
+              },
+              "& .Mui-selected": {
+                color: "var(--white-color)!important",
+                backgroundColor: "var(--orange-color)",
+              },
+            }}
+          >
+            <Tab label="All Users" />
+            <Tab label="Active Users" />
+            <Tab label="Inactive Users" />
+          </Tabs>
 
-      {/* Outlet for rendering child routes */}
-      <Box sx={{ marginTop: 3 }}>
-        <Outlet />
-      </Box>
-    </Box>
+          <Box sx={{ marginTop: 3 }}>
+            {activeTab === 0 && (
+              <AllUsers
+                data={data}
+                setPageSize={setPageSize}
+                pageSize={pageSize}
+                totalDoc={totalDoc}
+                setTotalDoc={setTotalDoc}
+                setPage={setPage}
+                columns={columns}
+                setSearchTerm={setSearchTerm}
+                searchTerm={searchTerm}
+                debounceSearchTerm={debounceSearchTerm}
+                totalPages={totalPages}
+              />
+            )}
+
+            {activeTab === 1 && (
+              <ActiveUsers
+                data={data}
+                setPageSize={setPageSize}
+                pageSize={pageSize}
+                totalDoc={totalDoc}
+                setTotalDoc={setTotalDoc}
+                setPage={setPage}
+                columns={columns}
+                setSearchTerm={setSearchTerm}
+                searchTerm={searchTerm}
+                debounceSearchTerm={debounceSearchTerm}
+                totalPages={totalPages}
+              />
+            )}
+
+            {activeTab === 2 && (
+              <InactiveUsers
+                data={data}
+                setPageSize={setPageSize}
+                pageSize={pageSize}
+                totalDoc={totalDoc}
+                setTotalDoc={setTotalDoc}
+                setPage={setPage}
+                columns={columns}
+                setSearchTerm={setSearchTerm}
+                searchTerm={searchTerm}
+                debounceSearchTerm={debounceSearchTerm}
+                totalPages={totalPages}
+              />
+            )}
+          </Box>
+        </Box>
+      ) : (
+        <Box sx={{ textAlign: "center", marginTop: 4 }}>
+          <CircularProgress />
+        </Box>
+      )}
+    </>
   );
 };
 
