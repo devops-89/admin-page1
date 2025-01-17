@@ -3,7 +3,7 @@ import {data} from "../../assets/data";
  const AllHotelers = () => {
     const columns = [
       { key: "id", label: "ID" },
-      { key: "profileImage", label: "Name" },
+      { key: "profileImage", label: "Profile" },
       { key: "firstName", label: "First Name" },
       { key: "lastName", label: "Last Name" },
       { key: "username", label: "Username" },
@@ -17,8 +17,8 @@ import {data} from "../../assets/data";
         data={data.users_page}
         columns={columns}
         onActionClick={(id) => console.log("View user:", id)}
-        table_heading={{ heading: "All Hotelers", para: "View all hotelers in the system." }}
-        actionPath="/dashboard/hoteler/hoteler-details"
+        table_heading={{ heading: "All Hoteliers", para: "View all hoteliers in the system." }}
+        actionPath="/dashboard/hoteliers/hotelier-details"
       />
     );
   };

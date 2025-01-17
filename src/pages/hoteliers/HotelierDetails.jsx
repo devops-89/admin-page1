@@ -1,9 +1,9 @@
 import React from 'react'
 
-const HotlerDetails = () => {
+const HotelierDetails = () => {
   return (
     <div>HotlerDetails</div>
   )
 }
 
-export default HotlerDetails;
+export default HotelierDetails;

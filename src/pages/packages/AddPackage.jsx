@@ -9,7 +9,7 @@ import { Form, Formik } from 'formik';
 
 const AddPackage = () => {
 
-    const [value, setValue] = React.useState(2);
+    const [value, setValue] = useState(2);
 
     const [images, setImages] = useState([]);
 

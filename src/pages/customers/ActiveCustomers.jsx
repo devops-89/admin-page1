@@ -20,7 +20,7 @@ import {
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
-const InactiveUsers = ({
+const ActiveCustomers = ({
   data,
   columns,
   setSearchTerm,
@@ -35,19 +35,20 @@ const InactiveUsers = ({
   const navigate = useNavigate();
 
   const table_heading = {
-    heading: "Inactive Users",
-    para: "These are the users currently marked as inactive in the system.",
+    heading: "Active Customers",
+    para: "These are the customers currently marked as active in the system.",
   };
 
-  const inactiveUsers = data.filter((user) => user.status === "INACTIVE");
+  const activeCustomers = data.filter((customer) => customer.status === "ACTIVE");
 
-  const filteredData = inactiveUsers.filter((item) =>
+  const filteredData = activeCustomers.filter((item) =>
     columns.some((column) =>
       String(item[column.key] || "")
         .toLowerCase()
         .includes(debounceSearchTerm.toLowerCase())
     )
   );
+
   return (
     <Box>
       <Box
@@ -124,6 +125,7 @@ const InactiveUsers = ({
                     fontSize: "16px",
                     fontWeight: "500",
                     color: "var(--white-color)",
+                     textAlign:'center'
                   }}
                 >
                   {column.label}
@@ -178,7 +180,7 @@ const InactiveUsers = ({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={() => navigate("/dashboard/users/user-details")}
+                      onClick={() => navigate("/dashboard/customers/customer-details", {state : {item}})}
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
@@ -205,7 +207,7 @@ const InactiveUsers = ({
       </TableContainer>
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
-        {filteredData.length>0 ? <Pagination
+        {filteredData.length > 0 ? <Pagination
           count={totalPages}
           page={page}
           onChange={(_, newPage) => setPage(newPage)}
@@ -220,10 +222,10 @@ const InactiveUsers = ({
             },
             "& :hover": { color: "var(--black-color)" },
           }}
-        />: ''}
+        /> : ''}
       </Box>
     </Box>
   );
 };
 
-export default InactiveUsers;
+export default ActiveCustomers;

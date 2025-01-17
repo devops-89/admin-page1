@@ -19,7 +19,8 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-const AllUsers = ({
+
+const InactiveCustomers = ({
   data,
   columns,
   setSearchTerm,
@@ -28,25 +29,25 @@ const AllUsers = ({
   pageSize,
   totalPages,
   page,
+  setPage,
   setPageSize,
-  setPage
 }) => {
   const navigate = useNavigate();
 
   const table_heading = {
-    heading: "User Details",
-    para: "Manage your personal details, bookings, and preferences.",
+    heading: "Inactive Customers",
+    para: "These are the customers currently marked as inactive in the system.",
   };
 
-  const filteredData = data.filter((item) =>
+  const inactiveCustomers = data.filter((customer) => customer.status === "INACTIVE");
+
+  const filteredData = inactiveCustomers.filter((item) =>
     columns.some((column) =>
       String(item[column.key] || "")
         .toLowerCase()
         .includes(debounceSearchTerm.toLowerCase())
     )
   );
-
-  // console.log(filteredData)
   return (
     <Box>
       <Box
@@ -123,6 +124,7 @@ const AllUsers = ({
                     fontSize: "16px",
                     fontWeight: "500",
                     color: "var(--white-color)",
+                     textAlign:'center'
                   }}
                 >
                   {column.label}
@@ -161,7 +163,6 @@ const AllUsers = ({
                             return moment(item[column.key] || "-").format(
                               "Do MMM YYYY"
                             );
-
                           case "status":
                             return <span className={item[column.key] == 'ACTIVE' ? 'green' : 'red'}>{item[column.key]}</span>
                           case "last_login":
@@ -178,11 +179,7 @@ const AllUsers = ({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={
-                        () => {
-                          // console.log(item.id)
-                          navigate("/dashboard/users/user-details", {state : {item}})
-                        }}
+                      onClick={() => navigate("/dashboard/customers/customer-details", {state : {item}})}
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
@@ -209,7 +206,7 @@ const AllUsers = ({
       </TableContainer>
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
-        {filteredData.length > 0 ? <Pagination
+        {filteredData.length>0 ? <Pagination
           count={totalPages}
           page={page}
           onChange={(_, newPage) => setPage(newPage)}
@@ -224,10 +221,10 @@ const AllUsers = ({
             },
             "& :hover": { color: "var(--black-color)" },
           }}
-        /> : ''}
+        />: ''}
       </Box>
     </Box>
   );
 };
 
-export default AllUsers;
+export default InactiveCustomers;

@@ -638,3 +638,75 @@ export const dashboardTableData = {
     },
   ],
 };
+
+
+
+
+export const customerTable = {
+  FLIGHT_BOOKINGS: [
+    {
+      BOOKING_ID: "AB123456789",
+      PASSENGER_NAME: "John Doe",
+      FLIGHT_NUMBER: "XY456",
+      DEPARTURE_DATE: "2025-01-20",
+      ARRIVAL_DATE: "2025-01-20",
+      SEAT: "12A",
+      PRICE: 500.00
+    },
+    {
+      BOOKING_ID: "CD987654321",
+      PASSENGER_NAME: "Jane Smith",
+      FLIGHT_NUMBER: "AB123",
+      DEPARTURE_DATE: "2025-02-15",
+      ARRIVAL_DATE: "2025-02-15",
+      SEAT: "18B",
+      PRICE: 450.00
+    },
+    {
+      BOOKING_ID: "EF112233445",
+      PASSENGER_NAME: "Michael Johnson",
+      FLIGHT_NUMBER: "CD456",
+      DEPARTURE_DATE: "2025-03-10",
+      ARRIVAL_DATE: "2025-03-10",
+      SEAT: "5C",
+      PRICE: 520.00
+    },
+    {
+      BOOKING_ID: "GH998877665",
+      PASSENGER_NAME: "Emily Davis",
+      FLIGHT_NUMBER: "EF789",
+      DEPARTURE_DATE: "2025-04-22",
+      ARRIVAL_DATE: "2025-04-22",
+      SEAT: "7D",
+      PRICE: 470.00
+    },
+    {
+      BOOKING_ID: "IJ223344556",
+      PASSENGER_NAME: "David Wilson",
+      FLIGHT_NUMBER: "GH012",
+      DEPARTURE_DATE: "2025-05-05",
+      ARRIVAL_DATE: "2025-05-05",
+      SEAT: "10E",
+      PRICE: 490.00
+    },
+    {
+      BOOKING_ID: "KL334455667",
+      PASSENGER_NAME: "Laura Brown",
+      FLIGHT_NUMBER: "IJ345",
+      DEPARTURE_DATE: "2025-06-18",
+      ARRIVAL_DATE: "2025-06-18",
+      SEAT: "3F",
+      PRICE: 530.00
+    },
+    {
+      BOOKING_ID: "MN445566778",
+      PASSENGER_NAME: "James Taylor",
+      FLIGHT_NUMBER: "KL678",
+      DEPARTURE_DATE: "2025-07-12",
+      ARRIVAL_DATE: "2025-07-12",
+      SEAT: "14G",
+      PRICE: 480.00
+    }
+  ]
+}
+

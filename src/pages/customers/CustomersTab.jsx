@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Tabs, Tab, Box, CircularProgress } from "@mui/material";
-import AllUsers from "../users/AllUsers";
-import ActiveUsers from "../users/ActiveUsers";
-import InactiveUsers from "../users/InactiveUsers";
-import { UserController } from "../../api/userController";
+import AllCustomers from "./AllCustomers";
+import ActiveCustomers from "./ActiveCustomers";
+import InactiveCustomers from "./InactiveCustomers";
+import { CustomerController } from "../../api/customerController";
 import { useDebounce } from "../../hooks/debounce";
 
-const UsersTab = () => {
+const CustomersTab = () => {
+  
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -17,7 +18,7 @@ const UsersTab = () => {
 
   const columns = [
     { key: "avatar", label: "Profile" },
-    { key: "full_name", label: "First Name" },
+    { key: "full_name", label: "Name" },
     { key: "email", label: "Email" },
     { key: "phone_number", label: "Phone" },
     { key: "status", label: "Status" },
@@ -30,7 +31,7 @@ const UsersTab = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await UserController.getUserList(
+        const res = await CustomerController.getCustomerList(
           pageSize,
           page,
           debounceSearchTerm
@@ -67,14 +68,14 @@ const UsersTab = () => {
               },
             }}
           >
-            <Tab label="All Users" />
-            <Tab label="Active Users" />
-            <Tab label="Inactive Users" />
+            <Tab label="All Customers" />
+            <Tab label="Active Customers" />
+            <Tab label="Inactive Customers" />
           </Tabs>
 
           <Box sx={{ marginTop: 3 }}>
             {activeTab === 0 && (
-              <AllUsers
+              <AllCustomers
                 data={data}
                 setPageSize={setPageSize}
                 pageSize={pageSize}
@@ -90,7 +91,7 @@ const UsersTab = () => {
             )}
 
             {activeTab === 1 && (
-              <ActiveUsers
+              <ActiveCustomers
                 data={data}
                 setPageSize={setPageSize}
                 pageSize={pageSize}
@@ -106,7 +107,7 @@ const UsersTab = () => {
             )}
 
             {activeTab === 2 && (
-              <InactiveUsers
+              <InactiveCustomers
                 data={data}
                 setPageSize={setPageSize}
                 pageSize={pageSize}
@@ -131,4 +132,4 @@ const UsersTab = () => {
   );
 };
 
-export default UsersTab;
+export default CustomersTab;

@@ -8,18 +8,20 @@ import {
   Collapse,
 } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import ReviewsIcon from "@mui/icons-material/RateReview";
 import FlightIcon from "@mui/icons-material/Flight";
 import HotelIcon from "@mui/icons-material/Hotel";
 import LocalTaxiIcon from "@mui/icons-material/LocalTaxi";
-import PersonIcon from "@mui/icons-material/Person";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import DomainAddIcon from "@mui/icons-material/DomainAdd";
 import { useTheme, useMediaQuery } from "@mui/material";
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import HikingIcon from '@mui/icons-material/Hiking';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ open, onClose }) => {
@@ -28,7 +30,7 @@ const Sidebar = ({ open, onClose }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const [openBooking, setOpenBooking] = useState(false);
-  const [openUsers, setOpenUsers] = useState(false);
+  const [openHoteliers, setOpenHoteliers] = useState(false);
   const [openPackages, setOpenPackages] = useState(false);
 
   const handleNavigation = (path) => {
@@ -37,31 +39,23 @@ const Sidebar = ({ open, onClose }) => {
   };
 
   const handleToggleBooking = () => setOpenBooking(!openBooking);
-  const handleToggleUsers = () => setOpenUsers(!openUsers);
+  const handleToggleHoteliers = () => setOpenHoteliers(!openHoteliers);
   const handleTogglePackages = () => setOpenPackages(!openPackages);
 
   const bookingSubItems = [
     { label: "Hotel Booking", icon: <HotelIcon />, path: "/dashboard/hotels" },
-    {
-      label: "Flight Booking",
-      icon: <FlightIcon />,
-      path: "/dashboard/flights",
-    },
+    { label: "Flight Booking", icon: <FlightIcon />, path: "/dashboard/flights"},
     { label: "Cab Booking", icon: <LocalTaxiIcon />, path: "/dashboard/cabs" },
   ];
 
   const packagesSubItems = [
-    { label: "All Packages", icon: <HotelIcon />, path: "/dashboard/hotels" },
-    { label: "Add Packages", icon: <FlightIcon />, path: "/dashboard/flights" },
+    { label: "All Packages", icon: <HikingIcon />, path: "/dashboard/packages" },
+    { label: "Add Packages", icon: <Inventory2Icon />, path: "/dashboard/add-packages" },
   ];
 
-  const usersSubItems = [
-    { label: "All Users", icon: <GroupAddIcon />, path: "/dashboard/users" },
-    {
-      label: "All Hotelers",
-      icon: <DomainAddIcon />,
-      path: "/dashboard/hotelers/",
-    },
+  const hoteliersSubItems = [
+    { label: "All Hoteliers", icon: <GroupAddIcon />, path: "/dashboard/hoteliers" },
+    { label: "Add Hotelier", icon: <DomainAddIcon />, path: "/dashboard/hotelier/add-hotelier"},
   ];
 
   return (
@@ -84,6 +78,8 @@ const Sidebar = ({ open, onClose }) => {
       anchor="left"
     >
       <List sx={{ padding: "0" }}>
+
+        {/* Dashboard  */}
         <ListItem
           button
           sx={{
@@ -103,9 +99,10 @@ const Sidebar = ({ open, onClose }) => {
           <ListItemText primary="Dashboard" />
         </ListItem>
 
+        {/* Customer  */}
         <ListItem
           button
-          onClick={handleToggleUsers}
+          onClick={() => handleNavigation("/dashboard/customers")}
           sx={{
             color: "var(--white-color)",
             "&:hover": {
@@ -117,14 +114,35 @@ const Sidebar = ({ open, onClose }) => {
           }}
         >
           <ListItemIcon>
-            <PeopleIcon sx={{ color: "var(--white-color)" }} />
+            <GroupAddIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
-          <ListItemText primary="Users" />
-          {openUsers ? <ExpandLess /> : <ExpandMore />}
+          <ListItemText primary="Customers" />
         </ListItem>
-        <Collapse in={openUsers} timeout="auto" unmountOnExit>
+
+
+        {/* Hoteliers  */}
+        <ListItem
+          button
+          onClick={handleToggleHoteliers}
+          sx={{
+            color: "var(--white-color)",
+            "&:hover": {
+              backgroundColor: "var(--orange-color)",
+              color: "var(--white-color)",
+              cursor: "pointer",
+              "& .MuiSvgIcon-root": { color: "var(--white-color)" },
+            },
+          }}
+        >
+          <ListItemIcon>
+            <ApartmentIcon sx={{ color: "var(--white-color)" }} />
+          </ListItemIcon>
+          <ListItemText primary="Hoteliers" />
+          {openHoteliers ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={openHoteliers} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {usersSubItems.map((item, index) => (
+            {hoteliersSubItems.map((item, index) => (
               <ListItem
                 button
                 key={index}
@@ -151,6 +169,8 @@ const Sidebar = ({ open, onClose }) => {
           </List>
         </Collapse>
 
+
+        {/* Booking  */}
         <ListItem
           button
           onClick={handleToggleBooking}
@@ -199,6 +219,9 @@ const Sidebar = ({ open, onClose }) => {
           </List>
         </Collapse>
 
+
+
+        {/* Package  */}
         <ListItem
           button
           onClick={handleTogglePackages}
@@ -212,6 +235,7 @@ const Sidebar = ({ open, onClose }) => {
             },
           }}
         >
+
           <ListItemIcon>
             <ReviewsIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
@@ -220,7 +244,7 @@ const Sidebar = ({ open, onClose }) => {
         </ListItem>
         <Collapse in={openPackages} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {bookingSubItems.map((item, index) => (
+            {packagesSubItems.map((item, index) => (
               <ListItem
                 button
                 key={index}
@@ -247,9 +271,14 @@ const Sidebar = ({ open, onClose }) => {
           </List>
         </Collapse>
 
+
+
+
+
+        {/* Add Staff  */}
         <ListItem
           button
-          onClick={() => handleNavigation("/dashboard/profile")}
+          onClick={() => handleNavigation("/dashboard/add-staff")}
           sx={{
             color: "var(--white-color)",
             "&:hover": {
@@ -261,10 +290,11 @@ const Sidebar = ({ open, onClose }) => {
           }}
         >
           <ListItemIcon>
-            <PersonIcon sx={{ color: "var(--white-color)" }} />
+            <PersonAddAltIcon sx={{ color: "var(--white-color)" }} />
           </ListItemIcon>
-          <ListItemText primary="Profile" />
+          <ListItemText primary="Add Staff" />
         </ListItem>
+
       </List>
     </Drawer>
   );

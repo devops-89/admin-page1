@@ -127,6 +127,7 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
                     fontSize: "16px",
                     fontWeight: "500",
                     color: "var(--white-color)",
+                    textAlign:'center'
                   }}
                   key={column.key}
                 >
@@ -160,7 +161,7 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
                 >
                   {columns.map((column) => (
                     <TableCell key={column.key} sx={{textAlign:'center'}}>
-                    {column.key === "avatar" ? (
+                    {column.key === "profileImage" ? (
                       <Avatar
                         src={item[column.key] || <AccountCircleIcon/>} 
                       />

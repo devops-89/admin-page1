@@ -5,17 +5,20 @@ import NotFound from "./pages/NotFound.jsx";
 import {
   createBrowserRouter,
   RouterProvider,
-  Navigate,
 } from "react-router-dom";
 import HotelsList from "./pages/HotelsList.jsx";
 import CabsList from "./pages/CabsList.jsx";
 import FlightsList from "./pages/FlightsList.jsx";
 import ProtectedRoute from "./components/auth/ProtectedRoute.jsx";
-import Hotelers from "./pages/hotelers/Hotelers.jsx";
-import UsersTab from "./pages/users/UsersTab.jsx";
-import HotlerDetails from "./pages/hotelers/HotlerDetails.jsx";
-import UserDetails from "./pages/users/UserDetails.jsx";
+import CustomersTab from "./pages/customers/CustomersTab.jsx";
+import CustomerDetails from "./pages/customers/CustomerDetails.jsx";
 import AddPackage from "./pages/packages/AddPackage.jsx";
+import AllPackage from "./pages/packages/AllPackage.jsx";
+import AddStaff from "./pages/staff/AddStaff.jsx";
+import AllHoteliers from "./pages/hoteliers/AllHoteliers.jsx";
+import AddHoteliers from "./pages/hoteliers/AddHoteliers.jsx";
+import Profile from './pages/profile/Profile.jsx';
+import HotelierDetails from "./pages/hoteliers/HotelierDetails.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,26 +34,38 @@ function App() {
         </ProtectedRoute>
       ),
       children: [
+
+        // dashboard 
         {
           path: "/dashboard/",
           element: <Dashboard />,
         },
+
+        // customers 
         {
-          path: "/dashboard/users",
-          element: <UsersTab />,
+          path: "/dashboard/customers",
+          element: <CustomersTab />,
         },
         {
-          path: "/dashboard/users/user-details",
-          element: <UserDetails />,
+          path: "/dashboard/customers/customer-details",
+          element: <CustomerDetails />,
+        },
+
+        // hotelers 
+        {
+          path: "/dashboard/hoteliers",
+          element: <AllHoteliers />,
         },
         {
-          path: "/dashboard/hotelers",
-          element: <Hotelers />,
+          path: "/dashboard/hotelier/add-hotelier",
+          element: <AddHoteliers />,
         },
         {
-          path: "/dashboard/hoteler/hoteler-details",
-          element: <HotlerDetails />,
+          path: "/dashboard/hoteliers/hotelier-details",
+          element: <HotelierDetails />,
         },
+
+        // booking
         {
           path: "/dashboard/hotels",
           element: <HotelsList />,
@@ -64,9 +79,24 @@ function App() {
           element: <FlightsList />,
         },
 
+        // package 
         {
           path: "/dashboard/packages",
+          element: <AllPackage />,
+        },
+        {
+          path: "/dashboard/add-packages",
           element: <AddPackage />,
+        },
+
+        // staff 
+        {
+          path: "/dashboard/add-staff",
+          element: <AddStaff />,
+        },
+        {
+          path: "/dashboard/profile",
+          element: <Profile />,
         },
       ],
     },

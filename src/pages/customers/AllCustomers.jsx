@@ -19,8 +19,7 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-
-const ActiveUsers = ({
+const AllCustomers = ({
   data,
   columns,
   setSearchTerm,
@@ -29,19 +28,17 @@ const ActiveUsers = ({
   pageSize,
   totalPages,
   page,
-  setPage,
   setPageSize,
+  setPage
 }) => {
   const navigate = useNavigate();
 
   const table_heading = {
-    heading: "Active Users",
-    para: "These are the users currently marked as active in the system.",
+    heading: "Customer Details",
+    para: "Manage your personal details, bookings, and preferences.",
   };
 
-  const activeUsers = data.filter((user) => user.status === "ACTIVE");
-
-  const filteredData = activeUsers.filter((item) =>
+  const filteredData = data.filter((item) =>
     columns.some((column) =>
       String(item[column.key] || "")
         .toLowerCase()
@@ -49,6 +46,7 @@ const ActiveUsers = ({
     )
   );
 
+  // console.log(filteredData)
   return (
     <Box>
       <Box
@@ -125,6 +123,7 @@ const ActiveUsers = ({
                     fontSize: "16px",
                     fontWeight: "500",
                     color: "var(--white-color)",
+                    textAlign:'center'
                   }}
                 >
                   {column.label}
@@ -163,6 +162,7 @@ const ActiveUsers = ({
                             return moment(item[column.key] || "-").format(
                               "Do MMM YYYY"
                             );
+
                           case "status":
                             return <span className={item[column.key] == 'ACTIVE' ? 'green' : 'red'}>{item[column.key]}</span>
                           case "last_login":
@@ -179,7 +179,11 @@ const ActiveUsers = ({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={() => navigate("/dashboard/users/user-details")}
+                      onClick={
+                        () => {
+                          // console.log(item.id)
+                          navigate("/dashboard/customers/customer-details", {state : {item}})
+                        }}
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
@@ -227,4 +231,4 @@ const ActiveUsers = ({
   );
 };
 
-export default ActiveUsers;
+export default AllCustomers;
