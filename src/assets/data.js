@@ -642,6 +642,8 @@ export const dashboardTableData = {
 
 
 
+
+
 export const customerTable = {
   FLIGHT_BOOKINGS: [
     {
@@ -710,3 +712,158 @@ export const customerTable = {
   ]
 }
 
+
+
+
+export const hoteler_list = [
+    {
+      full_name: "John Doe",
+      role: "Hoteler",
+      email: "johndoe@example.com",
+      phone_no: "+1234567890",
+      address: "123 Main Street",
+      city: "New York",
+      state: "NY",
+      status: "active"
+    },
+    {
+      full_name: "Jane Smith",
+      role: "Hoteler",
+      email: "janesmith@example.com",
+      phone_no: "+9876543210",
+      address: "456 Elm Street",
+      city: "Los Angeles",
+      state: "CA",
+      status: "inactive"
+    },
+    {
+      full_name: "Alice Johnson",
+      role: "Hoteler",
+      email: "alicejohnson@example.com",
+      phone_no: "+1123456789",
+      address: "789 Maple Avenue",
+      city: "Chicago",
+      state: "IL",
+      status: "active"
+    },
+    {
+      full_name: "Bob Brown",
+      role: "Hoteler",
+      email: "bobbrown@example.com",
+      phone_no: "+1987654321",
+      address: "321 Oak Street",
+      city: "Houston",
+      state: "TX",
+      status: "active"
+    },
+    {
+      full_name: "Charlie Davis",
+      role: "Hoteler",
+      email: "charliedavis@example.com",
+      phone_no: "+1212345678",
+      address: "654 Pine Lane",
+      city: "Phoenix",
+      state: "AZ",
+      status: "inactive"
+    },
+    {
+      full_name: "Dana Evans",
+      role: "Hoteler",
+      email: "danaevans@example.com",
+      phone_no: "+1321654987",
+      address: "987 Cedar Road",
+      city: "Philadelphia",
+      state: "PA",
+      status: "active"
+    },
+    {
+      full_name: "Evan Flores",
+      role: "Hoteler",
+      email: "evanflores@example.com",
+      phone_no: "+1432546879",
+      address: "246 Birch Street",
+      city: "San Antonio",
+      state: "TX",
+      status: "active"
+    },
+    {
+      full_name: "Fiona Green",
+      role: "Hoteler",
+      email: "fionagreen@example.com",
+      phone_no: "+1541236987",
+      address: "135 Walnut Avenue",
+      city: "San Diego",
+      state: "CA",
+      status: "inactive"
+    },
+    {
+      full_name: "George Harris",
+      role: "Hoteler",
+      email: "georgeharris@example.com",
+      phone_no: "+1654987132",
+      address: "579 Ash Street",
+      city: "Dallas",
+      state: "TX",
+      status: "active"
+    },
+    {
+      full_name: "Hannah Ingram",
+      role: "Hoteler",
+      email: "hannahingram@example.com",
+      phone_no: "+1765498713",
+      address: "357 Fir Lane",
+      city: "San Jose",
+      state: "CA",
+      status: "active"
+    },
+    {
+      full_name: "Ian Johnson",
+      role: "Hoteler",
+      email: "ianjohnson@example.com",
+      phone_no: "+1876598714",
+      address: "468 Palm Street",
+      city: "Austin",
+      state: "TX",
+      status: "inactive"
+    },
+    {
+      full_name: "Jasmine King",
+      role: "Hoteler",
+      email: "jasmineking@example.com",
+      phone_no: "+1987654321",
+      address: "752 Elm Avenue",
+      city: "Jacksonville",
+      state: "FL",
+      status: "active"
+    },
+    {
+      full_name: "Kevin Lee",
+      role: "Hoteler",
+      email: "kevinlee@example.com",
+      phone_no: "+1234987654",
+      address: "963 Spruce Street",
+      city: "San Francisco",
+      state: "CA",
+      status: "active"
+    },
+    {
+      full_name: "Laura Martinez",
+      role: "Hoteler",
+      email: "lauramartinez@example.com",
+      phone_no: "+1321987654",
+      address: "859 Beech Lane",
+      city: "Columbus",
+      state: "OH",
+      status: "inactive"
+    },
+    {
+      full_name: "Michael Nelson",
+      role: "Hoteler",
+      email: "michaelnelson@example.com",
+      phone_no: "+1432156987",
+      address: "246 Poplar Avenue",
+      city: "Fort Worth",
+      state: "TX",
+      status: "active"
+    }
+  ]  

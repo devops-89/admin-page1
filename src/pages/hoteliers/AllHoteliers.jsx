@@ -1,20 +1,22 @@
 import GenericTable from "../../components/GenericTable";
-import {data} from "../../assets/data";
+import {hoteler_list} from "../../assets/data";
  const AllHotelers = () => {
-    const columns = [
-      { key: "id", label: "ID" },
-      { key: "profileImage", label: "Profile" },
-      { key: "firstName", label: "First Name" },
-      { key: "lastName", label: "Last Name" },
-      { key: "username", label: "Username" },
-      { key: "email", label: "Email" },
-      { key: "phone", label: "Phone" },
-      { key: "status", label: "Status" },
-    ];
+  const columns = [
+    { key: "avatar", label: "Profile" },
+    { key: "full_name", label: "Name" },
+    { key: "role", label: "Role" },
+    { key: "email", label: "Email" },
+    { key: "phone_no", label: "Phone No." },
+    { key: "address", label: "Address" },
+    { key: "city", label: "City" },
+    { key: "state", label: "State" },
+    { key: "status", label: "Status" }
+  ];
+  
   
     return (
       <GenericTable
-        data={data.users_page}
+        data={hoteler_list}
         columns={columns}
         onActionClick={(id) => console.log("View user:", id)}
         table_heading={{ heading: "All Hoteliers", para: "View all hoteliers in the system." }}

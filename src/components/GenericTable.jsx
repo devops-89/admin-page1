@@ -96,7 +96,7 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
                 backgroundColor: "var(--white-color)",
                 marginRight: "10px",
               }}
-              onChange={(e) => setEntriesPerPage(parseInt(e.target.value, 10))}
+              onChange={(e) => setEntriesPerPage(parseInt(e.target.value))}
             >
               {[5, 10, 20, 50].map((count) => (
                 <MenuItem key={count} value={count}>
@@ -161,7 +161,7 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
                 >
                   {columns.map((column) => (
                     <TableCell key={column.key} sx={{textAlign:'center'}}>
-                    {column.key === "profileImage" ? (
+                    {column.key === "avatar" ? (
                       <Avatar
                         src={item[column.key] || <AccountCircleIcon/>} 
                       />

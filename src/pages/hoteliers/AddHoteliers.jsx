@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid2";
-import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
+import { Box, Button, FormLabel, IconButton, TextField, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
 import { Link } from "react-router-dom";
+import { useDropzone } from "react-dropzone";
+import CloseIcon from '@mui/icons-material/Close';
 
 const AddHoteliers = () => {
+
+  const [image, setImage] = useState(null);
+
+  const onDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      const filePreview = Object.assign(file, { preview: URL.createObjectURL(file) });
+      setImage(filePreview);
+    }
+  };
+
+  const removeImage = () => {
+    setImage(null);
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: {
+      'image/jpeg': [],
+      'image/png': [],
+      'image/gif': [],
+      'image/svg+xml': [],
+      'image/jpg': [],
+    },
+    multiple: false,
+  });
+
+
   return (
     <>
       <Grid container sx={{ marginBottom: '10px' }}>
@@ -318,6 +348,64 @@ const AddHoteliers = () => {
                   gap: "20px",
                 }}
               >
+                <Grid size={{ sx: 12 }} sx={{ width: '100%' }}>
+                  <Box sx={{ width: '100%', marginTop: 2 }}>
+                    <FormLabel htmlFor='profile-upload' sx={{ fontWeight: 500 }}>
+                      Profile
+                    </FormLabel>
+                    <Box
+                      {...getRootProps()}
+                      sx={{
+                        border: '1px dashed gray',
+                        padding: '20px',
+                        textAlign: 'center',
+                        cursor: 'pointer',
+                        marginTop: 1
+                      }}
+                    >
+                      <input {...getInputProps()} />
+                      <Typography>Drop File To Upload</Typography>
+                      <Typography variant="body2">or</Typography>
+                      <Button variant="contained" color="error">
+                        Upload an Image
+                      </Button>
+                    </Box>
+                    <Box sx={{ marginTop: 2 }}>
+                      {image && (
+                        <Box
+                          sx={{
+                            position: 'relative',
+                            width: 100,
+                            height: 100,
+                            borderRadius: 1,
+                            overflow: 'hidden',
+                            border: '1px solid var(--black-color)',
+                          }}
+                        >
+                          <img
+                            src={image.preview}
+                            alt="preview"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                          <IconButton
+                            size="small"
+                            sx={{
+                              position: 'absolute',
+                              top: 2,
+                              right: 2,
+                              backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                            }}
+                            onClick={removeImage}
+                          >
+                            <CloseIcon fontSize="small" />
+                          </IconButton>
+                        </Box>
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+
+
                 <Grid sx={{ display: "flex", flexDirection: "column" }}>
                   <Typography variant="h6">Publish</Typography>
                   <Button

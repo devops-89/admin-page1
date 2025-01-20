@@ -91,7 +91,7 @@ const AllCustomers = ({
                 backgroundColor: "var(--white-color)",
                 marginRight: "10px",
               }}
-              onChange={(e) => setPageSize(parseInt(e.target.value, 10))}
+              onChange={(e) => setPageSize(parseInt(e.target.value))}
             >
               {[5, 10, 20, 50].map((count) => (
                 <MenuItem key={count} value={count}>
