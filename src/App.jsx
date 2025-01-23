@@ -15,10 +15,11 @@ import CustomerDetails from "./pages/customers/CustomerDetails.jsx";
 import AddPackage from "./pages/packages/AddPackage.jsx";
 import AllPackage from "./pages/packages/AllPackage.jsx";
 import AddStaff from "./pages/staff/AddStaff.jsx";
-import AllHoteliers from "./pages/hoteliers/AllHoteliers.jsx";
 import AddHoteliers from "./pages/hoteliers/AddHoteliers.jsx";
 import Profile from './pages/profile/Profile.jsx';
 import HotelierDetails from "./pages/hoteliers/HotelierDetails.jsx";
+import HoteliersTab from "./pages/hoteliers/HoteliersTab.jsx";
+import Home from "./pages/website/Home.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -54,7 +55,7 @@ function App() {
         // hotelers 
         {
           path: "/dashboard/hoteliers",
-          element: <AllHoteliers />,
+          element: <HoteliersTab />,
         },
         {
           path: "/dashboard/hotelier/add-hotelier",
@@ -97,6 +98,11 @@ function App() {
         {
           path: "/dashboard/profile",
           element: <Profile />,
+        },
+
+        {
+          path: "/dashboard/home",
+          element: <Home />,
         },
       ],
     },

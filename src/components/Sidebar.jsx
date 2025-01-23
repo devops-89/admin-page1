@@ -22,6 +22,8 @@ import Inventory2Icon from '@mui/icons-material/Inventory2';
 import HikingIcon from '@mui/icons-material/Hiking';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ open, onClose }) => {
@@ -32,6 +34,7 @@ const Sidebar = ({ open, onClose }) => {
   const [openBooking, setOpenBooking] = useState(false);
   const [openHoteliers, setOpenHoteliers] = useState(false);
   const [openPackages, setOpenPackages] = useState(false);
+  const [openWebsite, setOpenWebsite] = useState(false);
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -41,6 +44,7 @@ const Sidebar = ({ open, onClose }) => {
   const handleToggleBooking = () => setOpenBooking(!openBooking);
   const handleToggleHoteliers = () => setOpenHoteliers(!openHoteliers);
   const handleTogglePackages = () => setOpenPackages(!openPackages);
+  const handleToggleWebsite = () => setOpenWebsite(!openWebsite);
 
   const bookingSubItems = [
     { label: "Hotel Booking", icon: <HotelIcon />, path: "/dashboard/hotels" },
@@ -56,6 +60,10 @@ const Sidebar = ({ open, onClose }) => {
   const hoteliersSubItems = [
     { label: "All Hoteliers", icon: <GroupAddIcon />, path: "/dashboard/hoteliers" },
     { label: "Add Hotelier", icon: <DomainAddIcon />, path: "/dashboard/hotelier/add-hotelier"},
+  ];
+
+  const websiteSubItems = [
+    { label: "Home", icon: <HomeIcon />, path: "/dashboard/home" },
   ];
 
   return (
@@ -294,6 +302,60 @@ const Sidebar = ({ open, onClose }) => {
           </ListItemIcon>
           <ListItemText primary="Add Staff" />
         </ListItem>
+
+
+
+        {/* Website Edit */}
+
+        <ListItem
+          button
+          onClick={handleToggleWebsite}
+          sx={{
+            color: "var(--white-color)",
+            "&:hover": {
+              backgroundColor: "var(--orange-color)",
+              color: "var(--white-color)",
+              cursor: "pointer",
+              "& .MuiSvgIcon-root": { color: "var(--white-color)" },
+            },
+          }}
+        >
+
+
+          <ListItemIcon>
+            <EditNoteIcon sx={{ color: "var(--white-color)" }} />
+          </ListItemIcon>
+          <ListItemText primary="Website" />
+          {openWebsite ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={openWebsite} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {websiteSubItems.map((item, index) => (
+              <ListItem
+                button
+                key={index}
+                sx={{
+                  pl: 5,
+                  color: "var(--white-color)",
+                  "&:hover": {
+                    backgroundColor: "var(--orange-color)",
+                    color: "var(--white-color)",
+                    cursor: "pointer",
+                    "& .MuiSvgIcon-root": { color: "var(--white-color)" },
+                  },
+                }}
+                onClick={() => handleNavigation(item.path)}
+              >
+                <ListItemIcon
+                  sx={{ color: "var(--white-color)", minWidth: "35px" }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItem>
+            ))}
+          </List>
+        </Collapse>
 
       </List>
     </Drawer>
