@@ -37,7 +37,7 @@ const Login = () => {
     setLoading(true);
 
    AuthenticationController
-      .login({ identity: values.email, password: values.password })
+      .login({ email: values.email, password: values.password , user_type:"ADMIN"})
       .then((res) => {
         const access_token = res.data.data.access_token;
 
