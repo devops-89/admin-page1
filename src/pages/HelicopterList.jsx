@@ -47,8 +47,7 @@ const HelicopterList = () => {
     { key: "time", value: "Time" },
     { key: "adults", value: "Adults" },
     { key: "children", value: "Children" },
-    // Removed the 'message' field
-    { key: "permission", value: "Permission" }
+    { key: "message", value: "Message" }
   ];
 
   if (loading) {
