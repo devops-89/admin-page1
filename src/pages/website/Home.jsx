@@ -1,47 +1,41 @@
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import React, { useState } from "react";
+import React from "react";
 import WebsiteTab from "../../components/WebsiteTab";
 import Logo from "./home/Logo";
+import Banner from "./home/Banner";
+import About from "./home/About";
+import Service from "./home/Service";
+
 
 const Home = () => {
     const tabLabel = [
         {
           tabSelected : 0,
-          label : 'Logo',
+          label : 'Logo Section',
           tabComponent : <Logo/>
         },
         {
             tabSelected : 1,
-            label : 'Favicon',
-            tabComponent : <Typography variant="body1">Favicon</Typography>
+            label : 'Banner Section',
+            tabComponent : <Banner/>
         },
         {
             tabSelected : 2,
-            label : 'Menu',
-            tabComponent : <Typography variant="body1">Menu</Typography>
+            label : 'Service Section',
+            tabComponent : <Service/>
         },
         {
             tabSelected : 3,
-            label : 'Banner Image',
-            tabComponent : <Typography variant="body1">Banner Image</Typography>
+            label : 'About Section',
+            tabComponent : <About/>
         },
         {
             tabSelected : 4,
-            label : 'Banner Heading',
+            label : 'Review Section',
             tabComponent : <Typography variant="body1">Banner Heading</Typography>
         },
-        {
-            tabSelected : 5,
-            label : 'Banner Subheading',
-            tabComponent : <Typography variant="body1">Banner Subheading</Typography>
-        },
-        {
-            tabSelected : 5,
-            label : 'Banner Subheading',
-            tabComponent : <Typography variant="body1">Banner Subheading</Typography>
-        },
-
+       
     ]
 
     return (

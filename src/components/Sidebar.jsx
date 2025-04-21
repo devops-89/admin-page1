@@ -25,6 +25,7 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from "react-router-dom";
+import PublicIcon from '@mui/icons-material/Public';
 
 const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const Sidebar = ({ open, onClose }) => {
     { label: "Hotel Booking", icon: <HotelIcon />, path: "/dashboard/hotels" },
     { label: "Flight Booking", icon: <FlightIcon />, path: "/dashboard/flights"},
     { label: "Cab Booking", icon: <LocalTaxiIcon />, path: "/dashboard/cabs" },
+    { label: "Helicopter Booking", icon: <PublicIcon />, path: "/dashboard/helicopters" },
   ];
 
   const packagesSubItems = [

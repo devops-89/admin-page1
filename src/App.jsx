@@ -20,6 +20,7 @@ import Profile from './pages/profile/Profile.jsx';
 import HotelierDetails from "./pages/hoteliers/HotelierDetails.jsx";
 import HoteliersTab from "./pages/hoteliers/HoteliersTab.jsx";
 import Home from "./pages/website/Home.jsx";
+import HelicopterList from "./pages/HelicopterList.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -78,6 +79,10 @@ function App() {
         {
           path: "/dashboard/flights",
           element: <FlightsList />,
+        },
+        {
+          path: "/dashboard/helicopters",
+          element: <HelicopterList />,
         },
 
         // package 

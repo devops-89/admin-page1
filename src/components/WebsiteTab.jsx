@@ -1,4 +1,4 @@
-import { Typography, Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import React, { useState } from "react";
 
@@ -11,7 +11,7 @@ const WebsiteTab = ({ tabLabel }) => {
     };
     return (
         <>
-            <Grid container size={{ xs: 12 }}>
+            <Grid container size={{ xs: 12 }} spacing={2}>
                 <Grid size={{ xs: 12, sm:3, md:2 }}>
                     <Tabs
                         orientation="vertical"
@@ -28,23 +28,23 @@ const WebsiteTab = ({ tabLabel }) => {
                             },
                         }}
                     >
-                        {tabLabel.map((tab) => {
+                        {tabLabel.map((tab, index) => {
                             return (
-                                <Tab label={tab.label} sx={{backgroundColor:"var(--white-color)", borderBottom:'1px solid #d1d1d1', boxShadow:"0px 2px 1px #d8d6d6"}}/>
+                                <Tab key={index} label={tab.label} sx={{backgroundColor:"var(--white-color)", borderBottom:'1px solid #d1d1d1', boxShadow:"0px 2px 1px #d8d6d6"}}/>
                             )
                         })}
                     </Tabs>
                 </Grid>
 
-                <Grid size={{ xs: 12, sm:9, md:10 }} sx={{padding:'0 20px' }}>
+                <Grid size={{ xs: 12, sm:9, md:10 }}>
                     <Box sx={{backgroundColor:'var(--white-color)', height:'100%', borderRadius:'4px', boxShadow:"0px 2px 1px #d8d6d6", padding:'20px 30px'}}>
-                        {tabLabel.map((tab) => {
+                        {tabLabel.map((tab, index) => {
 
                             return (
                                 <>
                                     {selectedTab === tab.tabSelected && (
                                         tab.tabComponent
-                                    )}
+                                    )}  
                                 </>
                             )
                         })}

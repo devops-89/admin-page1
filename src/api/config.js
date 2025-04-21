@@ -5,6 +5,10 @@ export const securedApi = axios.create({
   baseURL: APIURL.authenticationUrl,
 });
 
+export const extraDetailApi = axios.create({
+  baseURL: APIURL.extraDetailUrl,
+});
+
 export const userSecuredApi = axios.create({
   baseURL: APIURL.userUrl,
 });
