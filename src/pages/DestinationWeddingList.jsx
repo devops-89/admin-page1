@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { ExtraDetailController } from '../api/extraDetailController';
 import { Enquiry_Type } from '../utils/enum';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Box, Typography } from '@mui/material';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  CircularProgress,
+  Box,
+  Typography,
+} from '@mui/material';
 
-const HelicopterList = () => {
-  const [helicopterData, setHelicopterData] = useState(null);
+const DestinationWeddingList = () => {
+  const [destinationWeddingData, setDestinationWeddingData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.HELICOPTER)
+    ExtraDetailController.getExtraSerivce(Enquiry_Type.DESTINATION_WEDDING)
       .then((res) => {
         const rawData = res?.data?.data;
-
         if (rawData && Array.isArray(rawData)) {
           const parsedData = rawData
             .map(item => {
@@ -24,30 +34,37 @@ const HelicopterList = () => {
             })
             .filter(item => item !== null);
 
-          setHelicopterData(parsedData);
+          setDestinationWeddingData(parsedData);
+          // console.log("parsedData------------", parsedData);
         } else {
-           setHelicopterData([]);
+          setDestinationWeddingData([]);
         }
         setLoading(false);
       })
       .catch(err => {
         setError(err);
         setLoading(false);
-        setHelicopterData([]);
+        setDestinationWeddingData([]);
       });
   }, []);
 
-  const HelicopterTableFields = [
+  const DestinationWeddingTableFields = [
     { key: "fullName", value: "Full Name" },
     { key: "phoneNumber", value: "Phone Number" },
     { key: "email", value: "Email" },
-    { key: "from", value: "From" },
-    { key: "to", value: "To" },
     { key: "date", value: "Date" },
-    { key: "time", value: "Time" },
-    { key: "adults", value: "Adults" },
-    { key: "children", value: "Children" },
-    { key: "message", value: "Message" }
+    { key: "numberOfGuests", value: "Guests" },
+    { key: "propertyType", value: "Property Type" },
+    { key: "destination", value: "Destination" },
+    { key: "budget", value: "Budget" },
+    { key: "weddingSide", value: "Wedding Side" },
+    { key: "weddingTheme", value: "Theme" },
+    { key: "foodType", value: "Food Preference" },
+    { key: "clothing", value: "Clothing" },
+    { key: "eventType", value: "Event Types" },
+    { key: "entryVehicle", value: "Entry Vehicle" },
+    { key: "musicTheme", value: "Music Theme" },
+    { key: "additionalServices", value: "Additional Services" },
   ];
 
   if (loading) {
@@ -59,25 +76,24 @@ const HelicopterList = () => {
   }
 
   if (error) {
-      return (
-          <div style={{ textAlign: "center", marginTop: "50px", color: 'red' }}>
-              <p>Error loading data: {error.message || 'Unknown error'}</p>
-          </div>
-      );
+    return (
+      <div style={{ textAlign: "center", marginTop: "50px", color: 'red' }}>
+        <p>Error loading data: {error.message || 'Unknown error'}</p>
+      </div>
+    );
   }
 
-  if (!helicopterData || helicopterData.length === 0) {
-      return (
-          <div style={{ textAlign: "center", marginTop: "50px" }}>
-              <p>No helicopter enquiry data available.</p>
-          </div>
-      );
+  if (!destinationWeddingData || destinationWeddingData.length === 0) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <p>No Destination Wedding enquiry data available.</p>
+      </div>
+    );
   }
 
   return (
     <>
-    
-    <Box>
+        <Box>
         <Typography
           variant="h4"
           sx={{
@@ -90,7 +106,7 @@ const HelicopterList = () => {
             },
           }}
         >
-          Helicopter Bookings
+          Destination Wedding Enquiry
         </Typography>
         <Typography
           variant="body1"
@@ -104,38 +120,39 @@ const HelicopterList = () => {
             },
           }}
         >
-          Track and Respond to Helicopter Booking Enquiries
+          Track and Respond to Destination Wedding Enquiries
         </Typography>
       </Box>
    
     <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
-      <Table stickyHeader aria-label="helicopter enquiries table">
+      <Table stickyHeader aria-label="destination wedding enquiries table">
         <TableHead>
           <TableRow>
-            {HelicopterTableFields.map((tableHeading, index) => (
-              <TableCell sx={{ fontWeight: 500, backgroundColor: '#000', color:'#fff' }} key={index}>
+            {DestinationWeddingTableFields.map((tableHeading, index) => (
+              <TableCell
+                key={index}
+                sx={{ fontWeight: 500, backgroundColor: '#000', color: '#fff' }}
+              >
                 {tableHeading.value}
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {helicopterData.map((enquiryObject, rowIndex) => (
+          {destinationWeddingData.map((enquiryObject, rowIndex) => (
             <TableRow
               key={rowIndex}
               hover
               sx={{
-                '&:nth-of-type(odd)': {
-                  backgroundColor: '#f9f9f9',
-                },
-                '&:last-child td, &:last-child th': {
-                  border: 0,
-                },
+                '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' },
+                '&:last-child td, &:last-child th': { border: 0 },
               }}
             >
-              {HelicopterTableFields.map((field, colIndex) => (
+              {DestinationWeddingTableFields.map((field, colIndex) => (
                 <TableCell key={colIndex}>
-                  {String(enquiryObject[field.key]) || ''}
+                  {Array.isArray(enquiryObject[field.key])
+                    ? enquiryObject[field.key].join(', ')
+                    : String(enquiryObject[field.key]) || ''}
                 </TableCell>
               ))}
             </TableRow>
@@ -147,4 +164,4 @@ const HelicopterList = () => {
   );
 };
 
-export default HelicopterList;
+export default DestinationWeddingList;

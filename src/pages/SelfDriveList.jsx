@@ -3,16 +3,15 @@ import { ExtraDetailController } from '../api/extraDetailController';
 import { Enquiry_Type } from '../utils/enum';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Box, Typography } from '@mui/material';
 
-const HelicopterList = () => {
-  const [helicopterData, setHelicopterData] = useState(null);
+const SelfDriveList = () => {
+  const [selfDriveData, setSelfDriveData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.HELICOPTER)
+    ExtraDetailController.getExtraSerivce(Enquiry_Type.SELF_DRIVE)
       .then((res) => {
         const rawData = res?.data?.data;
-
         if (rawData && Array.isArray(rawData)) {
           const parsedData = rawData
             .map(item => {
@@ -24,31 +23,35 @@ const HelicopterList = () => {
             })
             .filter(item => item !== null);
 
-          setHelicopterData(parsedData);
+          setSelfDriveData(parsedData);
+          // console.log("parsedData------------",parsedData)
         } else {
-           setHelicopterData([]);
+          setSelfDriveData([]);
         }
         setLoading(false);
       })
       .catch(err => {
         setError(err);
         setLoading(false);
-        setHelicopterData([]);
+        setSelfDriveData([]);
       });
   }, []);
 
-  const HelicopterTableFields = [
+  const SelfDriveTableFields = [
+    { key: "email", value: "Email" },
+    { key: "fromDate", value: "From Date" },
     { key: "fullName", value: "Full Name" },
     { key: "phoneNumber", value: "Phone Number" },
-    { key: "email", value: "Email" },
-    { key: "from", value: "From" },
-    { key: "to", value: "To" },
-    { key: "date", value: "Date" },
-    { key: "time", value: "Time" },
-    { key: "adults", value: "Adults" },
-    { key: "children", value: "Children" },
-    { key: "message", value: "Message" }
+    { key: "toDate", value: "To Date" },
   ];
+
+ 
+
+
+
+
+
+
 
   if (loading) {
     return (
@@ -66,53 +69,51 @@ const HelicopterList = () => {
       );
   }
 
-  if (!helicopterData || helicopterData.length === 0) {
+  if (!selfDriveData || selfDriveData.length === 0) {
       return (
           <div style={{ textAlign: "center", marginTop: "50px" }}>
-              <p>No helicopter enquiry data available.</p>
+              <p>No Self Drive enquiry data available.</p>
           </div>
       );
   }
 
   return (
     <>
-    
     <Box>
-        <Typography
-          variant="h4"
-          sx={{
-            fontSize: "18px",
-            fontWeight: "600",
-            marginBottom: "5px",
-            textAlign: { xs: "center", sm: "center", md: "start" },
-            "@media (min-width: 831px) and (max-width: 900px)": {
-              textAlign: "start",
-            },
-          }}
-        >
-          Helicopter Bookings
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            fontSize: "15px",
-            fontWeight: "400",
-            marginBottom: "5px",
-            textAlign: { xs: "center", sm: "center", md: "start" },
-            "@media (min-width: 831px) and (max-width: 900px)": {
-              textAlign: "start",
-            },
-          }}
-        >
-          Track and Respond to Helicopter Booking Enquiries
-        </Typography>
-      </Box>
-   
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: "18px",
+                  fontWeight: "600",
+                  marginBottom: "5px",
+                  textAlign: { xs: "center", sm: "center", md: "start" },
+                  '@media (min-width: 831px) and (max-width: 900px)': {
+                textAlign: 'start', 
+              },
+                }}
+              >
+                Self Drive Enquiry
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: "15px",
+                  fontWeight: "400",
+                  marginBottom: "5px",
+                  textAlign: { xs: "center", sm: "center", md: "start" },
+                  '@media (min-width: 831px) and (max-width: 900px)': {
+                textAlign: 'start', 
+              },
+                }}
+              >
+               View and Respond to Self-Drive Requests
+              </Typography>
+            </Box>
     <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
-      <Table stickyHeader aria-label="helicopter enquiries table">
+      <Table stickyHeader aria-label="self drive enquiries table">
         <TableHead>
           <TableRow>
-            {HelicopterTableFields.map((tableHeading, index) => (
+            {SelfDriveTableFields.map((tableHeading, index) => (
               <TableCell sx={{ fontWeight: 500, backgroundColor: '#000', color:'#fff' }} key={index}>
                 {tableHeading.value}
               </TableCell>
@@ -120,7 +121,7 @@ const HelicopterList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {helicopterData.map((enquiryObject, rowIndex) => (
+          {selfDriveData.map((enquiryObject, rowIndex) => (
             <TableRow
               key={rowIndex}
               hover
@@ -133,7 +134,7 @@ const HelicopterList = () => {
                 },
               }}
             >
-              {HelicopterTableFields.map((field, colIndex) => (
+              {SelfDriveTableFields.map((field, colIndex) => (
                 <TableCell key={colIndex}>
                   {String(enquiryObject[field.key]) || ''}
                 </TableCell>
@@ -147,4 +148,4 @@ const HelicopterList = () => {
   );
 };
 
-export default HelicopterList;
+export default SelfDriveList;
