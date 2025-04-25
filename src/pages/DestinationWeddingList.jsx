@@ -224,7 +224,7 @@ const DestinationWeddingList = () => {
         <DialogTitle id="responsive-dialog-title">
           View Destination Wedding Detail
         </DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{maxHeight:"350px"}}>
           <DialogContentText>
             <TableContainer>
               <Table>
