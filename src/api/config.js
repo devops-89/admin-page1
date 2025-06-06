@@ -25,6 +25,10 @@ export const flightPublicApi = axios.create({
   baseURL: APIURL.flightUrl,
 });
 
+export const packagePublicApi=axios.create({
+  baseURL:APIURL.packageUrl,
+})
+
 export const publicApi = axios.create({
   baseURL: APIURL.authenticationUrl,
 });

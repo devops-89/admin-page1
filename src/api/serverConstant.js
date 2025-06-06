@@ -1,8 +1,11 @@
-const baseURL = "https://dev.page1travels.com"
+// const baseURL = "https://dev.page1travels.com/admin";
+// const authenticationBaseUrl="http://192.168.1.21:3000";
+// const packageBaseUrl="http://192.168.1.21:3005";
 
-export const APIURL ={
-    authenticationUrl: `${baseURL}/auth/api`,
-    userUrl: `${baseURL}/user/api/`,
-    
+const authenticationBaseUrl="https://dev.page1travels.com/auth";
+const packageBaseUrl="https://dev.page1travels.com/admin";
+
+export const APIURL={
+    authenticationUrl:`${authenticationBaseUrl}/api`,
+    packageUrl:`${packageBaseUrl}/api`
 }
-

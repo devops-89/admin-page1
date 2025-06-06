@@ -2,6 +2,8 @@ import AppLayout from "./components/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login.jsx";
 import NotFound from "./pages/NotFound.jsx";
+
+import PackageSettings from "./pages/packages/PackageSettings.jsx";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -14,12 +16,15 @@ import CustomersTab from "./pages/customers/CustomersTab.jsx";
 import CustomerDetails from "./pages/customers/CustomerDetails.jsx";
 import AddPackage from "./pages/packages/AddPackage.jsx";
 import AllPackage from "./pages/packages/AllPackage.jsx";
+
 import AddStaff from "./pages/staff/AddStaff.jsx";
 import AddHoteliers from "./pages/hoteliers/AddHoteliers.jsx";
 import Profile from './pages/profile/Profile.jsx';
 import HotelierDetails from "./pages/hoteliers/HotelierDetails.jsx";
 import HoteliersTab from "./pages/hoteliers/HoteliersTab.jsx";
 import Home from "./pages/website/Home.jsx";
+
+
 
 function App() {
   const router = createBrowserRouter([
@@ -89,6 +94,11 @@ function App() {
           path: "/dashboard/add-packages",
           element: <AddPackage />,
         },
+         {
+          path:"/dashboard/package-settings",
+          element:<PackageSettings />
+        },
+
 
         // staff 
         {

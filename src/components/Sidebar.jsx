@@ -7,6 +7,11 @@ import {
   ListItemIcon,
   Collapse,
 } from "@mui/material";
+
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
+import CategoryIcon from "@mui/icons-material/Category";
+
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import ReviewsIcon from "@mui/icons-material/RateReview";
@@ -18,12 +23,13 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import DomainAddIcon from "@mui/icons-material/DomainAdd";
 import { useTheme, useMediaQuery } from "@mui/material";
-import Inventory2Icon from '@mui/icons-material/Inventory2';
+
 import HikingIcon from '@mui/icons-material/Hiking';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import HomeIcon from '@mui/icons-material/Home';
+
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ open, onClose }) => {
@@ -52,10 +58,11 @@ const Sidebar = ({ open, onClose }) => {
     { label: "Cab Booking", icon: <LocalTaxiIcon />, path: "/dashboard/cabs" },
   ];
 
-  const packagesSubItems = [
-    { label: "All Packages", icon: <HikingIcon />, path: "/dashboard/packages" },
-    { label: "Add Packages", icon: <Inventory2Icon />, path: "/dashboard/add-packages" },
-  ];
+ const packagesSubItems = [
+  { label: "All Packages", icon: <HikingIcon />, path: "/dashboard/packages" },
+  { label: "Add Packages", icon: <AddBoxIcon />, path: "/dashboard/add-packages" },
+  { label:"Package Settings", icon:<CategoryIcon />, path:"/dashboard/package-settings"}
+];
 
   const hoteliersSubItems = [
     { label: "All Hoteliers", icon: <GroupAddIcon />, path: "/dashboard/hoteliers" },
