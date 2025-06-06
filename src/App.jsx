@@ -23,6 +23,9 @@ import Profile from './pages/profile/Profile.jsx';
 import HotelierDetails from "./pages/hoteliers/HotelierDetails.jsx";
 import HoteliersTab from "./pages/hoteliers/HoteliersTab.jsx";
 import Home from "./pages/website/Home.jsx";
+import HelicopterList from "./pages/HelicopterList.jsx";
+import DestinationWeddingList from "./pages/DestinationWeddingList.jsx";
+import SelfDriveList from "./pages/SelfDriveList.jsx";
 
 
 
@@ -83,6 +86,18 @@ function App() {
         {
           path: "/dashboard/flights",
           element: <FlightsList />,
+        },
+        {
+          path: "/dashboard/helicopters",
+          element: <HelicopterList />,
+        },
+        {
+          path: "/dashboard/destination-wedding",
+          element: <DestinationWeddingList />,
+        },
+        {
+          path: "/dashboard/self-drive",
+          element: <SelfDriveList />,
         },
 
         // package 

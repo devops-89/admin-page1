@@ -31,6 +31,9 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import HomeIcon from '@mui/icons-material/Home';
 
 import { useNavigate } from "react-router-dom";
+import PublicIcon from '@mui/icons-material/Public';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import BluetoothDriveIcon from '@mui/icons-material/BluetoothDrive';
 
 const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -56,6 +59,9 @@ const Sidebar = ({ open, onClose }) => {
     { label: "Hotel Booking", icon: <HotelIcon />, path: "/dashboard/hotels" },
     { label: "Flight Booking", icon: <FlightIcon />, path: "/dashboard/flights"},
     { label: "Cab Booking", icon: <LocalTaxiIcon />, path: "/dashboard/cabs" },
+    { label: "Helicopter Booking", icon: <PublicIcon />, path: "/dashboard/helicopters" },
+    { label: "Destination Wedding", icon: <AddLocationIcon />, path: "/dashboard/destination-wedding" },
+    { label: "Self Drive", icon: <BluetoothDriveIcon />, path: "/dashboard/self-drive" },
   ];
 
  const packagesSubItems = [

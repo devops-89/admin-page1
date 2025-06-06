@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone";
 import CloseIcon from '@mui/icons-material/Close';
 import logo from '../assets/logo.png'
 
-const ImageUpload = () => {
+const ImageUpload = ({field_name}) => {
     const [image, setImage] = useState(null);
 
     const onDrop = (acceptedFiles) => {
@@ -15,7 +15,7 @@ const ImageUpload = () => {
         }
     };
 
-    console.log("himanshu", image===null?logo:image)
+
     const removeImage = () => {
         setImage(null);
     };
@@ -36,7 +36,7 @@ const ImageUpload = () => {
             <Box sx={{ display: 'flex', flexDirection:{xs:'column', sm:'column', md:'row'} }}>
                 <Box>
                 <FormLabel htmlFor='profile-upload' sx={{ fontWeight: 500, color:'var(--black-color)', fontSize:'18px' }}>
-                    Profile
+                    {field_name}
                 </FormLabel>
 
                     {image!==null ?
@@ -47,8 +47,9 @@ const ImageUpload = () => {
                                 height: '150px',
                                 borderRadius: 1,
                                 overflow: 'hidden',
-                                border: '1px solid var(--black-color)',
+                                border: '1px dashed var(--sidebar-color)',
                                 marginTop:'15px',
+                                padding:'10px',
                                 marginX:{xs:'auto', sm:'auto', md:'unset'}
                             }}
                         >
@@ -76,8 +77,9 @@ const ImageUpload = () => {
                                 height: '150px',
                                 borderRadius: 1,
                                 overflow: 'hidden',
-                                border: '1px solid var(--black-color)',
+                                border: '1px dashed var(--sidebar-color)',
                                 marginTop:'15px',
+                                padding:'10px',
                                 marginX:{xs:'auto', sm:'auto', md:'unset'}
                             }}>
                                 <img
@@ -104,8 +106,7 @@ const ImageUpload = () => {
                     }}
                 >
                     <input {...getInputProps()} />
-                    <Typography>Drop File To Upload</Typography>
-                    <Typography variant="body2">or</Typography>
+                    <Typography sx={{color:'var(--light-dark-color)', marginBottom:'8px'}}>File Upload</Typography>
                     <Button variant="contained" sx={{backgroundColor: "var(--orange-color)"}}>
                         Upload an Image
                     </Button>
