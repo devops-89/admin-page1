@@ -4,8 +4,10 @@
 
 const authenticationBaseUrl="https://dev.page1travels.com/auth";
 const packageBaseUrl="https://dev.page1travels.com/admin";
+const baseURL = "https://dev.page1travels.com";
 
 export const APIURL={
     authenticationUrl:`${authenticationBaseUrl}/api`,
-    packageUrl:`${packageBaseUrl}/api`
+    packageUrl:`${packageBaseUrl}/api`,
+    extraDetailUrl : `${baseURL}/utility-services/api/`
 }
