@@ -27,6 +27,8 @@ import HelicopterList from "./pages/HelicopterList.jsx";
 import DestinationWeddingList from "./pages/DestinationWeddingList.jsx";
 import SelfDriveList from "./pages/SelfDriveList.jsx";
 import ComissionSettings from "./pages/comission/ComissionSettings.jsx";
+import Activities from "./pages/Activities.jsx";
+import OutstationCabs from "./pages/OutstationCabs.jsx";
 
 
 
@@ -99,6 +101,14 @@ function App() {
         {
           path: "/dashboard/self-drive",
           element: <SelfDriveList />,
+        },
+         {
+          path: "/dashboard/outstation-cabs",
+          element: <OutstationCabs />,
+        },
+         {
+          path: "/dashboard/activities",
+          element: <Activities />,
         },
 
         // package 

@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import CategoryIcon from "@mui/icons-material/Category";
+import RowingIcon from '@mui/icons-material/Rowing';
+
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import ReviewsIcon from "@mui/icons-material/RateReview";
@@ -21,6 +22,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import DomainAddIcon from "@mui/icons-material/DomainAdd";
+import TaxiAlertIcon from '@mui/icons-material/TaxiAlert';
 import { useTheme, useMediaQuery } from "@mui/material";
 import HikingIcon from "@mui/icons-material/Hiking";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
@@ -63,6 +65,8 @@ const Sidebar = ({ open, onClose }) => {
     { label: "Helicopter Booking", icon: <PublicIcon />, path: "/dashboard/helicopters" },
     { label: "Destination Wedding", icon: <AddLocationIcon />, path: "/dashboard/destination-wedding" },
     { label: "Self Drive", icon: <BluetoothDriveIcon />, path: "/dashboard/self-drive" },
+    { label: "Outstation Cabs", icon: <TaxiAlertIcon />, path: "/dashboard/outstation-cabs" },
+    { label: "Activities", icon: <RowingIcon />, path: "/dashboard/activities" },
   ];
 
   const packagesSubItems = [
