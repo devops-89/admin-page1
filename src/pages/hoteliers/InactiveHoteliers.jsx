@@ -38,7 +38,7 @@ const InactiveHoteliers = ({
     para: "These are the hoteliers currently marked as inactive in the system.",
   };
 
-  const inactiveHoteliers = data.filter((customer) => customer.status === "inactive");
+  const inactiveHoteliers = data.filter((hotlier) => hotlier.status === "INACTIVE");
 
   const filteredData = inactiveHoteliers.filter((item) =>
     columns.some((column) =>

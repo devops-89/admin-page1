@@ -39,7 +39,7 @@ const ActiveHoteliers = ({
     para: "These are the hoteliers currently marked as active in the system.",
   };
 
-  const activeHoteliers = data.filter((customer) => customer.status === "active");
+  const activeHoteliers = data.filter((hotlier) => hotlier.status === "ACTIVE");
 
   const filteredData = activeHoteliers.filter((item) =>
     columns.some((column) =>
@@ -162,7 +162,9 @@ const ActiveHoteliers = ({
                             );
               
                           case "status":
-                            return <span className={item[column.key] == 'active' ? 'green' : 'red'}>{item[column.key]}</span>
+                            return <span className={item[column.key] == 'ACTIVE' ? 'green' : 'red'}>{item[column.key]}</span>
+                          case "verify_status":
+                            return <span className={item[column.key] == 'VERIFIED' ? 'green' : 'red'}>{item[column.key]}</span>
                           default:
                             return item[column.key] || "-";
                         }

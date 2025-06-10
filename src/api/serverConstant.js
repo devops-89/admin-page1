@@ -4,8 +4,16 @@
 
 const authenticationBaseUrl="https://dev.page1travels.com/auth";
 const packageBaseUrl="https://dev.page1travels.com/admin";
+const baseURL = "https://dev.page1travels.com";
+const comissionBaseUrl="https://dev.page1travels.com/admin"
+const testHotlierUrl="http://localhost:3005";
+
+
 
 export const APIURL={
     authenticationUrl:`${authenticationBaseUrl}/api`,
-    packageUrl:`${packageBaseUrl}/api`
+    packageUrl:`${packageBaseUrl}/api`,
+    extraDetailUrl : `${baseURL}/utility-services/api/`,
+    hotlierUrl:`${testHotlierUrl}/api`,
+    comissionUrl:`${comissionBaseUrl}/api`
 }

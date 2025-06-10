@@ -6,6 +6,7 @@ import InactiveHoteliers from "./InactiveHoteliers";
 import { CustomerController } from "../../api/customerController";
 import { useDebounce } from "../../hooks/debounce";
 import { hoteler_list } from "../../assets/data";
+import { HotlierController } from "../../api/hotlier.controller";
 
 const HoteliersTab = () => {
   
@@ -20,36 +21,31 @@ const HoteliersTab = () => {
   const columns = [
     { key: "avatar", label: "Profile" },
     { key: "full_name", label: "Name" },
-    { key: "role", label: "Role" },
+  
     { key: "email", label: "Email" },
-    { key: "phone_no", label: "Phone No." },
-    { key: "address", label: "Address" },
-    { key: "city", label: "City" },
-    { key: "state", label: "State" },
-    { key: "status", label: "Status" }
+    { key: "phone_number", label: "Phone No." },
+   
+    { key: "country_code", label: "Country Code" },
+    { key: "status", label: "Status" },
+     { key: "verify_status", label: "Verify Status" },
+
+
   ];
   
 
   const totalPages = Math.ceil(totalDoc / pageSize);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await CustomerController.getCustomerList(
-          pageSize,
-          page,
-          debounceSearchTerm
-        );
-        // setData(res.data.data.docs);
-        setData(hoteler_list);
-        setTotalDoc(res.data.data.totalDocs);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  useEffect(()=>{
+         HotlierController.getHotlier().then((response)=>{
+              console.log("Hotliers:",response.data.data);
+            setData(response.data.data.docs);
+        setTotalDoc(response.data.data.totalDocs);
+         }).catch((error)=>{
+          console.log(error);
+         })
+  },[]);
 
-    fetchData();
-  }, [page, pageSize, debounceSearchTerm]);
+
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);

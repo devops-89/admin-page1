@@ -1,19 +1,38 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid2";
-import { Box, Button, FormLabel, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  Select,
+  MenuItem,
+  Button,
+  FormLabel,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { HotlierValidationSchema } from "../../utils/validationSchema";
 import { Form, Formik } from "formik";
 import { Link } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 const AddHoteliers = () => {
-
+  const initialValue={
+         "email": "",
+        "password": "",
+        "full_name": "",
+        "phone_number": "",
+        "country_code": "+91"
+  };
   const [image, setImage] = useState(null);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
     if (file) {
-      const filePreview = Object.assign(file, { preview: URL.createObjectURL(file) });
+      const filePreview = Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
       setImage(filePreview);
     }
   };
@@ -25,19 +44,18 @@ const AddHoteliers = () => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      'image/jpeg': [],
-      'image/png': [],
-      'image/gif': [],
-      'image/svg+xml': [],
-      'image/jpg': [],
+      "image/jpeg": [],
+      "image/png": [],
+      "image/gif": [],
+      "image/svg+xml": [],
+      "image/jpg": [],
     },
     multiple: false,
   });
 
-
   return (
     <>
-      <Grid container sx={{ marginBottom: '10px' }}>
+      <Grid container sx={{ marginBottom: "10px" }}>
         <Grid size={{ xs: 12, sm: 9 }}>
           <Typography
             variant="h4"
@@ -45,7 +63,7 @@ const AddHoteliers = () => {
               fontSize: "18px",
               fontWeight: "600",
               marginBottom: "5px",
-              textAlign: { xs: "center", sm: "start" }
+              textAlign: { xs: "center", sm: "start" },
             }}
           >
             Add Hotelier Details
@@ -56,20 +74,42 @@ const AddHoteliers = () => {
               fontSize: "15px",
               fontWeight: "400",
               marginBottom: "5px",
-              textAlign: { xs: "center", sm: "start" }
+              textAlign: { xs: "center", sm: "start" },
             }}
           >
             Submit Hotelier's Personal and Professional Details
           </Typography>
         </Grid>
-        <Grid size={{ xs: 12, sm: 3 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-end' } }}>
-          <Link to='/dashboard/hoteliers'><Button variant="contained" sx={{ backgroundColor: 'var(--orange-color)', marginBottom: '15px' }}>View All Hoteliers</Button></Link>
+        <Grid
+          size={{ xs: 12, sm: 3 }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: { xs: "center", sm: "flex-end" },
+          }}
+        >
+          <Link to="/dashboard/hoteliers">
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "var(--orange-color)",
+                marginBottom: "15px",
+              }}
+            >
+              View All Hoteliers
+            </Button>
+          </Link>
         </Grid>
       </Grid>
 
-
-      <Formik>
-        <Form>
+      <Formik initialValues={initialValue} validationSchema={HotlierValidationSchema} onSubmit={(values,{resetForm})=>{
+          console.log("Form values are:",values);
+          resetForm();
+      }}  >
+        {
+          ({values,errors,handleBlur,handleChange})=>{
+            return (
+                    <Form>
           <Grid container spacing={2}>
             <Grid
               size={{ xs: 12, sm: 12, md: 12, lg: 9 }}
@@ -78,20 +118,26 @@ const AddHoteliers = () => {
               <Grid
                 sx={{
                   backgroundColor: "var(--white-color)",
-                  padding: "20px",
+                  padding: "30px",
                   display: "flex",
                   flexWrap: "wrap",
                   gap: "10px",
                 }}
               >
-                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
-                  <FormLabel htmlFor="hotelier-name" sx={{ fontWeight: 500 }}>
+                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%",my:1 }}>
+                  <FormLabel htmlFor="full_name" sx={{ fontWeight: 500 }}>
                     Full Name
                   </FormLabel>
                   <TextField
-                    id="hotelier-name"
+                    id="full_name"
                     variant="outlined"
                     placeholder="Full Name"
+                    name="full_name"
+                    value={values.full_name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(errors.full_name)}
+                    helperText={errors.full_name}
                     fullWidth
                     required
                     sx={{
@@ -106,7 +152,7 @@ const AddHoteliers = () => {
                   />
                 </Grid>
 
-                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%",my:1 }}>
                   <FormLabel htmlFor="role" sx={{ fontWeight: 500 }}>
                     Role
                   </FormLabel>
@@ -134,14 +180,20 @@ const AddHoteliers = () => {
                   />
                 </Grid>
 
-                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
-                  <FormLabel htmlFor="hotelier-email" sx={{ fontWeight: 500 }}>
+                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" ,my:1}}>
+                  <FormLabel htmlFor="email" sx={{ fontWeight: 500 }}>
                     Email
                   </FormLabel>
                   <TextField
                     id="hotelier-email"
                     variant="outlined"
                     placeholder="Email"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(errors.email)}
+                    helperText={errors.email}
                     type="email"
                     fullWidth
                     required
@@ -157,14 +209,20 @@ const AddHoteliers = () => {
                   />
                 </Grid>
 
-                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
-                  <FormLabel htmlFor="hotelier-phone" sx={{ fontWeight: 500 }}>
+                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%",my:1 }}>
+                  <FormLabel htmlFor="phone_number" sx={{ fontWeight: 500 }}>
                     Phone
                   </FormLabel>
                   <TextField
-                    id="hotelier-phone"
+                    id="phone_number"
                     variant="outlined"
                     placeholder="Phone"
+                    name="phone_number"
+                    value={values.phone_number}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(errors.phone_number)}
+                    helperText={errors.phone_number}
                     fullWidth
                     required
                     sx={{
@@ -179,18 +237,23 @@ const AddHoteliers = () => {
                   />
                 </Grid>
 
-                <Grid size={{ sx: 12 }} sx={{ width: "100%" }}>
+                <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%",my:1 }}>
                   <FormLabel
-                    htmlFor="hotelier-password"
+                    htmlFor="password"
                     sx={{ fontWeight: 500 }}
                   >
                     Password
                   </FormLabel>
                   <TextField
-                    id="hotelier-password"
+                    id="password"
                     variant="outlined"
                     placeholder="Password"
                     type="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(errors.password)}
+                    helperText={errors.password}
                     fullWidth
                     required
                     sx={{
@@ -204,9 +267,47 @@ const AddHoteliers = () => {
                     }}
                   />
                 </Grid>
+
+              <Grid item sx={{ width: "100%",my:1 }} size={{ sx: 12, sm: 6 }}>
+  <FormControl fullWidth required >
+    <FormLabel htmlFor="country_code" sx={{ fontWeight: 500 }}>
+      Country Code
+    </FormLabel>
+    <Select
+      id="country_code"
+      defaultValue="+91"
+      displayEmpty
+      name="country_code"
+      value={values.country_code}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      variant="outlined"
+      sx={{
+        marginTop: 1,
+        color: "var(--black-color)",
+        backgroundColor: "white",
+        ".MuiOutlinedInput-notchedOutline": {
+          borderColor: "rgba(0, 0, 0, 0.23)",
+        },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--orange-color)",
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--orange-color)",
+        },
+      }}
+    >
+      <MenuItem value="+91">+91 (India)</MenuItem>
+      <MenuItem value="+1">+1 (USA)</MenuItem>
+      <MenuItem value="+44">+44 (UK)</MenuItem>
+      <MenuItem value="+61">+61 (Australia)</MenuItem>
+      <MenuItem value="+81">+81 (Japan)</MenuItem>
+    </Select>
+  </FormControl>
+</Grid>
               </Grid>
 
-              <Grid
+              {/* <Grid
                 sx={{
                   backgroundColor: "var(--white-color)",
                   padding: "20px",
@@ -335,7 +436,7 @@ const AddHoteliers = () => {
                     }}
                   />
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Grid>
 
             <Grid size={{ xs: 12, sm: 12, md: 12, lg: 3 }}>
@@ -348,19 +449,22 @@ const AddHoteliers = () => {
                   gap: "20px",
                 }}
               >
-                <Grid size={{ sx: 12 }} sx={{ width: '100%' }}>
-                  <Box sx={{ width: '100%', marginTop: 2 }}>
-                    <FormLabel htmlFor='profile-upload' sx={{ fontWeight: 500 }}>
+                <Grid size={{ sx: 12 }} sx={{ width: "100%",my:1 }}>
+                  <Box sx={{ width: "100%", marginTop: 2 }}>
+                    <FormLabel
+                      htmlFor="profile-upload"
+                      sx={{ fontWeight: 500 }}
+                    >
                       Profile
                     </FormLabel>
                     <Box
                       {...getRootProps()}
                       sx={{
-                        border: '1px dashed gray',
-                        padding: '20px',
-                        textAlign: 'center',
-                        cursor: 'pointer',
-                        marginTop: 1
+                        border: "1px dashed gray",
+                        padding: "20px",
+                        textAlign: "center",
+                        cursor: "pointer",
+                        marginTop: 1,
                       }}
                     >
                       <input {...getInputProps()} />
@@ -374,26 +478,30 @@ const AddHoteliers = () => {
                       {image && (
                         <Box
                           sx={{
-                            position: 'relative',
+                            position: "relative",
                             width: 100,
                             height: 100,
                             borderRadius: 1,
-                            overflow: 'hidden',
-                            border: '1px solid var(--black-color)',
+                            overflow: "hidden",
+                            border: "1px solid var(--black-color)",
                           }}
                         >
                           <img
                             src={image.preview}
                             alt="preview"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
                           />
                           <IconButton
                             size="small"
                             sx={{
-                              position: 'absolute',
+                              position: "absolute",
                               top: 2,
                               right: 2,
-                              backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                              backgroundColor: "rgba(255, 255, 255, 0.7)",
                             }}
                             onClick={removeImage}
                           >
@@ -405,9 +513,8 @@ const AddHoteliers = () => {
                   </Box>
                 </Grid>
 
-
                 <Grid sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography variant="h6">Publish</Typography>
+                
                   <Button
                     type="submit"
                     fullWidth
@@ -428,6 +535,10 @@ const AddHoteliers = () => {
             </Grid>
           </Grid>
         </Form>
+            )
+          }
+        }
+    
       </Formik>
     </>
   );

@@ -33,6 +33,14 @@ export const packagePublicApi=axios.create({
   baseURL:APIURL.packageUrl,
 })
 
+export const hotlierPublicApi=axios.create({
+  baseURL:APIURL.hotlierUrl
+})
+
+export const comissionPublicApi=axios.create({
+  baseURL:APIURL.comissionUrl
+})
+
 export const publicApi = axios.create({
   baseURL: APIURL.authenticationUrl,
 });

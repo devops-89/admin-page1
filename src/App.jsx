@@ -26,6 +26,7 @@ import Home from "./pages/website/Home.jsx";
 import HelicopterList from "./pages/HelicopterList.jsx";
 import DestinationWeddingList from "./pages/DestinationWeddingList.jsx";
 import SelfDriveList from "./pages/SelfDriveList.jsx";
+import ComissionSettings from "./pages/comission/ComissionSettings.jsx";
 
 
 
@@ -113,18 +114,14 @@ function App() {
           path:"/dashboard/package-settings",
           element:<PackageSettings />
         },
-
-
-        // staff 
-        {
-          path: "/dashboard/add-staff",
-          element: <AddStaff />,
-        },
         {
           path: "/dashboard/profile",
           element: <Profile />,
         },
-
+          {
+          path: "/dashboard/comission",
+          element: <ComissionSettings />,
+        },
         {
           path: "/dashboard/home",
           element: <Home />,
