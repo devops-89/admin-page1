@@ -35,7 +35,7 @@ const OutstationCabs = () => {
             .filter((item) => item !== null);
 
           setOutstationCabsData(parsedData);
-          console.log("parsedData------------",parsedData)
+          // console.log("parsedData------------",parsedData)
         } else {
           setOutstationCabsData([]);
         }

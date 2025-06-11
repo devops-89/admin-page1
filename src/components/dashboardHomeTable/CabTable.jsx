@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { ExtraDetailController } from "../api/extraDetailController";
-import { Enquiry_Type } from "../utils/enum";
 import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
+  Typography,
   TableContainer,
+  Table,
   TableHead,
   TableRow,
-  
-  Typography,
+  TableCell,
+  TableBody,
   Box,
+  Paper,
 } from "@mui/material";
-import ReactLoading from "react-loading";
-import {COLORS} from "../utils/colors.js";
+import { useEffect, useState } from "react";
+import { ExtraDetailController } from "../../api/extraDetailController";
+import { Enquiry_Type } from "../../utils/enum";
 
-const CabsList = () => {
+
+const CabTable = ({setLoading}) => {
   const [cabsData, setCabsData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -35,51 +32,35 @@ const CabsList = () => {
               }
             })
             .filter((item) => item !== null);
+            
 
           setCabsData(parsedData.reverse());
           // console.log("parsedData------------",parsedData)
         } else {
           setCabsData([]);
         }
-        setLoading(false);
+         setLoading((prev) => ({
+          ...prev,
+          CabLoading: false,
+        }));
       })
       .catch((err) => {
         setError(err);
-        setLoading(false);
+         setLoading((prev) => ({
+          ...prev,
+          CabLoading: false,
+        }));
         setCabsData([]);
       });
   }, []);
 
   const CabsTableFields = [
-    { key: "capacity", value: "Capacity" },
-    { key: "date", value: "Date" },
+     { key: "taxiType", value: "Taxi Type" },
     { key: "drop", value: "Drop" },
-    { key: "email", value: "Email" },
-    { key: "fullName", value: "FullName" },
-    { key: "phoneNumber", value: "Phone Number" },
+    { key: "fullName", value: "Name" },
     { key: "pickup", value: "Pick Up" },
     { key: "taxiType", value: "Taxi Type" },
   ];
-
-  if (loading) {
-    return (
-    <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 300,
-                        }}
-                      >
-                        <ReactLoading
-                          type="bars"
-                          width={40}
-                          height={40}
-                          color={COLORS.PRIMARY}
-                        />
-                      </Box>
-    );
-  }
 
   if (error) {
     return (
@@ -112,25 +93,24 @@ const CabsList = () => {
             },
           }}
         >
-          Cab Bookings
+          Recent Cab Bookings
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: "15px",
             fontWeight: "400",
-            marginBottom: "5px",
             textAlign: { xs: "center", sm: "center", md: "start" },
             "@media (min-width: 831px) and (max-width: 900px)": {
               textAlign: "start",
             },
           }}
         >
-          Track and Respond to Cab Booking Enquiries
+          Track and Respond to your Recent Cab Booking Enquiries
         </Typography>
       </Box>
 
-      <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
+      <TableContainer component={Paper} sx={{ margin: "auto", mt: 2 }}>
         <Table stickyHeader aria-label="cab enquiries table">
           <TableHead>
             <TableRow>
@@ -140,6 +120,7 @@ const CabsList = () => {
                     fontWeight: 500,
                     backgroundColor: "#000",
                     color: "#fff",
+                    py:1
                   }}
                   key={index}
                 >
@@ -149,7 +130,7 @@ const CabsList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cabsData.map((enquiryObject, rowIndex) => (
+            {cabsData.slice(0, 5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover
@@ -176,4 +157,4 @@ const CabsList = () => {
   );
 };
 
-export default CabsList;
+export default CabTable;

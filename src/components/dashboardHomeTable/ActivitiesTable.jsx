@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { ExtraDetailController } from "../api/extraDetailController";
-import { Enquiry_Type } from "../utils/enum";
+import { useEffect, useState } from "react";
+
 import {
   Paper,
   Table,
@@ -9,20 +8,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  
   Typography,
   Box,
 } from "@mui/material";
-import ReactLoading from "react-loading";
-import {COLORS} from "../utils/colors.js";
+import { ExtraDetailController } from "../../api/extraDetailController";
+import { Enquiry_Type } from "../../utils/enum";
 
-const CabsList = () => {
-  const [cabsData, setCabsData] = useState(null);
-  const [loading, setLoading] = useState(true);
+const ActivitiesTable = ({setLoading}) => {
+  const [activitiesData, setActivitiesData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.CABS)
+    ExtraDetailController.getExtraSerivce(Enquiry_Type.ACTIVITIE)
       .then((res) => {
         const rawData = res?.data?.data;
         if (rawData && Array.isArray(rawData)) {
@@ -36,50 +33,33 @@ const CabsList = () => {
             })
             .filter((item) => item !== null);
 
-          setCabsData(parsedData.reverse());
-          // console.log("parsedData------------",parsedData)
+          setActivitiesData(parsedData.reverse());
+        //   console.log("parsedData------------",parsedData)
         } else {
-          setCabsData([]);
+          setActivitiesData([]);
         }
-        setLoading(false);
+       setLoading((prev) => ({
+          ...prev,
+          ActivitiesLoading: false,
+        }));
       })
       .catch((err) => {
         setError(err);
-        setLoading(false);
-        setCabsData([]);
+        setLoading((prev) => ({
+          ...prev,
+          ActivitiesLoading: false,
+        }));
+        setActivitiesData([]);
       });
   }, []);
 
-  const CabsTableFields = [
-    { key: "capacity", value: "Capacity" },
-    { key: "date", value: "Date" },
-    { key: "drop", value: "Drop" },
+  const AcitvitiesTableFields = [
+    { key: "name", value: "Name" },
     { key: "email", value: "Email" },
-    { key: "fullName", value: "FullName" },
-    { key: "phoneNumber", value: "Phone Number" },
-    { key: "pickup", value: "Pick Up" },
-    { key: "taxiType", value: "Taxi Type" },
+    { key: "mobile", value: "Phone" },
+    { key: "activity", value: "Activity" },
   ];
 
-  if (loading) {
-    return (
-    <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 300,
-                        }}
-                      >
-                        <ReactLoading
-                          type="bars"
-                          width={40}
-                          height={40}
-                          color={COLORS.PRIMARY}
-                        />
-                      </Box>
-    );
-  }
 
   if (error) {
     return (
@@ -89,10 +69,10 @@ const CabsList = () => {
     );
   }
 
-  if (!cabsData || cabsData.length === 0) {
+  if (!activitiesData || activitiesData.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <p>No Cabs enquiry data available.</p>
+        <p>No Activity enquiry data available.</p>
       </div>
     );
   }
@@ -112,34 +92,34 @@ const CabsList = () => {
             },
           }}
         >
-          Cab Bookings
+          Recent Activity Bookings
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: "15px",
             fontWeight: "400",
-            marginBottom: "5px",
             textAlign: { xs: "center", sm: "center", md: "start" },
             "@media (min-width: 831px) and (max-width: 900px)": {
               textAlign: "start",
             },
           }}
         >
-          Track and Respond to Cab Booking Enquiries
+          Track and Respond to your Recent Activity Booking Enquiries
         </Typography>
       </Box>
 
-      <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
+      <TableContainer component={Paper} sx={{ margin: "auto", mt: 2 }}>
         <Table stickyHeader aria-label="cab enquiries table">
           <TableHead>
             <TableRow>
-              {CabsTableFields.map((tableHeading, index) => (
+              {AcitvitiesTableFields.map((tableHeading, index) => (
                 <TableCell
                   sx={{
                     fontWeight: 500,
                     backgroundColor: "#000",
                     color: "#fff",
+                    py:1
                   }}
                   key={index}
                 >
@@ -149,7 +129,7 @@ const CabsList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cabsData.map((enquiryObject, rowIndex) => (
+            {activitiesData.slice(0,5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover
@@ -162,7 +142,7 @@ const CabsList = () => {
                   },
                 }}
               >
-                {CabsTableFields.map((field, colIndex) => (
+                {AcitvitiesTableFields.map((field, colIndex) => (
                   <TableCell key={colIndex}>
                     {String(enquiryObject[field.key]) || ""}
                   </TableCell>
@@ -176,4 +156,4 @@ const CabsList = () => {
   );
 };
 
-export default CabsList;
+export default ActivitiesTable;

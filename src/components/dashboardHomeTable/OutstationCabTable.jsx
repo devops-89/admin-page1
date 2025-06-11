@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ExtraDetailController } from "../api/extraDetailController";
-import { Enquiry_Type } from "../utils/enum";
 import {
   Paper,
   Table,
@@ -9,20 +7,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  
   Typography,
   Box,
 } from "@mui/material";
-import ReactLoading from "react-loading";
-import {COLORS} from "../utils/colors.js";
+import { ExtraDetailController } from "../../api/extraDetailController";
+import { Enquiry_Type } from "../../utils/enum";
 
-const CabsList = () => {
-  const [cabsData, setCabsData] = useState(null);
-  const [loading, setLoading] = useState(true);
+const OutstationCabTable = ({setLoading}) => {
+  const [outstationCabsData, setOutstationCabsData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.CABS)
+    ExtraDetailController.getExtraSerivce(Enquiry_Type.OUTSTATION_CABS)
       .then((res) => {
         const rawData = res?.data?.data;
         if (rawData && Array.isArray(rawData)) {
@@ -36,50 +32,35 @@ const CabsList = () => {
             })
             .filter((item) => item !== null);
 
-          setCabsData(parsedData.reverse());
-          // console.log("parsedData------------",parsedData)
+          setOutstationCabsData(parsedData.reverse());
+        //   console.log("parsedData------------",parsedData)
         } else {
-          setCabsData([]);
+          setOutstationCabsData([]);
         }
-        setLoading(false);
+        setLoading((prev) => ({
+          ...prev,
+          OutstationLoading: false,
+        }));
       })
       .catch((err) => {
         setError(err);
-        setLoading(false);
-        setCabsData([]);
+        setLoading((prev) => ({
+          ...prev,
+          OutstationLoading: false,
+        }));
+        setOutstationCabsData([]);
       });
   }, []);
 
-  const CabsTableFields = [
-    { key: "capacity", value: "Capacity" },
-    { key: "date", value: "Date" },
-    { key: "drop", value: "Drop" },
-    { key: "email", value: "Email" },
-    { key: "fullName", value: "FullName" },
-    { key: "phoneNumber", value: "Phone Number" },
-    { key: "pickup", value: "Pick Up" },
-    { key: "taxiType", value: "Taxi Type" },
+  const OutstationCabsTableFields = [
+     { key: "pickupLocation", value: "PickUp" },
+    { key: "dropLocation", value: "Drop" },
+    { key: "pickupDate", value: "PickUp Date" },
+    { key: "returnDate", value: "Return Date" },
+    { key: "pickupTime", value: "P.Time" },
+    { key: "numberOfPerson", value: "Persons" },
   ];
 
-  if (loading) {
-    return (
-    <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 300,
-                        }}
-                      >
-                        <ReactLoading
-                          type="bars"
-                          width={40}
-                          height={40}
-                          color={COLORS.PRIMARY}
-                        />
-                      </Box>
-    );
-  }
 
   if (error) {
     return (
@@ -89,10 +70,10 @@ const CabsList = () => {
     );
   }
 
-  if (!cabsData || cabsData.length === 0) {
+  if (!outstationCabsData || outstationCabsData.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <p>No Cabs enquiry data available.</p>
+        <p>No Outstation Cabs enquiry data available.</p>
       </div>
     );
   }
@@ -112,34 +93,34 @@ const CabsList = () => {
             },
           }}
         >
-          Cab Bookings
+          Recent Outstation Cabs Bookings
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: "15px",
             fontWeight: "400",
-            marginBottom: "5px",
             textAlign: { xs: "center", sm: "center", md: "start" },
             "@media (min-width: 831px) and (max-width: 900px)": {
               textAlign: "start",
             },
           }}
         >
-          Track and Respond to Cab Booking Enquiries
+          Track and Respond to your Recent Outstation Cabs Booking Enquiries
         </Typography>
       </Box>
 
-      <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
+      <TableContainer component={Paper} sx={{ margin: "auto", mt: 2 }}>
         <Table stickyHeader aria-label="cab enquiries table">
           <TableHead>
             <TableRow>
-              {CabsTableFields.map((tableHeading, index) => (
+              {OutstationCabsTableFields.map((tableHeading, index) => (
                 <TableCell
                   sx={{
                     fontWeight: 500,
                     backgroundColor: "#000",
                     color: "#fff",
+                    py:1
                   }}
                   key={index}
                 >
@@ -149,7 +130,7 @@ const CabsList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cabsData.map((enquiryObject, rowIndex) => (
+            {outstationCabsData.slice(0,5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover
@@ -162,10 +143,14 @@ const CabsList = () => {
                   },
                 }}
               >
-                {CabsTableFields.map((field, colIndex) => (
+                {OutstationCabsTableFields.map((field, colIndex) => (
+                    <>
+                    {/* {console.log("field-----------",enquiryObject)} */}
                   <TableCell key={colIndex}>
-                    {String(enquiryObject[field.key]) || ""}
+                    {enquiryObject[field.key] ? String(enquiryObject[field.key]) : "-"}
+
                   </TableCell>
+                  </>
                 ))}
               </TableRow>
             ))}
@@ -176,4 +161,4 @@ const CabsList = () => {
   );
 };
 
-export default CabsList;
+export default OutstationCabTable;
