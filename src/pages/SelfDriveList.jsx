@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { ExtraDetailController } from '../api/extraDetailController';
 import { Enquiry_Type } from '../utils/enum';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Box, Typography } from '@mui/material';
-
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,Box, Typography } from '@mui/material';
+import ReactLoading from "react-loading";
+import {COLORS} from "../utils/colors.js";
 const SelfDriveList = () => {
   const [selfDriveData, setSelfDriveData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,9 +56,21 @@ const SelfDriveList = () => {
 
   if (loading) {
     return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <CircularProgress />
-      </div>
+       <Box
+                             sx={{
+                               display: "flex",
+                               justifyContent: "center",
+                               alignItems: "center",
+                               height: 300,
+                             }}
+                           >
+                             <ReactLoading
+                               type="bars"
+                               width={40}
+                               height={40}
+                               color={COLORS.PRIMARY}
+                             />
+                           </Box>
     );
   }
 

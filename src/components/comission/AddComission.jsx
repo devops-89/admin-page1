@@ -25,7 +25,7 @@ const AddComission = ({ onAddSuccess }) => {
   const initialValues = {
     type: "FLIGHT_ONEWAY_DOMESTIC",
     commission_type: "PERCENTAGE",
-    percentage: 0.0,
+    percentage: 0,
     status: true,
   };
 

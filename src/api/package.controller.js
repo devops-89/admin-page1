@@ -57,15 +57,29 @@ export const PackageController = {
       throw error;
     }
   },
-  addCategory: async (data)=>{
+  updateCategories: async (id,data)=>{
     try{
-       const result=await packagePublicApi.post("/package/category/add",data);
+       const result=await packagePublicApi.post(`/package/category/update?id=${id}`,data);
        return result;
     }
-    catch(error){
+    catch(error)
+    {
       throw error;
     }
   },
+ addCategory: async (data) => {
+  try {
+    const config = {};
+    // If data is FormData, let axios send multipart/form-data
+    if (data instanceof FormData) {
+      config.headers = { "Content-Type": "multipart/form-data" };
+    }
+    const result = await packagePublicApi.post("/package/category/add", data, config);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+},
   createPackage:async (data)=>{
     try{
       const result=await packagePublicApi.post("package/create",data);

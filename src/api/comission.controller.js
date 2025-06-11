@@ -18,5 +18,15 @@ export const ComissionController={
         catch(error){
             throw error;
         }
+    },
+    updateComission: async (data)=>{
+        try{
+            const result=await comissionPublicApi.post("commission/update",data);
+            return result;
+
+        }
+        catch(error){
+           throw error;
+        }
     }
 }

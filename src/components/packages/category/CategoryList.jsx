@@ -1,6 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
-import UpdatePackage from "../../../pages/packages/UpdatePackage";
+import UpdateCategory from "./UpdateCategory";
 import {
   Table,
   TableBody,
@@ -80,7 +80,7 @@ const CategoryList = ({ data, loading }) => {
                       padding: 1,
                     }}
                   >
-                    <UpdatePackage />
+                   <UpdateCategory categoryData={row} />
                     <Button
                       variant="contained"
                       onClick={() => onDeleteClick(row.category_id)}

@@ -1,67 +1,117 @@
 import React, { useState } from "react";
-import { Formik, Form, ErrorMessage } from "formik";
-import { ErrorCode, useDropzone } from "react-dropzone";
+import { categoryValidationSchema } from "../../../utils/validationSchema";
 import Grid from "@mui/material/Grid2";
-import { categoryValidationSchema } from "../../../utils/validationSchema.js";
-import { PackageController } from "../../../api/package.controller.js";
+import Dialog from "@mui/material/Dialog";
+import { Formik, Form } from "formik";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import { PackageController } from "../../../api/package.controller";
+import { COLORS } from "../../../utils/colors";
 import {
   Box,
   Button,
   FormLabel,
-  IconButton,
+  FormControl,
+  Select,
+  MenuItem,
   Typography,
-  Paper,
   TextField,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { COLORS } from "../../../utils/colors.js";
 import ReactLoading from "react-loading";
-
-const AddCategory = ({ onAddSuccess }) => {
+import { ErrorCode, useDropzone } from "react-dropzone";
+export default function UpdateCategory({ categoryData }) {
+ console.log("Data:",categoryData);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const initialValues = {
-    category_image: [],
-    category_name: "",
-  };
+   const initialValues = {
+  category_image: categoryData?.category_image
+    ? [
+        {
+          preview: categoryData.category_image,
+          path: categoryData.category_image,
+          relativePath: categoryData.category_image,
+        },
+      ]
+    : [],
+  category_name: categoryData.category_name || "",
+};
+
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
-    <Paper sx={{ height: "auto", padding: "20px" }}>
-      <Typography
-        variant="h4"
+    <>
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
         sx={{
-          fontSize: "18px",
-          fontWeight: "600",
-          marginBottom: "5px",
-          textAlign: { xs: "center", sm: "center", md: "start" },
-          "@media (min-width: 831px) and (max-width: 900px)": {
-            textAlign: "start",
+          minWidth: "32px",
+          padding: "4px",
+          backgroundColor: "var(--orange-color)",
+          "&:hover": {
+            backgroundColor: "var(--blue-color)",
           },
         }}
       >
-        Add Category Details
-      </Typography>
+        <EditIcon fontSize="small" />
+      </Button>
 
-      <Formik
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            height: "auto",
+            borderRadius: 2,
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            m: 0,
+            p: 2,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          Update Category
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+
+        <DialogContent>
+           <Formik
         initialValues={initialValues}
         validationSchema={categoryValidationSchema}
         onSubmit={(values, { resetForm }) => {
-          console.log(values.category_image[0].file instanceof File); // should print: true
-console.log(values.category_image[0].file); // Should show a full File object with size, type, etc.
-
-          // setLoading(true);
-          // PackageController.addCategory(values)
-          //   .then((response) => {
-          //     console.log("response coming: ", response);
-          //     onAddSuccess(response.data.data);
-          //   })
-          //   .catch((error) => {
-          //     console.log(error);
-          //   })
-          //   .finally(() => {
-          //     resetForm();
-          //     setLoading(false);
-          //   });
+            console.log("Submited Values: ",values);
+          setLoading(true);
+          PackageController.updateCategories(categoryData.category_id,values)
+            .then((response) => {
+              console.log("response coming: ", response);
+              onAddSuccess(response.data.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+            .finally(() => {
+              resetForm();
+              setLoading(false);
+            });
         }}
       >
         {({ values, handleChange, handleBlur, setFieldValue, errors }) => {
@@ -72,10 +122,8 @@ console.log(values.category_image[0].file); // Should show a full File object wi
             onDrop: (acceptedFiles) => {
               const file = acceptedFiles[0];
               if (file) {
-                console.log("file",file)
                 const previewFile = {
                   preview: URL.createObjectURL(file),
-                  file,
                   path: file.path || file.name,
                   relativePath: file.path || file.name,
                 };
@@ -223,8 +271,8 @@ console.log(values.category_image[0].file); // Should show a full File object wi
           );
         }}
       </Formik>
-    </Paper>
+        </DialogContent>
+      </Dialog>
+    </>
   );
-};
-
-export default AddCategory;
+}

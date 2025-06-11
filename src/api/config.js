@@ -10,7 +10,7 @@ export const extraDetailApi = axios.create({
 });
 
 export const userSecuredApi = axios.create({
-  baseURL: APIURL.userUrl,
+  baseURL: APIURL.customerUrl,
 });
 
 userSecuredApi.interceptors.request.use((config) => {

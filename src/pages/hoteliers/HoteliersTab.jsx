@@ -7,6 +7,8 @@ import { CustomerController } from "../../api/customerController";
 import { useDebounce } from "../../hooks/debounce";
 import { hoteler_list } from "../../assets/data";
 import { HotlierController } from "../../api/hotlier.controller";
+import {COLORS} from "../../utils/colors.js";
+import ReactLoading from "react-loading";
 
 const HoteliersTab = () => {
   
@@ -125,9 +127,21 @@ const HoteliersTab = () => {
           </Box>
         </Box>
       ) : (
-        <Box sx={{ textAlign: "center", marginTop: 4 }}>
-          <CircularProgress />
-        </Box>
+        <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              height: 300,
+                            }}
+                          >
+                            <ReactLoading
+                              type="bars"
+                              width={40}
+                              height={40}
+                              color={COLORS.PRIMARY}
+                            />
+                          </Box>
       )}
     </>
   );

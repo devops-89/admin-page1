@@ -5,6 +5,8 @@ import ActiveCustomers from "./ActiveCustomers";
 import InactiveCustomers from "./InactiveCustomers";
 import { CustomerController } from "../../api/customerController";
 import { useDebounce } from "../../hooks/debounce";
+import {COLORS} from "../../utils/colors.js";
+import ReactLoading from "react-loading";
 
 const CustomersTab = () => {
   
@@ -31,13 +33,10 @@ const CustomersTab = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await CustomerController.getCustomerList(
-          pageSize,
-          page,
-          debounceSearchTerm
-        );
-        setData(res.data.data.docs);
-        setTotalDoc(res.data.data.totalDocs);
+        const result = await CustomerController.getCustomerList();
+        console.log("customers:",result);
+        setData(result.data.data.docs);
+        setTotalDoc(result.data.data.totalDocs);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -124,9 +123,21 @@ const CustomersTab = () => {
           </Box>
         </Box>
       ) : (
-        <Box sx={{ textAlign: "center", marginTop: 4 }}>
-          <CircularProgress />
-        </Box>
+        <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 300,
+                    }}
+                  >
+                    <ReactLoading
+                      type="bars"
+                      width={40}
+                      height={40}
+                      color={COLORS.PRIMARY}
+                    />
+                  </Box>
       )}
     </>
   );

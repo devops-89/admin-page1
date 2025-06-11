@@ -9,11 +9,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  CircularProgress,
   Typography,
   Box,
 } from "@mui/material";
-
+import ReactLoading from "react-loading";
+import {COLORS} from "../utils/colors.js";
 const OutstationCabs = () => {
   const [outstationCabsData, setOutstationCabsData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -62,9 +62,21 @@ const OutstationCabs = () => {
 
   if (loading) {
     return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <CircularProgress />
-      </div>
+      <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              height: 300,
+                            }}
+                          >
+                            <ReactLoading
+                              type="bars"
+                              width={40}
+                              height={40}
+                              color={COLORS.PRIMARY}
+                            />
+                          </Box>
     );
   }
 

@@ -17,6 +17,13 @@ const ComissionSettings = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const handleUpdate = (updatedItem) => {
+  setComissionList((prev) =>
+    prev.map((item) => (item.commission_id == updatedItem.commission_id ? updatedItem : item))
+  );
+};
+
+
   useEffect(() => {
     setLoading(true);
    ComissionController.getComissions()
@@ -77,7 +84,7 @@ const ComissionSettings = () => {
   return (
     <Grid container spacing={2}>
       <Grid size={8}>
-  <ComissionList data={comissionList} />
+  <ComissionList data={comissionList}  onAddSuccess={handleUpdate} />
       </Grid>
        <Grid size={4}>
   <AddComission onAddSuccess={handleComissionAdded} />

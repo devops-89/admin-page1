@@ -1,6 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
-import UpdatePackage from "../../pages/packages/UpdatePackage";
 import {
   Table,
   TableBody,
@@ -13,10 +12,11 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import UpdateComission from "./UpdateComission";
 
-const ComissionList = ({ data = [], onDeleteClick }) => {
+const ComissionList = ({ data = [], onAddSuccess }) => {
   const [page, setPage] = useState(0);
-  const rowsPerPage = 10;
+  const rowsPerPage = 8;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -49,13 +49,16 @@ const ComissionList = ({ data = [], onDeleteClick }) => {
                   <TableCell>
                     <Box
                       sx={{
-                        px:"4px",
-                        py:"2px",
+                        px: "4px",
+                        py: "2px",
                         borderRadius: 10,
                         color: row?.status === true ? "green" : "red",
                         fontWeight: "bold",
                         textAlign: "center",
-                        border: row?.status === true ? "2px solid green" : "2px solid red",
+                        border:
+                          row?.status === true
+                            ? "2px solid green"
+                            : "2px solid red",
                       }}
                     >
                       {row?.status === true ? "ACTIVE" : "INACTIVE"}
@@ -72,21 +75,11 @@ const ComissionList = ({ data = [], onDeleteClick }) => {
                         padding: 1,
                       }}
                     >
-                      <UpdatePackage packageData={row} />
-                      <Button
-                        variant="contained"
-                        onClick={() => onDeleteClick(row?.id)}
-                        sx={{
-                          minWidth: "32px",
-                          padding: "4px",
-                          backgroundColor: "var(--orange-color)",
-                          "&:hover": {
-                            backgroundColor: "var(--blue-color)",
-                          },
-                        }}
-                      >
-                        <DeleteIcon fontSize="small" />
-                      </Button>
+                      <UpdateComission
+                        onAddSuccess={onAddSuccess}
+                        comissionData={row}
+                      />
+                     
                     </Box>
                   </TableCell>
                 </TableRow>
