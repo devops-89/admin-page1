@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -28,17 +27,14 @@ const AllCustomers = ({
   pageSize,
   setPageSize,
   setPage,
-
-  totalDoc,
   page,
+  totalDoc,
 }) => {
   const navigate = useNavigate();
-  
   const table_heading = {
     heading: "Customer Details",
     para: "Manage your personal details, bookings, and preferences.",
   };
-
   const filteredData = data.filter((item) =>
     columns.some((column) =>
       String(item[column.key] || "")
@@ -46,8 +42,8 @@ const AllCustomers = ({
         .includes(debounceSearchTerm.toLowerCase())
     )
   );
-
-  // console.log(filteredData)
+  // console.log("totalDoc------------", totalDoc)
+  const totalPages = Math.ceil(totalDoc / pageSize);
   return (
     <Box>
       <Box
@@ -83,16 +79,15 @@ const AllCustomers = ({
             {table_heading.para}
           </Typography>
         </Box>
-
         <Box sx={{ display: "flex" }}>
           <FormControl size="small" sx={{ minWidth: 120 }}>
             <Select
               value={pageSize}
-              sx={{
-                backgroundColor: "var(--white-color)",
-                marginRight: "10px",
+              sx={{ backgroundColor: "var(--white-color)", marginRight: "10px" }}
+              onChange={(e) => {
+                setPageSize(parseInt(e.target.value));
+                setPage(1);
               }}
-              onChange={(e) => setPageSize(parseInt(e.target.value))}
             >
               {[5, 10, 20, 50].map((count) => (
                 <MenuItem key={count} value={count}>
@@ -101,18 +96,19 @@ const AllCustomers = ({
               ))}
             </Select>
           </FormControl>
-
           <TextField
             size="small"
             label="Search"
             variant="outlined"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setPage(1);
+            }}
             sx={{ backgroundColor: "var(--white-color)" }}
           />
         </Box>
       </Box>
-
       <TableContainer component={Paper}>
         <Table>
           <TableHead sx={{ backgroundColor: "var(--sidebar-color)" }}>
@@ -124,7 +120,7 @@ const AllCustomers = ({
                     fontSize: "16px",
                     fontWeight: "500",
                     color: "var(--white-color)",
-                    textAlign:'center'
+                    textAlign: "center",
                   }}
                 >
                   {column.label}
@@ -160,16 +156,17 @@ const AllCustomers = ({
                               />
                             );
                           case "created_at":
-                            return moment(item[column.key] || "-").format(
-                              "Do MMM YYYY"
-                            );
-
-                          case "status":
-                            return <span className={item[column.key] == 'ACTIVE' ? 'green' : 'red'}>{item[column.key]}</span>
+                            return moment(item[column.key] || "-").format("Do MMM YYYY");
                           case "last_login":
                             return item[column.key]
                               ? moment(item[column.key]).format("Do MMM YYYY")
                               : "-";
+                          case "status":
+                            return (
+                              <span className={item[column.key] === "ACTIVE" ? "green" : "red"}>
+                                {item[column.key]}
+                              </span>
+                            );
                           default:
                             return item[column.key] || "-";
                         }
@@ -180,11 +177,11 @@ const AllCustomers = ({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={
-                        () => {
-                          // console.log(item.id)
-                          navigate("/dashboard/customers/customer-details", {state : {item}})
-                        }}
+                      onClick={() =>
+                        navigate("/dashboard/customers/customer-details", {
+                          state: { item },
+                        })
+                      }
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
@@ -209,28 +206,36 @@ const AllCustomers = ({
           </TableBody>
         </Table>
       </TableContainer>
-
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
-        {/* {console.log("filteredData---", filteredData.length, "totalDoc-----------", totalDoc,"page------------", page)} */}
-        {filteredData.length > 0 ? <Pagination
-          count={totalDoc}
-          page={page}
-          onChange={(_, newPage) => setPage(newPage)}
-          sx={{
-            "& .MuiButtonBase-root": {
-              backgroundColor: "var(--orange-color)",
-              color: "var(--white-color)",
-            },
-            "& .Mui-selected": {
-              color: "var(--black-color)",
-              backgroundColor: "var(--table-head-color)",
-            },
-            "& :hover": { color: "var(--black-color)" },
-          }}
-        /> : ''}
+        {totalPages > 1 && (
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={(_, newPage) => setPage(newPage)}
+            sx={{
+              "& .MuiButtonBase-root": {
+                backgroundColor: "var(--orange-color)",
+                color: "var(--white-color)",
+              },
+              "& .Mui-selected": {
+                color: "var(--black-color)",
+                backgroundColor: "var(--table-head-color)",
+              },
+              "& :hover": { color: "var(--black-color)" },
+            }}
+          />
+        )}
       </Box>
     </Box>
   );
 };
-
 export default AllCustomers;
+
+
+
+
+
+
+
+
+

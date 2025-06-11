@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Tabs, Tab, Box, CircularProgress } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import AllCustomers from "./AllCustomers";
 import ActiveCustomers from "./ActiveCustomers";
 import InactiveCustomers from "./InactiveCustomers";
 import { CustomerController } from "../../api/customerController";
 import { useDebounce } from "../../hooks/debounce";
-import {COLORS} from "../../utils/colors.js";
 import ReactLoading from "react-loading";
-
+import {COLORS} from "../../utils/colors.js";
 const CustomersTab = () => {
-  
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -17,7 +15,6 @@ const CustomersTab = () => {
   const [totalDoc, setTotalDoc] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const debounceSearchTerm = useDebounce(searchTerm, 500);
-
   const columns = [
     { key: "avatar", label: "Profile" },
     { key: "full_name", label: "Name" },
@@ -27,40 +24,35 @@ const CustomersTab = () => {
     { key: "created_at", label: "Created At" },
     { key: "last_login", label: "Last Login" },
   ];
-
-  const totalPages = Math.ceil(totalDoc / pageSize);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await CustomerController.getCustomerList();
-        console.log("customers:",result);
-        setData(result?.data?.data?.docs);
-        setTotalDoc(result.data.data.totalDocs);
+        const result = await CustomerController.getCustomerList({
+          page,
+          limit: pageSize,
+          search: debounceSearchTerm,
+        });
+        setData(result?.data?.data?.docs || []);
+        setTotalDoc(result?.data?.data?.totalDocs || 0);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, [page, pageSize, debounceSearchTerm]);
-
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
-
   return (
     <>
-      {data.length > 0 ? (
+      {/* {data.length > 0 ? (
         <Box>
           <Tabs
             value={activeTab}
             onChange={handleTabChange}
             centered
             sx={{
-              "& .MuiTabs-indicator": {
-                display: "none",
-              },
+              "& .MuiTabs-indicator": { display: "none" },
               "& .Mui-selected": {
                 color: "var(--white-color)!important",
                 backgroundColor: "var(--orange-color)",
@@ -71,7 +63,6 @@ const CustomersTab = () => {
             <Tab label="Active Customers" />
             <Tab label="Inactive Customers" />
           </Tabs>
-            {console.log("totalPages-------------", totalPages, "totalDoc-----------", totalDoc)}
           <Box sx={{ marginTop: 3 }}>
             {activeTab === 0 && (
               <AllCustomers
@@ -83,14 +74,10 @@ const CustomersTab = () => {
                 pageSize={pageSize}
                 setPageSize={setPageSize}
                 setPage={setPage}
-
-
+                page={page}
                 totalDoc={totalDoc}
-                setTotalDoc={setTotalDoc}
-                totalPages={totalPages}
               />
             )}
-
             {activeTab === 1 && (
               <ActiveCustomers
                  data={data}
@@ -105,7 +92,6 @@ const CustomersTab = () => {
                 totalDoc={totalDoc}
               />
             )}
-
             {activeTab === 2 && (
               <InactiveCustomers
                   data={data}
@@ -124,23 +110,43 @@ const CustomersTab = () => {
         </Box>
       ) : (
         <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: 300,
-                    }}
-                  >
-                    <ReactLoading
-                      type="bars"
-                      width={40}
-                      height={40}
-                      color={COLORS.PRIMARY}
-                    />
-                  </Box>
-      )}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: 300,
+          }}
+        >
+          <ReactLoading
+            type="bars"
+            width={40}
+            height={40}
+            color={COLORS.PRIMARY}
+          />
+        </Box>
+      )} */}
+
+
+
+
+
+
+
+
+
+      <AllCustomers
+                data={data}
+                columns={columns}
+                setSearchTerm={setSearchTerm}
+                searchTerm={searchTerm}
+                debounceSearchTerm={debounceSearchTerm}
+                pageSize={pageSize}
+                setPageSize={setPageSize}
+                setPage={setPage}
+                page={page}
+                totalDoc={totalDoc}
+              />
     </>
   );
 };
-
 export default CustomersTab;

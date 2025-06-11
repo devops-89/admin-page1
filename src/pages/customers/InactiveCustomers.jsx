@@ -19,7 +19,6 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-
 const InactiveCustomers = ({
   data,
   columns,
@@ -33,14 +32,13 @@ const InactiveCustomers = ({
   setPageSize,
 }) => {
   const navigate = useNavigate();
-
-  const table_heading = {
+  const tableHeading = {
     heading: "Inactive Customers",
     para: "These are the customers currently marked as inactive in the system.",
   };
-
-  const inactiveCustomers = data.filter((customer) => customer.status === "INACTIVE");
-
+  const inactiveCustomers = data.filter(
+    (customer) => customer.status === "INACTIVE"
+  );
   const filteredData = inactiveCustomers.filter((item) =>
     columns.some((column) =>
       String(item[column.key] || "")
@@ -50,13 +48,14 @@ const InactiveCustomers = ({
   );
   return (
     <Box>
+      {/* Header */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: { xs: "center", sm: "center", md: "space-between" },
+          justifyContent: { xs: "center", md: "space-between" },
           alignItems: "center",
           flexWrap: "wrap",
-          marginBottom: 2,
+          mb: 2,
         }}
       >
         <Box>
@@ -64,35 +63,31 @@ const InactiveCustomers = ({
             variant="h4"
             sx={{
               fontSize: "18px",
-              fontWeight: "600",
-              marginBottom: "5px",
+              fontWeight: 600,
+              mb: "5px",
               textAlign: { xs: "center", md: "start" },
             }}
           >
-            {table_heading.heading}
+            {tableHeading.heading}
           </Typography>
           <Typography
             variant="body1"
             sx={{
               fontSize: "15px",
-              fontWeight: "400",
-              marginBottom: "5px",
+              fontWeight: 400,
               textAlign: { xs: "center", md: "start" },
             }}
           >
-            {table_heading.para}
+            {tableHeading.para}
           </Typography>
         </Box>
-
-        <Box sx={{ display: "flex" }}>
-          <FormControl size="small" sx={{ minWidth: 120 }}>
+        {/* Controls */}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <FormControl size="small" sx={{ minWidth: 120, mr: 1 }}>
             <Select
               value={pageSize}
-              sx={{
-                backgroundColor: "var(--white-color)",
-                marginRight: "10px",
-              }}
-              onChange={(e) => setPageSize(parseInt(e.target.value, 10))}
+              onChange={(e) => setPageSize(parseInt(e.target.value))}
+              sx={{ backgroundColor: "var(--white-color)" }}
             >
               {[5, 10, 20, 50].map((count) => (
                 <MenuItem key={count} value={count}>
@@ -101,7 +96,6 @@ const InactiveCustomers = ({
               ))}
             </Select>
           </FormControl>
-
           <TextField
             size="small"
             label="Search"
@@ -112,7 +106,7 @@ const InactiveCustomers = ({
           />
         </Box>
       </Box>
-
+      {/* Table */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead sx={{ backgroundColor: "var(--sidebar-color)" }}>
@@ -122,9 +116,9 @@ const InactiveCustomers = ({
                   key={column.key}
                   sx={{
                     fontSize: "16px",
-                    fontWeight: "500",
+                    fontWeight: 500,
                     color: "var(--white-color)",
-                     textAlign:'center'
+                    textAlign: "center",
                   }}
                 >
                   {column.label}
@@ -133,7 +127,7 @@ const InactiveCustomers = ({
               <TableCell
                 sx={{
                   fontSize: "16px",
-                  fontWeight: "500",
+                  fontWeight: 500,
                   color: "var(--white-color)",
                 }}
               >
@@ -151,26 +145,25 @@ const InactiveCustomers = ({
                   {columns.map((column) => (
                     <TableCell key={column.key} sx={{ textAlign: "center" }}>
                       {(() => {
+                        const value = item[column.key];
                         switch (column.key) {
                           case "avatar":
                             return (
-                              <Avatar
-                                src={item[column.key]}
-                                alt={item[column.key]}
-                              />
+                              <Avatar src={value} alt={value} />
                             );
                           case "created_at":
-                            return moment(item[column.key] || "-").format(
-                              "Do MMM YYYY"
-                            );
-                          case "status":
-                            return <span className={item[column.key] == 'ACTIVE' ? 'green' : 'red'}>{item[column.key]}</span>
                           case "last_login":
-                            return item[column.key]
-                              ? moment(item[column.key]).format("Do MMM YYYY")
+                            return value
+                              ? moment(value).format("Do MMM YYYY")
                               : "-";
+                          case "status":
+                            return (
+                              <span className={value === "ACTIVE" ? "green" : "red"}>
+                                {value}
+                              </span>
+                            );
                           default:
-                            return item[column.key] || "-";
+                            return value || "-";
                         }
                       })()}
                     </TableCell>
@@ -179,11 +172,17 @@ const InactiveCustomers = ({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={() => navigate("/dashboard/customers/customer-details", {state : {item}})}
+                      onClick={() =>
+                        navigate("/dashboard/customers/customer-details", {
+                          state: { item },
+                        })
+                      }
                       sx={{
                         backgroundColor: "var(--orange-color)",
-                        marginRight: "5px",
-                        "&:hover": { backgroundColor: "var(--blue-color)" },
+                        mr: 1,
+                        "&:hover": {
+                          backgroundColor: "var(--blue-color)",
+                        },
                       }}
                     >
                       View
@@ -195,7 +194,7 @@ const InactiveCustomers = ({
               <TableRow>
                 <TableCell
                   colSpan={columns.length + 1}
-                  sx={{ fontSize: "16px", textAlign: "center" }}
+                  sx={{ textAlign: "center", fontSize: "16px" }}
                 >
                   No Data Found
                 </TableCell>
@@ -204,27 +203,30 @@ const InactiveCustomers = ({
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
-        {filteredData.length>0 ? <Pagination
-          count={totalPages}
-          page={page}
-          onChange={(_, newPage) => setPage(newPage)}
-          sx={{
-            "& .MuiButtonBase-root": {
-              backgroundColor: "var(--orange-color)",
-              color: "var(--white-color)",
-            },
-            "& .Mui-selected": {
-              color: "var(--black-color)",
-              backgroundColor: "var(--table-head-color)",
-            },
-            "& :hover": { color: "var(--black-color)" },
-          }}
-        />: ''}
-      </Box>
+      {/* Pagination */}
+      {filteredData.length > 0 && (
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={(_, newPage) => setPage(newPage)}
+            sx={{
+              "& .MuiButtonBase-root": {
+                backgroundColor: "var(--orange-color)",
+                color: "var(--white-color)",
+              },
+              "& .Mui-selected": {
+                color: "var(--black-color)",
+                backgroundColor: "var(--table-head-color)",
+              },
+              "& :hover": {
+                color: "var(--black-color)",
+              },
+            }}
+          />
+        </Box>
+      )}
     </Box>
   );
 };
-
 export default InactiveCustomers;
