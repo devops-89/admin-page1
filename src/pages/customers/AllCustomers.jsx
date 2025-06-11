@@ -211,7 +211,7 @@ const AllCustomers = ({
       </TableContainer>
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
-        {console.log("filteredData---", filteredData.length, "totalDoc-----------", totalDoc,"page------------", page)}
+        {/* {console.log("filteredData---", filteredData.length, "totalDoc-----------", totalDoc,"page------------", page)} */}
         {filteredData.length > 0 ? <Pagination
           count={totalDoc}
           page={page}
