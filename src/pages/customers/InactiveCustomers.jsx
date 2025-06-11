@@ -34,14 +34,12 @@ const InactiveCustomers = ({
 }) => {
   const navigate = useNavigate();
 
-  const tableHeading = {
+  const table_heading = {
     heading: "Inactive Customers",
     para: "These are the customers currently marked as inactive in the system.",
   };
 
-  const inactiveCustomers = data.filter(
-    (customer) => customer.status === "INACTIVE"
-  );
+  const inactiveCustomers = data.filter((customer) => customer.status === "INACTIVE");
 
   const filteredData = inactiveCustomers.filter((item) =>
     columns.some((column) =>
@@ -50,17 +48,15 @@ const InactiveCustomers = ({
         .includes(debounceSearchTerm.toLowerCase())
     )
   );
-
   return (
     <Box>
-      {/* Header */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: { xs: "center", md: "space-between" },
+          justifyContent: { xs: "center", sm: "center", md: "space-between" },
           alignItems: "center",
           flexWrap: "wrap",
-          mb: 2,
+          marginBottom: 2,
         }}
       >
         <Box>
@@ -68,32 +64,35 @@ const InactiveCustomers = ({
             variant="h4"
             sx={{
               fontSize: "18px",
-              fontWeight: 600,
-              mb: "5px",
+              fontWeight: "600",
+              marginBottom: "5px",
               textAlign: { xs: "center", md: "start" },
             }}
           >
-            {tableHeading.heading}
+            {table_heading.heading}
           </Typography>
           <Typography
             variant="body1"
             sx={{
               fontSize: "15px",
-              fontWeight: 400,
+              fontWeight: "400",
+              marginBottom: "5px",
               textAlign: { xs: "center", md: "start" },
             }}
           >
-            {tableHeading.para}
+            {table_heading.para}
           </Typography>
         </Box>
 
-        {/* Controls */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <FormControl size="small" sx={{ minWidth: 120, mr: 1 }}>
+        <Box sx={{ display: "flex" }}>
+          <FormControl size="small" sx={{ minWidth: 120 }}>
             <Select
               value={pageSize}
-              onChange={(e) => setPageSize(parseInt(e.target.value))}
-              sx={{ backgroundColor: "var(--white-color)" }}
+              sx={{
+                backgroundColor: "var(--white-color)",
+                marginRight: "10px",
+              }}
+              onChange={(e) => setPageSize(parseInt(e.target.value, 10))}
             >
               {[5, 10, 20, 50].map((count) => (
                 <MenuItem key={count} value={count}>
@@ -114,7 +113,6 @@ const InactiveCustomers = ({
         </Box>
       </Box>
 
-      {/* Table */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead sx={{ backgroundColor: "var(--sidebar-color)" }}>
@@ -124,9 +122,9 @@ const InactiveCustomers = ({
                   key={column.key}
                   sx={{
                     fontSize: "16px",
-                    fontWeight: 500,
+                    fontWeight: "500",
                     color: "var(--white-color)",
-                    textAlign: "center",
+                     textAlign:'center'
                   }}
                 >
                   {column.label}
@@ -135,7 +133,7 @@ const InactiveCustomers = ({
               <TableCell
                 sx={{
                   fontSize: "16px",
-                  fontWeight: 500,
+                  fontWeight: "500",
                   color: "var(--white-color)",
                 }}
               >
@@ -153,25 +151,26 @@ const InactiveCustomers = ({
                   {columns.map((column) => (
                     <TableCell key={column.key} sx={{ textAlign: "center" }}>
                       {(() => {
-                        const value = item[column.key];
                         switch (column.key) {
                           case "avatar":
                             return (
-                              <Avatar src={value} alt={value} />
+                              <Avatar
+                                src={item[column.key]}
+                                alt={item[column.key]}
+                              />
                             );
                           case "created_at":
-                          case "last_login":
-                            return value
-                              ? moment(value).format("Do MMM YYYY")
-                              : "-";
-                          case "status":
-                            return (
-                              <span className={value === "ACTIVE" ? "green" : "red"}>
-                                {value}
-                              </span>
+                            return moment(item[column.key] || "-").format(
+                              "Do MMM YYYY"
                             );
+                          case "status":
+                            return <span className={item[column.key] == 'ACTIVE' ? 'green' : 'red'}>{item[column.key]}</span>
+                          case "last_login":
+                            return item[column.key]
+                              ? moment(item[column.key]).format("Do MMM YYYY")
+                              : "-";
                           default:
-                            return value || "-";
+                            return item[column.key] || "-";
                         }
                       })()}
                     </TableCell>
@@ -180,17 +179,11 @@ const InactiveCustomers = ({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={() =>
-                        navigate("/dashboard/customers/customer-details", {
-                          state: { item },
-                        })
-                      }
+                      onClick={() => navigate("/dashboard/customers/customer-details", {state : {item}})}
                       sx={{
                         backgroundColor: "var(--orange-color)",
-                        mr: 1,
-                        "&:hover": {
-                          backgroundColor: "var(--blue-color)",
-                        },
+                        marginRight: "5px",
+                        "&:hover": { backgroundColor: "var(--blue-color)" },
                       }}
                     >
                       View
@@ -202,7 +195,7 @@ const InactiveCustomers = ({
               <TableRow>
                 <TableCell
                   colSpan={columns.length + 1}
-                  sx={{ textAlign: "center", fontSize: "16px" }}
+                  sx={{ fontSize: "16px", textAlign: "center" }}
                 >
                   No Data Found
                 </TableCell>
@@ -212,29 +205,24 @@ const InactiveCustomers = ({
         </Table>
       </TableContainer>
 
-      {/* Pagination */}
-      {filteredData.length > 0 && (
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={(_, newPage) => setPage(newPage)}
-            sx={{
-              "& .MuiButtonBase-root": {
-                backgroundColor: "var(--orange-color)",
-                color: "var(--white-color)",
-              },
-              "& .Mui-selected": {
-                color: "var(--black-color)",
-                backgroundColor: "var(--table-head-color)",
-              },
-              "& :hover": {
-                color: "var(--black-color)",
-              },
-            }}
-          />
-        </Box>
-      )}
+      <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
+        {filteredData.length>0 ? <Pagination
+          count={totalPages}
+          page={page}
+          onChange={(_, newPage) => setPage(newPage)}
+          sx={{
+            "& .MuiButtonBase-root": {
+              backgroundColor: "var(--orange-color)",
+              color: "var(--white-color)",
+            },
+            "& .Mui-selected": {
+              color: "var(--black-color)",
+              backgroundColor: "var(--table-head-color)",
+            },
+            "& :hover": { color: "var(--black-color)" },
+          }}
+        />: ''}
+      </Box>
     </Box>
   );
 };

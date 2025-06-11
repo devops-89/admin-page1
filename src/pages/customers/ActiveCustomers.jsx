@@ -27,6 +27,7 @@ const ActiveCustomers = ({
   searchTerm,
   debounceSearchTerm,
   pageSize,
+  totalPages,
   page,
   setPage,
   setPageSize,
@@ -38,12 +39,8 @@ const ActiveCustomers = ({
     para: "These are the customers currently marked as active in the system.",
   };
 
-  // Filter only active customers
-  const activeCustomers = data.filter(
-    (customer) => customer.status === "ACTIVE"
-  );
+  const activeCustomers = data.filter((customer) => customer.status === "ACTIVE");
 
-  // Apply search filter
   const filteredData = activeCustomers.filter((item) =>
     columns.some((column) =>
       String(item[column.key] || "")
@@ -52,18 +49,8 @@ const ActiveCustomers = ({
     )
   );
 
-  // Calculate total pages after filtering
-  const totalPages = Math.ceil(filteredData.length / pageSize);
-
-  // Paginate filtered results
-  const paginatedData = filteredData.slice(
-    (page - 1) * pageSize,
-    page * pageSize
-  );
-
   return (
     <Box>
-      {/* Header */}
       <Box
         sx={{
           display: "flex",
@@ -98,16 +85,15 @@ const ActiveCustomers = ({
           </Typography>
         </Box>
 
-        {/* Search + Page size */}
         <Box sx={{ display: "flex" }}>
           <FormControl size="small" sx={{ minWidth: 120 }}>
             <Select
               value={pageSize}
-              sx={{ backgroundColor: "var(--white-color)", marginRight: "10px" }}
-              onChange={(e) => {
-                setPageSize(parseInt(e.target.value, 10));
-                setPage(1); // Reset to first page on page size change
+              sx={{
+                backgroundColor: "var(--white-color)",
+                marginRight: "10px",
               }}
+              onChange={(e) => setPageSize(parseInt(e.target.value, 10))}
             >
               {[5, 10, 20, 50].map((count) => (
                 <MenuItem key={count} value={count}>
@@ -122,16 +108,12 @@ const ActiveCustomers = ({
             label="Search"
             variant="outlined"
             value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setPage(1); // Reset to first page on search
-            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
             sx={{ backgroundColor: "var(--white-color)" }}
           />
         </Box>
       </Box>
 
-      {/* Table */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead sx={{ backgroundColor: "var(--sidebar-color)" }}>
@@ -143,7 +125,7 @@ const ActiveCustomers = ({
                     fontSize: "16px",
                     fontWeight: "500",
                     color: "var(--white-color)",
-                    textAlign: "center",
+                     textAlign:'center'
                   }}
                 >
                   {column.label}
@@ -161,8 +143,8 @@ const ActiveCustomers = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData.length > 0 ? (
-              paginatedData.map((item) => (
+            {filteredData.length > 0 ? (
+              filteredData.map((item) => (
                 <TableRow
                   key={item.id}
                   sx={{ "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.08)" } }}
@@ -179,21 +161,15 @@ const ActiveCustomers = ({
                               />
                             );
                           case "created_at":
-                            return moment(item[column.key] || "-").format("Do MMM YYYY");
+                            return moment(item[column.key] || "-").format(
+                              "Do MMM YYYY"
+                            );
+                          case "status":
+                            return <span className={item[column.key] == 'ACTIVE' ? 'green' : 'red'}>{item[column.key]}</span>
                           case "last_login":
                             return item[column.key]
                               ? moment(item[column.key]).format("Do MMM YYYY")
                               : "-";
-                          case "status":
-                            return (
-                              <span
-                                className={
-                                  item[column.key] === "ACTIVE" ? "green" : "red"
-                                }
-                              >
-                                {item[column.key]}
-                              </span>
-                            );
                           default:
                             return item[column.key] || "-";
                         }
@@ -204,11 +180,7 @@ const ActiveCustomers = ({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={() =>
-                        navigate("/dashboard/customers/customer-details", {
-                          state: { item },
-                        })
-                      }
+                      onClick={() => navigate("/dashboard/customers/customer-details", {state : {item}})}
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
@@ -234,26 +206,23 @@ const ActiveCustomers = ({
         </Table>
       </TableContainer>
 
-      {/* Pagination */}
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
-        {totalPages > 1 && (
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={(_, newPage) => setPage(newPage)}
-            sx={{
-              "& .MuiButtonBase-root": {
-                backgroundColor: "var(--orange-color)",
-                color: "var(--white-color)",
-              },
-              "& .Mui-selected": {
-                color: "var(--black-color)",
-                backgroundColor: "var(--table-head-color)",
-              },
-              "& :hover": { color: "var(--black-color)" },
-            }}
-          />
-        )}
+        {filteredData.length > 0 ? <Pagination
+          count={totalPages}
+          page={page}
+          onChange={(_, newPage) => setPage(newPage)}
+          sx={{
+            "& .MuiButtonBase-root": {
+              backgroundColor: "var(--orange-color)",
+              color: "var(--white-color)",
+            },
+            "& .Mui-selected": {
+              color: "var(--black-color)",
+              backgroundColor: "var(--table-head-color)",
+            },
+            "& :hover": { color: "var(--black-color)" },
+          }}
+        /> : ''}
       </Box>
     </Box>
   );
