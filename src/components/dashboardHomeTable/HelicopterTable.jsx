@@ -3,44 +3,11 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { Enquiry_Type } from '../../utils/enum';
 import { ExtraDetailController } from '../../api/extraDetailController';
 
-const HelicopterTable = ({setLoading}) => {
-  const [helicopterData, setHelicopterData] = useState(null);
-  const [error, setError] = useState(null);
+const HelicopterTable = ({data}) => {
+  
+  
 
-  useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.HELICOPTER)
-      .then((res) => {
-        const rawData = res?.data?.data;
-
-        if (rawData && Array.isArray(rawData)) {
-          const parsedData = rawData
-            .map(item => {
-              try {
-                return JSON.parse(item?.enquiry_description || '{}');
-              } catch (e) {
-                return null;
-              }
-            })
-            .filter(item => item !== null);
-
-          setHelicopterData(parsedData.reverse());
-        } else {
-           setHelicopterData([]);
-        }
-        setLoading((prev) => ({
-          ...prev,
-          HelicopterLoading: false,
-        }));
-      })
-      .catch(err => {
-        setError(err);
-        setLoading((prev) => ({
-          ...prev,
-          HelicopterLoading: false,
-        }));
-        setHelicopterData([]);
-      });
-  }, []);
+ 
 
   const HelicopterTableFields = [
     { key: "fullName", value: "Name" },
@@ -55,15 +22,9 @@ const HelicopterTable = ({setLoading}) => {
   ];
 
 
-  if (error) {
-      return (
-          <div style={{ textAlign: "center", marginTop: "50px", color: 'red' }}>
-              <p>Error loading data: {error.message || 'Unknown error'}</p>
-          </div>
-      );
-  }
+  
 
-  if (!helicopterData || helicopterData.length === 0) {
+  if (!data || data.length === 0) {
       return (
           <div style={{ textAlign: "center", marginTop: "50px" }}>
               <p>No helicopter enquiry data available.</p>
@@ -116,7 +77,7 @@ const HelicopterTable = ({setLoading}) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {helicopterData.slice(0,5).map((enquiryObject, rowIndex) => (
+          {data.slice(0,5).map((enquiryObject, rowIndex) => (
             <TableRow
               key={rowIndex}
               hover

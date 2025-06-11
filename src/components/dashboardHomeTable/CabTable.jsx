@@ -14,45 +14,8 @@ import { ExtraDetailController } from "../../api/extraDetailController";
 import { Enquiry_Type } from "../../utils/enum";
 
 
-const CabTable = ({setLoading}) => {
-  const [cabsData, setCabsData] = useState(null);
-  const [error, setError] = useState(null);
+const CabTable = ({data}) => {
 
-  useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.CABS)
-      .then((res) => {
-        const rawData = res?.data?.data;
-        if (rawData && Array.isArray(rawData)) {
-          const parsedData = rawData
-            .map((item) => {
-              try {
-                return JSON.parse(item?.enquiry_description || "{}");
-              } catch (e) {
-                return null;
-              }
-            })
-            .filter((item) => item !== null);
-            
-
-          setCabsData(parsedData.reverse());
-          // console.log("parsedData------------",parsedData)
-        } else {
-          setCabsData([]);
-        }
-         setLoading((prev) => ({
-          ...prev,
-          CabLoading: false,
-        }));
-      })
-      .catch((err) => {
-        setError(err);
-         setLoading((prev) => ({
-          ...prev,
-          CabLoading: false,
-        }));
-        setCabsData([]);
-      });
-  }, []);
 
   const CabsTableFields = [
      { key: "taxiType", value: "Taxi Type" },
@@ -62,15 +25,9 @@ const CabTable = ({setLoading}) => {
     { key: "taxiType", value: "Taxi Type" },
   ];
 
-  if (error) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px", color: "red" }}>
-        <p>Error loading data: {error.message || "Unknown error"}</p>
-      </div>
-    );
-  }
+ 
 
-  if (!cabsData || cabsData.length === 0) {
+  if (!data || data.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "50px" }}>
         <p>No Cabs enquiry data available.</p>
@@ -130,7 +87,7 @@ const CabTable = ({setLoading}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cabsData.slice(0, 5).map((enquiryObject, rowIndex) => (
+            {data.slice(0, 5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover

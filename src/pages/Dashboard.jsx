@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
@@ -12,28 +12,84 @@ import CountUp from "react-countup";
 import { useNavigate } from "react-router-dom";
 import AirplanemodeInactiveIcon from "@mui/icons-material/AirplanemodeInactive";
 import DomainDisabledIcon from "@mui/icons-material/DomainDisabled";
-
+import { Enquiry_Type } from "../utils/enum.js";
 import CabTable from "../components/dashboardHomeTable/CabTable.jsx";
 import SelfDriveTable from "../components/dashboardHomeTable/SelfDriveTable.jsx";
 import HelicopterTable from "../components/dashboardHomeTable/HelicopterTable.jsx";
 import ActivitiesTable from "../components/dashboardHomeTable/ActivitiesTable.jsx";
 import OutstationCabTable from "../components/dashboardHomeTable/OutstationCabTable.jsx";
 import DestinationWeddingTable from "../components/dashboardHomeTable/DestinationWeddingTable.jsx";
-import ReactLoading from 'react-loading';
+import { ExtraDetailController } from "../api/extraDetailController.js";
+import ReactLoading from "react-loading";
 import { Button } from "@mui/material";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState({
-    CabLoading: true,
-    ActivitiesLoading: true,
-    DestinationWeddingLoading: true,
-    HelicopterLoading: true,
-    OutstationLoading: true,
-    SelfDriveLoading: true,
-  });
 
-  console.log("loading--------", loading)
+  // loading state to manage loader
+  const [loading, setLoading] = useState(true);
+
+  // states for passing to tables data
+  const [cabData, setCabData] = useState([]);
+  const [selfDriveData, setSelfDriveData] = useState([]);
+  const [helicopterData, setHelicopterData] = useState([]);
+  const [activityData, setActivityData] = useState([]);
+  const [outstationCabData, setOutstationCabData] = useState([]);
+  const [destinationWeddingData, setDestinationWeddingData] = useState([]);
+
+  useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const [
+        activitiesRes,
+        cabsRes,
+        destinationWeddingRes,
+        helicopterRes,
+        outstationCabsRes,
+        selfDriveRes,
+      ] = await Promise.all([
+        ExtraDetailController.getExtraSerivce(Enquiry_Type.ACTIVITIE),
+        ExtraDetailController.getExtraSerivce(Enquiry_Type.CABS),
+        ExtraDetailController.getExtraSerivce(Enquiry_Type.DESTINATION_WEDDING),
+        ExtraDetailController.getExtraSerivce(Enquiry_Type.HELICOPTER),
+        ExtraDetailController.getExtraSerivce(Enquiry_Type.OUTSTATION_CABS),
+        ExtraDetailController.getExtraSerivce(Enquiry_Type.SELF_DRIVE),
+      ]);
+
+      const parseData = (res) => {
+        const rawData = res?.data?.data;
+        return rawData && Array.isArray(rawData)
+          ? rawData
+              .map((item) => {
+                try {
+                  return JSON.parse(item?.enquiry_description || "{}");
+                } catch (e) {
+                  return null;
+                }
+              })
+              .filter((item) => item !== null)
+              .reverse()
+          : [];
+      };
+
+      setActivityData(parseData(activitiesRes));
+      setCabData(parseData(cabsRes));
+      setDestinationWeddingData(parseData(destinationWeddingRes));
+      setHelicopterData(parseData(helicopterRes));
+      setOutstationCabData(parseData(outstationCabsRes));
+      setSelfDriveData(parseData(selfDriveRes));
+    } catch (err) {
+      console.error("Error fetching dashboard data:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
+  console.log("loading--------", loading);
 
   const dashboardDataList = [
     {
@@ -95,20 +151,17 @@ const Dashboard = () => {
     },
   ];
 
-  function refresh(){
+  function refresh() {
     setLoading((prev) => ({
-          ...prev,
-    CabLoading: false,
-    ActivitiesLoading: false,
-    DestinationWeddingLoading: false,
-    HelicopterLoading: false,
-    OutstationLoading: false,
-    SelfDriveLoading: false,
-  
-        }));
+      ...prev,
+      CabLoading: false,
+      ActivitiesLoading: false,
+      DestinationWeddingLoading: false,
+      HelicopterLoading: false,
+      OutstationLoading: false,
+      SelfDriveLoading: false,
+    }));
   }
-
-  console.log("loading----------", loading)
 
   return (
     <>
@@ -186,39 +239,45 @@ const Dashboard = () => {
 
       {/* Tables  */}
 
-     {Object.values(loading).some((val) => val) ? (
-  <Box component="section" sx={{ py: 2 }}>
-
-    <div style={{ textAlign: "center", marginTop: "50px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <Button onClick={refresh}>Refresh</Button>
-      <ReactLoading type="bars" height={40} width={40} color="#dd800c" />
-    </div>
-  </Box>
-) : (
-  <Box component="section" sx={{ py: 2 }}>
-    <Grid container spacing={2}>
-      <Grid size={{ xs: 12, sm: 6 }}>
-        <CabTable setLoading={setLoading} />
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6 }}>
-        <SelfDriveTable setLoading={setLoading} />
-      </Grid>
-      <Grid size={{ xs: 12, sm: 12 }}>
-        <HelicopterTable setLoading={setLoading} />
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6 }}>
-        <ActivitiesTable setLoading={setLoading} />
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6 }}>
-        <OutstationCabTable setLoading={setLoading} />
-      </Grid>
-      <Grid size={{ xs: 12, sm: 12 }}>
-        <DestinationWeddingTable setLoading={setLoading} />
-      </Grid>
-    </Grid>
-  </Box>
-)}
-
+      {loading ? (
+        <Box component="section" sx={{ py: 2 }}>
+          <div
+            style={{
+              textAlign: "center",
+              marginTop: "50px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+           
+            <ReactLoading type="bars" height={40} width={40} color="#dd800c" />
+          </div>
+        </Box>
+      ) : (
+        <Box component="section" sx={{ py: 2 }}>
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <CabTable data={cabData} />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <SelfDriveTable data={selfDriveData} />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 12 }}>
+              <HelicopterTable data={helicopterData} />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <ActivitiesTable data={activityData} />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <OutstationCabTable data={outstationCabData} />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 12 }}>
+              <DestinationWeddingTable data={destinationWeddingData} />
+            </Grid>
+          </Grid>
+        </Box>
+      )}
     </>
   );
 };

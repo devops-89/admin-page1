@@ -13,45 +13,10 @@ import {
 import { ExtraDetailController } from "../../api/extraDetailController";
 import { Enquiry_Type } from "../../utils/enum";
 
-const OutstationCabTable = ({setLoading}) => {
-  const [outstationCabsData, setOutstationCabsData] = useState(null);
-  const [error, setError] = useState(null);
+const OutstationCabTable = ({data}) => {
+ 
 
-  useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.OUTSTATION_CABS)
-      .then((res) => {
-        const rawData = res?.data?.data;
-        if (rawData && Array.isArray(rawData)) {
-          const parsedData = rawData
-            .map((item) => {
-              try {
-                return JSON.parse(item?.enquiry_description || "{}");
-              } catch (e) {
-                return null;
-              }
-            })
-            .filter((item) => item !== null);
-
-          setOutstationCabsData(parsedData.reverse());
-        //   console.log("parsedData------------",parsedData)
-        } else {
-          setOutstationCabsData([]);
-        }
-        setLoading((prev) => ({
-          ...prev,
-          OutstationLoading: false,
-        }));
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading((prev) => ({
-          ...prev,
-          OutstationLoading: false,
-        }));
-        setOutstationCabsData([]);
-      });
-  }, []);
-
+ 
   const OutstationCabsTableFields = [
      { key: "pickupLocation", value: "PickUp" },
     { key: "dropLocation", value: "Drop" },
@@ -62,15 +27,9 @@ const OutstationCabTable = ({setLoading}) => {
   ];
 
 
-  if (error) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px", color: "red" }}>
-        <p>Error loading data: {error.message || "Unknown error"}</p>
-      </div>
-    );
-  }
+  
 
-  if (!outstationCabsData || outstationCabsData.length === 0) {
+  if (!data || data.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "50px" }}>
         <p>No Outstation Cabs enquiry data available.</p>
@@ -130,7 +89,7 @@ const OutstationCabTable = ({setLoading}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {outstationCabsData.slice(0,5).map((enquiryObject, rowIndex) => (
+            {data.slice(0,5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover

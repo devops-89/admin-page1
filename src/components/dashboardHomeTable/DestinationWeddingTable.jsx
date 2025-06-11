@@ -13,44 +13,10 @@ import {
 import { ExtraDetailController } from "../../api/extraDetailController";
 import { Enquiry_Type } from "../../utils/enum";
 
-const DestinationWeddingTable = ({setLoading}) => {
-  const [destinationWeddingData, setDestinationWeddingData] = useState(null);
-  const [error, setError] = useState(null);
+const DestinationWeddingTable = ({data}) => {
 
-  useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.DESTINATION_WEDDING)
-      .then((res) => {
-        const rawData = res?.data?.data;
-        if (rawData && Array.isArray(rawData)) {
-          const parsedData = rawData
-            .map((item) => {
-              try {
-                return JSON.parse(item?.enquiry_description || "{}");
-              } catch (e) {
-                return null;
-              }
-            })
-            .filter((item) => item !== null);
 
-          setDestinationWeddingData(parsedData.reverse());
-        } else {
-          setDestinationWeddingData([]);
-        }
-        setLoading((prev) => ({
-          ...prev,
-          DestinationWeddingLoading: false,
-        }));
-      })
-      .catch((err) => {
-        setError(err);
-         setLoading((prev) => ({
-          ...prev,
-          DestinationWeddingLoading: false,
-        }));
-        setDestinationWeddingData([]);
-      });
-  }, []);
-
+ 
   const DestinationWeddingTableFields = [
     { key: "fullName", value: "Name" },
     { key: "phoneNumber", value: "Phone No" },
@@ -61,15 +27,9 @@ const DestinationWeddingTable = ({setLoading}) => {
     { key: "destination", value: "Destination" },
   ];
 
-  if (error) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px", color: "red" }}>
-        <p>Error loading data: {error.message || "Unknown error"}</p>
-      </div>
-    );
-  }
+ 
 
-  if (!destinationWeddingData || destinationWeddingData.length === 0) {
+  if (!data || data.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "50px" }}>
         <p>No Destination Wedding enquiry data available.</p>
@@ -129,7 +89,7 @@ const DestinationWeddingTable = ({setLoading}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {destinationWeddingData
+            {data
               .slice(0, 5)
               .map((enquiryObject, rowIndex) => (
                 <TableRow

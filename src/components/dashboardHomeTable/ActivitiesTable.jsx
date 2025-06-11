@@ -11,47 +11,14 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { ExtraDetailController } from "../../api/extraDetailController";
-import { Enquiry_Type } from "../../utils/enum";
 
-const ActivitiesTable = ({setLoading}) => {
-  const [activitiesData, setActivitiesData] = useState(null);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.ACTIVITIE)
-      .then((res) => {
-        const rawData = res?.data?.data;
-        if (rawData && Array.isArray(rawData)) {
-          const parsedData = rawData
-            .map((item) => {
-              try {
-                return JSON.parse(item?.enquiry_description || "{}");
-              } catch (e) {
-                return null;
-              }
-            })
-            .filter((item) => item !== null);
 
-          setActivitiesData(parsedData.reverse());
-        //   console.log("parsedData------------",parsedData)
-        } else {
-          setActivitiesData([]);
-        }
-       setLoading((prev) => ({
-          ...prev,
-          ActivitiesLoading: false,
-        }));
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading((prev) => ({
-          ...prev,
-          ActivitiesLoading: false,
-        }));
-        setActivitiesData([]);
-      });
-  }, []);
+const ActivitiesTable = ({data}) => {
+
+ 
+
+
 
   const AcitvitiesTableFields = [
     { key: "name", value: "Name" },
@@ -61,15 +28,9 @@ const ActivitiesTable = ({setLoading}) => {
   ];
 
 
-  if (error) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px", color: "red" }}>
-        <p>Error loading data: {error.message || "Unknown error"}</p>
-      </div>
-    );
-  }
+ 
 
-  if (!activitiesData || activitiesData.length === 0) {
+  if (!data || data.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "50px" }}>
         <p>No Activity enquiry data available.</p>
@@ -129,7 +90,7 @@ const ActivitiesTable = ({setLoading}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {activitiesData.slice(0,5).map((enquiryObject, rowIndex) => (
+            {data.slice(0,5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover
