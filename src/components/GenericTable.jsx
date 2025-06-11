@@ -25,6 +25,7 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
   const navigate=useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const debounceSearchTerm=useDebounce(searchTerm,500);
+  
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 

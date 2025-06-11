@@ -128,15 +128,6 @@ const AllHoteliers = ({
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: "500",
-                  color: "var(--white-color)",
-                }}
-              >
-                Action
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -167,24 +158,7 @@ const AllHoteliers = ({
                       })()}
                     </TableCell>
                   ))}
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      onClick={
-                        () => {
-                          // console.log(item.id)
-                          navigate("/dashboard/customers/customer-details", {state : {item}})
-                        }}
-                      sx={{
-                        backgroundColor: "var(--orange-color)",
-                        marginRight: "5px",
-                        "&:hover": { backgroundColor: "var(--blue-color)" },
-                      }}
-                    >
-                      View
-                    </Button>
-                  </TableCell>
+                 
                 </TableRow>
               ))
             ) : (
