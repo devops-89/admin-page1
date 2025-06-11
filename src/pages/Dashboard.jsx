@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
@@ -12,11 +12,28 @@ import CountUp from "react-countup";
 import { useNavigate } from "react-router-dom";
 import AirplanemodeInactiveIcon from "@mui/icons-material/AirplanemodeInactive";
 import DomainDisabledIcon from "@mui/icons-material/DomainDisabled";
-import DashboardTable from "../components/DashboardTable";
-import { dashboardTableData, tables } from "../assets/data.js";
+
+import CabTable from "../components/dashboardHomeTable/CabTable.jsx";
+import SelfDriveTable from "../components/dashboardHomeTable/SelfDriveTable.jsx";
+import HelicopterTable from "../components/dashboardHomeTable/HelicopterTable.jsx";
+import ActivitiesTable from "../components/dashboardHomeTable/ActivitiesTable.jsx";
+import OutstationCabTable from "../components/dashboardHomeTable/OutstationCabTable.jsx";
+import DestinationWeddingTable from "../components/dashboardHomeTable/DestinationWeddingTable.jsx";
+import ReactLoading from 'react-loading';
+import { Button } from "@mui/material";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState({
+    CabLoading: true,
+    ActivitiesLoading: true,
+    DestinationWeddingLoading: true,
+    HelicopterLoading: true,
+    OutstationLoading: true,
+    SelfDriveLoading: true,
+  });
+
+  console.log("loading--------", loading)
 
   const dashboardDataList = [
     {
@@ -78,6 +95,21 @@ const Dashboard = () => {
     },
   ];
 
+  function refresh(){
+    setLoading((prev) => ({
+          ...prev,
+    CabLoading: false,
+    ActivitiesLoading: false,
+    DestinationWeddingLoading: false,
+    HelicopterLoading: false,
+    OutstationLoading: false,
+    SelfDriveLoading: false,
+  
+        }));
+  }
+
+  console.log("loading----------", loading)
+
   return (
     <>
       <Box component="section" sx={{ py: 2 }}>
@@ -124,7 +156,11 @@ const Dashboard = () => {
                 >
                   <Typography
                     variant="h6"
-                    sx={{ color: "var(--black-color)", fontSize: "18px", "&:hover":{color:'var(--orange-color)'} }}
+                    sx={{
+                      color: "var(--black-color)",
+                      fontSize: "18px",
+                      "&:hover": { color: "var(--orange-color)" },
+                    }}
                   >
                     {item.label}
                   </Typography>
@@ -150,23 +186,39 @@ const Dashboard = () => {
 
       {/* Tables  */}
 
-      <Box component="section" sx={{ py: 2 }}>
-        <Grid container spacing={2}>
-          {tables.map((table, index) => {
-            //  {console.log( dashboardTableData[table.table_body])}
-            return (
-              <DashboardTable
-                key={index}
-                title={table.heading}
-                description={table.subheading}
-                customSize={table.customSize}
-                columns={table.columns}
-                table_body={dashboardTableData[table.table_body]}
-              />
-            );
-          })}
-        </Grid>
-      </Box>
+     {Object.values(loading).some((val) => val) ? (
+  <Box component="section" sx={{ py: 2 }}>
+
+    <div style={{ textAlign: "center", marginTop: "50px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Button onClick={refresh}>Refresh</Button>
+      <ReactLoading type="bars" height={40} width={40} color="#dd800c" />
+    </div>
+  </Box>
+) : (
+  <Box component="section" sx={{ py: 2 }}>
+    <Grid container spacing={2}>
+      <Grid size={{ xs: 12, sm: 6 }}>
+        <CabTable setLoading={setLoading} />
+      </Grid>
+      <Grid size={{ xs: 12, sm: 6 }}>
+        <SelfDriveTable setLoading={setLoading} />
+      </Grid>
+      <Grid size={{ xs: 12, sm: 12 }}>
+        <HelicopterTable setLoading={setLoading} />
+      </Grid>
+      <Grid size={{ xs: 12, sm: 6 }}>
+        <ActivitiesTable setLoading={setLoading} />
+      </Grid>
+      <Grid size={{ xs: 12, sm: 6 }}>
+        <OutstationCabTable setLoading={setLoading} />
+      </Grid>
+      <Grid size={{ xs: 12, sm: 12 }}>
+        <DestinationWeddingTable setLoading={setLoading} />
+      </Grid>
+    </Grid>
+  </Box>
+)}
+
     </>
   );
 };

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ExtraDetailController } from "../api/extraDetailController";
-import { Enquiry_Type } from "../utils/enum";
 import {
   Paper,
   Table,
@@ -9,14 +7,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  CircularProgress,
   Typography,
   Box,
 } from "@mui/material";
+import { ExtraDetailController } from "../../api/extraDetailController";
+import { Enquiry_Type } from "../../utils/enum";
 
-const OutstationCabs = () => {
+const OutstationCabTable = ({setLoading}) => {
   const [outstationCabsData, setOutstationCabsData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -34,39 +32,35 @@ const OutstationCabs = () => {
             })
             .filter((item) => item !== null);
 
-          setOutstationCabsData(parsedData);
-          // console.log("parsedData------------",parsedData)
+          setOutstationCabsData(parsedData.reverse());
+        //   console.log("parsedData------------",parsedData)
         } else {
           setOutstationCabsData([]);
         }
-        setLoading(false);
+        setLoading((prev) => ({
+          ...prev,
+          OutstationLoading: false,
+        }));
       })
       .catch((err) => {
         setError(err);
-        setLoading(false);
+        setLoading((prev) => ({
+          ...prev,
+          OutstationLoading: false,
+        }));
         setOutstationCabsData([]);
       });
   }, []);
 
   const OutstationCabsTableFields = [
-    { key: "email", value: "Email" },
-    { key: "mobileNumber", value: "Phone" },
-     { key: "pickupLocation", value: "Pick Location" },
-    { key: "dropLocation", value: "Drop Location" },
-    { key: "pickupDate", value: "PickUp" },
-    { key: "returnDate", value: "Return" },
-    { key: "pickupTime", value: "Pickup Time" },
+     { key: "pickupLocation", value: "PickUp" },
+    { key: "dropLocation", value: "Drop" },
+    { key: "pickupDate", value: "PickUp Date" },
+    { key: "returnDate", value: "Return Date" },
+    { key: "pickupTime", value: "P.Time" },
     { key: "numberOfPerson", value: "Persons" },
   ];
 
-
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <CircularProgress />
-      </div>
-    );
-  }
 
   if (error) {
     return (
@@ -99,25 +93,24 @@ const OutstationCabs = () => {
             },
           }}
         >
-          Outstation Cabs Bookings
+          Recent Outstation Cabs Bookings
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: "15px",
             fontWeight: "400",
-            marginBottom: "5px",
             textAlign: { xs: "center", sm: "center", md: "start" },
             "@media (min-width: 831px) and (max-width: 900px)": {
               textAlign: "start",
             },
           }}
         >
-          Track and Respond to Outstation Cabs Booking Enquiries
+          Track and Respond to your Recent Outstation Cabs Booking Enquiries
         </Typography>
       </Box>
 
-      <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
+      <TableContainer component={Paper} sx={{ margin: "auto", mt: 2 }}>
         <Table stickyHeader aria-label="cab enquiries table">
           <TableHead>
             <TableRow>
@@ -127,6 +120,7 @@ const OutstationCabs = () => {
                     fontWeight: 500,
                     backgroundColor: "#000",
                     color: "#fff",
+                    py:1
                   }}
                   key={index}
                 >
@@ -136,7 +130,7 @@ const OutstationCabs = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {outstationCabsData.map((enquiryObject, rowIndex) => (
+            {outstationCabsData.slice(0,5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover
@@ -167,4 +161,4 @@ const OutstationCabs = () => {
   );
 };
 
-export default OutstationCabs;
+export default OutstationCabTable;

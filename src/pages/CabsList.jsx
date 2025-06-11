@@ -34,7 +34,7 @@ const CabsList = () => {
             })
             .filter((item) => item !== null);
 
-          setCabsData(parsedData);
+          setCabsData(parsedData.reverse());
           // console.log("parsedData------------",parsedData)
         } else {
           setCabsData([]);

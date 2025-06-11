@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { ExtraDetailController } from "../api/extraDetailController";
-import { Enquiry_Type } from "../utils/enum";
 import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
+  Typography,
   TableContainer,
+  Table,
   TableHead,
   TableRow,
-  CircularProgress,
-  Typography,
+  TableCell,
+  TableBody,
   Box,
+  Paper,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import { ExtraDetailController } from "../../api/extraDetailController";
+import { Enquiry_Type } from "../../utils/enum";
 
-const OutstationCabs = () => {
-  const [outstationCabsData, setOutstationCabsData] = useState(null);
-  const [loading, setLoading] = useState(true);
+
+const CabTable = ({setLoading}) => {
+  const [cabsData, setCabsData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.OUTSTATION_CABS)
+    ExtraDetailController.getExtraSerivce(Enquiry_Type.CABS)
       .then((res) => {
         const rawData = res?.data?.data;
         if (rawData && Array.isArray(rawData)) {
@@ -33,40 +32,35 @@ const OutstationCabs = () => {
               }
             })
             .filter((item) => item !== null);
+            
 
-          setOutstationCabsData(parsedData);
+          setCabsData(parsedData.reverse());
           // console.log("parsedData------------",parsedData)
         } else {
-          setOutstationCabsData([]);
+          setCabsData([]);
         }
-        setLoading(false);
+         setLoading((prev) => ({
+          ...prev,
+          CabLoading: false,
+        }));
       })
       .catch((err) => {
         setError(err);
-        setLoading(false);
-        setOutstationCabsData([]);
+         setLoading((prev) => ({
+          ...prev,
+          CabLoading: false,
+        }));
+        setCabsData([]);
       });
   }, []);
 
-  const OutstationCabsTableFields = [
-    { key: "email", value: "Email" },
-    { key: "mobileNumber", value: "Phone" },
-     { key: "pickupLocation", value: "Pick Location" },
-    { key: "dropLocation", value: "Drop Location" },
-    { key: "pickupDate", value: "PickUp" },
-    { key: "returnDate", value: "Return" },
-    { key: "pickupTime", value: "Pickup Time" },
-    { key: "numberOfPerson", value: "Persons" },
+  const CabsTableFields = [
+     { key: "taxiType", value: "Taxi Type" },
+    { key: "drop", value: "Drop" },
+    { key: "fullName", value: "Name" },
+    { key: "pickup", value: "Pick Up" },
+    { key: "taxiType", value: "Taxi Type" },
   ];
-
-
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <CircularProgress />
-      </div>
-    );
-  }
 
   if (error) {
     return (
@@ -76,10 +70,10 @@ const OutstationCabs = () => {
     );
   }
 
-  if (!outstationCabsData || outstationCabsData.length === 0) {
+  if (!cabsData || cabsData.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <p>No Outstation Cabs enquiry data available.</p>
+        <p>No Cabs enquiry data available.</p>
       </div>
     );
   }
@@ -99,34 +93,34 @@ const OutstationCabs = () => {
             },
           }}
         >
-          Outstation Cabs Bookings
+          Recent Cab Bookings
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: "15px",
             fontWeight: "400",
-            marginBottom: "5px",
             textAlign: { xs: "center", sm: "center", md: "start" },
             "@media (min-width: 831px) and (max-width: 900px)": {
               textAlign: "start",
             },
           }}
         >
-          Track and Respond to Outstation Cabs Booking Enquiries
+          Track and Respond to your Recent Cab Booking Enquiries
         </Typography>
       </Box>
 
-      <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
+      <TableContainer component={Paper} sx={{ margin: "auto", mt: 2 }}>
         <Table stickyHeader aria-label="cab enquiries table">
           <TableHead>
             <TableRow>
-              {OutstationCabsTableFields.map((tableHeading, index) => (
+              {CabsTableFields.map((tableHeading, index) => (
                 <TableCell
                   sx={{
                     fontWeight: 500,
                     backgroundColor: "#000",
                     color: "#fff",
+                    py:1
                   }}
                   key={index}
                 >
@@ -136,7 +130,7 @@ const OutstationCabs = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {outstationCabsData.map((enquiryObject, rowIndex) => (
+            {cabsData.slice(0, 5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover
@@ -149,14 +143,10 @@ const OutstationCabs = () => {
                   },
                 }}
               >
-                {OutstationCabsTableFields.map((field, colIndex) => (
-                    <>
-                    {/* {console.log("field-----------",enquiryObject)} */}
+                {CabsTableFields.map((field, colIndex) => (
                   <TableCell key={colIndex}>
-                    {enquiryObject[field.key] ? String(enquiryObject[field.key]) : "-"}
-
+                    {String(enquiryObject[field.key]) || ""}
                   </TableCell>
-                  </>
                 ))}
               </TableRow>
             ))}
@@ -167,4 +157,4 @@ const OutstationCabs = () => {
   );
 };
 
-export default OutstationCabs;
+export default CabTable;

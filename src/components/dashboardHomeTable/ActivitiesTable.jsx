@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { ExtraDetailController } from "../api/extraDetailController";
-import { Enquiry_Type } from "../utils/enum";
+import { useEffect, useState } from "react";
+
 import {
   Paper,
   Table,
@@ -9,18 +8,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  CircularProgress,
   Typography,
   Box,
 } from "@mui/material";
+import { ExtraDetailController } from "../../api/extraDetailController";
+import { Enquiry_Type } from "../../utils/enum";
 
-const OutstationCabs = () => {
-  const [outstationCabsData, setOutstationCabsData] = useState(null);
-  const [loading, setLoading] = useState(true);
+const ActivitiesTable = ({setLoading}) => {
+  const [activitiesData, setActivitiesData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    ExtraDetailController.getExtraSerivce(Enquiry_Type.OUTSTATION_CABS)
+    ExtraDetailController.getExtraSerivce(Enquiry_Type.ACTIVITIE)
       .then((res) => {
         const rawData = res?.data?.data;
         if (rawData && Array.isArray(rawData)) {
@@ -34,39 +33,33 @@ const OutstationCabs = () => {
             })
             .filter((item) => item !== null);
 
-          setOutstationCabsData(parsedData);
-          // console.log("parsedData------------",parsedData)
+          setActivitiesData(parsedData.reverse());
+        //   console.log("parsedData------------",parsedData)
         } else {
-          setOutstationCabsData([]);
+          setActivitiesData([]);
         }
-        setLoading(false);
+       setLoading((prev) => ({
+          ...prev,
+          ActivitiesLoading: false,
+        }));
       })
       .catch((err) => {
         setError(err);
-        setLoading(false);
-        setOutstationCabsData([]);
+        setLoading((prev) => ({
+          ...prev,
+          ActivitiesLoading: false,
+        }));
+        setActivitiesData([]);
       });
   }, []);
 
-  const OutstationCabsTableFields = [
+  const AcitvitiesTableFields = [
+    { key: "name", value: "Name" },
     { key: "email", value: "Email" },
-    { key: "mobileNumber", value: "Phone" },
-     { key: "pickupLocation", value: "Pick Location" },
-    { key: "dropLocation", value: "Drop Location" },
-    { key: "pickupDate", value: "PickUp" },
-    { key: "returnDate", value: "Return" },
-    { key: "pickupTime", value: "Pickup Time" },
-    { key: "numberOfPerson", value: "Persons" },
+    { key: "mobile", value: "Phone" },
+    { key: "activity", value: "Activity" },
   ];
 
-
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <CircularProgress />
-      </div>
-    );
-  }
 
   if (error) {
     return (
@@ -76,10 +69,10 @@ const OutstationCabs = () => {
     );
   }
 
-  if (!outstationCabsData || outstationCabsData.length === 0) {
+  if (!activitiesData || activitiesData.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <p>No Outstation Cabs enquiry data available.</p>
+        <p>No Activity enquiry data available.</p>
       </div>
     );
   }
@@ -99,34 +92,34 @@ const OutstationCabs = () => {
             },
           }}
         >
-          Outstation Cabs Bookings
+          Recent Activity Bookings
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: "15px",
             fontWeight: "400",
-            marginBottom: "5px",
             textAlign: { xs: "center", sm: "center", md: "start" },
             "@media (min-width: 831px) and (max-width: 900px)": {
               textAlign: "start",
             },
           }}
         >
-          Track and Respond to Outstation Cabs Booking Enquiries
+          Track and Respond to your Recent Activity Booking Enquiries
         </Typography>
       </Box>
 
-      <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
+      <TableContainer component={Paper} sx={{ margin: "auto", mt: 2 }}>
         <Table stickyHeader aria-label="cab enquiries table">
           <TableHead>
             <TableRow>
-              {OutstationCabsTableFields.map((tableHeading, index) => (
+              {AcitvitiesTableFields.map((tableHeading, index) => (
                 <TableCell
                   sx={{
                     fontWeight: 500,
                     backgroundColor: "#000",
                     color: "#fff",
+                    py:1
                   }}
                   key={index}
                 >
@@ -136,7 +129,7 @@ const OutstationCabs = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {outstationCabsData.map((enquiryObject, rowIndex) => (
+            {activitiesData.slice(0,5).map((enquiryObject, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 hover
@@ -149,14 +142,10 @@ const OutstationCabs = () => {
                   },
                 }}
               >
-                {OutstationCabsTableFields.map((field, colIndex) => (
-                    <>
-                    {/* {console.log("field-----------",enquiryObject)} */}
+                {AcitvitiesTableFields.map((field, colIndex) => (
                   <TableCell key={colIndex}>
-                    {enquiryObject[field.key] ? String(enquiryObject[field.key]) : "-"}
-
+                    {String(enquiryObject[field.key]) || ""}
                   </TableCell>
-                  </>
                 ))}
               </TableRow>
             ))}
@@ -167,4 +156,4 @@ const OutstationCabs = () => {
   );
 };
 
-export default OutstationCabs;
+export default ActivitiesTable;

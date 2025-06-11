@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ExtraDetailController } from '../api/extraDetailController';
-import { Enquiry_Type } from '../utils/enum';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Box, Typography } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, Typography } from '@mui/material';
+import { Enquiry_Type } from '../../utils/enum';
+import { ExtraDetailController } from '../../api/extraDetailController';
 
-const HelicopterList = () => {
+const HelicopterTable = ({setLoading}) => {
   const [helicopterData, setHelicopterData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -28,18 +27,24 @@ const HelicopterList = () => {
         } else {
            setHelicopterData([]);
         }
-        setLoading(false);
+        setLoading((prev) => ({
+          ...prev,
+          HelicopterLoading: false,
+        }));
       })
       .catch(err => {
         setError(err);
-        setLoading(false);
+        setLoading((prev) => ({
+          ...prev,
+          HelicopterLoading: false,
+        }));
         setHelicopterData([]);
       });
   }, []);
 
   const HelicopterTableFields = [
-    { key: "fullName", value: "Full Name" },
-    { key: "phoneNumber", value: "Phone Number" },
+    { key: "fullName", value: "Name" },
+    { key: "phoneNumber", value: "Mobile" },
     { key: "email", value: "Email" },
     { key: "from", value: "From" },
     { key: "to", value: "To" },
@@ -47,16 +52,8 @@ const HelicopterList = () => {
     { key: "time", value: "Time" },
     { key: "adults", value: "Adults" },
     { key: "children", value: "Children" },
-    { key: "message", value: "Message" }
   ];
 
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <CircularProgress />
-      </div>
-    );
-  }
 
   if (error) {
       return (
@@ -90,37 +87,36 @@ const HelicopterList = () => {
             },
           }}
         >
-          Helicopter Bookings
+          Recent Helicopter Bookings
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: "15px",
             fontWeight: "400",
-            marginBottom: "5px",
             textAlign: { xs: "center", sm: "center", md: "start" },
             "@media (min-width: 831px) and (max-width: 900px)": {
               textAlign: "start",
             },
           }}
         >
-          Track and Respond to Helicopter Booking Enquiries
+          Track and Respond to your recent Helicopter Booking Enquiries
         </Typography>
       </Box>
    
-    <TableContainer component={Paper} sx={{ margin: "auto", mt: 5 }}>
+    <TableContainer component={Paper} sx={{ margin: "auto", mt: 2 }}>
       <Table stickyHeader aria-label="helicopter enquiries table">
         <TableHead>
           <TableRow>
             {HelicopterTableFields.map((tableHeading, index) => (
-              <TableCell sx={{ fontWeight: 500, backgroundColor: '#000', color:'#fff' }} key={index}>
+              <TableCell sx={{ fontWeight: 500, backgroundColor: '#000', color:'#fff', py:1 }} key={index}>
                 {tableHeading.value}
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {helicopterData.map((enquiryObject, rowIndex) => (
+          {helicopterData.slice(0,5).map((enquiryObject, rowIndex) => (
             <TableRow
               key={rowIndex}
               hover
@@ -147,4 +143,4 @@ const HelicopterList = () => {
   );
 };
 
-export default HelicopterList;
+export default HelicopterTable;
