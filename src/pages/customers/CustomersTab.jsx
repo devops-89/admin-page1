@@ -87,30 +87,30 @@ const CustomersTab = () => {
             )}
             {activeTab === 1 && (
               <ActiveCustomers
-                data={data}
-                setPageSize={setPageSize}
-                pageSize={pageSize}
-                setPage={setPage}
-                page={page}
-                totalDoc={totalDoc}
+                 data={data}
                 columns={columns}
                 setSearchTerm={setSearchTerm}
                 searchTerm={searchTerm}
                 debounceSearchTerm={debounceSearchTerm}
+                pageSize={pageSize}
+                setPageSize={setPageSize}
+                setPage={setPage}
+                page={page}
+                totalDoc={totalDoc}
               />
             )}
             {activeTab === 2 && (
               <InactiveCustomers
-                data={data}
-                setPageSize={setPageSize}
-                pageSize={pageSize}
-                setPage={setPage}
-                page={page}
-                totalDoc={totalDoc}
+                  data={data}
                 columns={columns}
                 setSearchTerm={setSearchTerm}
                 searchTerm={searchTerm}
                 debounceSearchTerm={debounceSearchTerm}
+                pageSize={pageSize}
+                setPageSize={setPageSize}
+                setPage={setPage}
+                page={page}
+                totalDoc={totalDoc}
               />
             )}
           </Box>
