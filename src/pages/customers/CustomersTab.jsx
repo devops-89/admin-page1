@@ -5,8 +5,9 @@ import ActiveCustomers from "./ActiveCustomers";
 import InactiveCustomers from "./InactiveCustomers";
 import { CustomerController } from "../../api/customerController";
 import { useDebounce } from "../../hooks/debounce";
-import { COLORS } from "../../utils/colors";
+
 import ReactLoading from "react-loading";
+import {COLORS} from "../../utils/colors.js";
 
 const CustomersTab = () => {
   const [activeTab, setActiveTab] = useState(0);
