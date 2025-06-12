@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ReactLoading from "react-loading";
 import { COLORS } from "../../../utils/colors";
+import UpdatePackageDay from "./UpdatePackageDay";
 const PackageDayList= ({ data, loading }) => {
   const [page, setPage] = useState(0);
   const rowsPerPage = 2;
@@ -80,21 +81,8 @@ const PackageDayList= ({ data, loading }) => {
                       padding: 1,
                     }}
                   >
-                    <UpdatePackage />
-                    <Button
-                      variant="contained"
-                      onClick={() => onDeleteClick(row.category_id)}
-                      sx={{
-                        minWidth: "32px",
-                        padding: "4px",
-                        backgroundColor: "var(--orange-color)",
-                        "&:hover": {
-                          backgroundColor: "var(--blue-color)",
-                        },
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </Button>
+                    <UpdatePackageDay packageDayData={row} />
+                    
                   </Box>
                 </TableCell>
               </TableRow>

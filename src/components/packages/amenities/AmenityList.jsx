@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { COLORS } from "../../../utils/colors.js";
 import ReactLoading from "react-loading";
+import UpdateAmenity from "./UpdateAmenity.jsx";
 
 const AmenityList = ({ data, loading }) => {
   const [page, setPage] = useState(0);
@@ -84,21 +85,8 @@ const AmenityList = ({ data, loading }) => {
                       padding: 1,
                     }}
                   >
-                    <UpdatePackage />
-                    <Button
-                      variant="contained"
-                      onClick={() => onDeleteClick(row.category_id)}
-                      sx={{
-                        minWidth: "32px",
-                        padding: "4px",
-                        backgroundColor: "var(--orange-color)",
-                        "&:hover": {
-                          backgroundColor: "var(--blue-color)",
-                        },
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </Button>
+                    <UpdateAmenity amenityData={row} />
+                    
                   </Box>
                 </TableCell>
               </TableRow>

@@ -28,15 +28,16 @@ export default function UpdateCategory({ categoryData }) {
   const [loading, setLoading] = useState(false);
 
    const initialValues = {
-  category_image: categoryData?.category_image
-    ? [
-        {
-          preview: categoryData.category_image,
-          path: categoryData.category_image,
-          relativePath: categoryData.category_image,
-        },
-      ]
-    : [],
+  // category_image: categoryData?.category_image
+  //   ? [
+  //       {
+  //         preview: categoryData.category_image,
+  //         path: categoryData.category_image,
+  //         relativePath: categoryData.category_image,
+  //       },
+  //     ]
+  //   : [],
+   category_image: [],
   category_name: categoryData.category_name || "",
 };
 

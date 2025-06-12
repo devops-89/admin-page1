@@ -81,20 +81,7 @@ const CategoryList = ({ data, loading }) => {
                     }}
                   >
                    <UpdateCategory categoryData={row} />
-                    <Button
-                      variant="contained"
-                      onClick={() => onDeleteClick(row.category_id)}
-                      sx={{
-                        minWidth: "32px",
-                        padding: "4px",
-                        backgroundColor: "var(--orange-color)",
-                        "&:hover": {
-                          backgroundColor: "var(--blue-color)",
-                        },
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </Button>
+                  
                   </Box>
                 </TableCell>
               </TableRow>
