@@ -88,7 +88,8 @@ const AllPackage = () => {
           count={totalPages}
           page={page}
           onChange={(event, value) => setPage(value)}
-          color="primary"
+          
+          color="primary" 
         />
       </Stack> */}
     </Box>
