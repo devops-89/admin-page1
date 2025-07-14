@@ -89,13 +89,28 @@ export const PackageController = {
       throw error;
     }
   },
-  getPackages: async ()=>{
-    try{
-       const result=await packagePublicApi.get("package/list");
-       return result;
-    }
-    catch(error){
-      throw error;
-    }
+  // getPackages: async ()=>{
+  //   try{
+  //      const result=await packagePublicApi.get("package/list");
+  //      return result;
+  //   }
+  //   catch(error){
+  //     throw error;
+  //   }
+  // },
+ getPackages: async (limit, page) => {
+  try {
+    const queryParams = new URLSearchParams({
+      limit: String(limit),
+      page: String(page),
+    });
+
+    const result = await packagePublicApi.get(`package/list?${queryParams.toString()}`);
+    return result;
+  } catch (error) {
+    console.error('Error in fetching the package list details.', error);
+    throw error;
   }
+}
+
 };

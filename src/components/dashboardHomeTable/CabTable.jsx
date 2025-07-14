@@ -26,13 +26,8 @@ const CabTable = ({data}) => {
   ];
 
  
-
   if (!data || data.length === 0) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <p>No Cabs enquiry data available.</p>
-      </div>
-    );
+    return null;
   }
 
   return (

@@ -21,13 +21,11 @@ const SelfDriveTable = ({ data }) => {
     { key: "phoneNumber", value: "Mobile" },
   ];
 
-  if (!data || data.length === 0) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <p>No Self Drive enquiry data available.</p>
-      </div>
-    );
+   if (!data || data.length === 0) {
+    return null;
   }
+
+  
 
   return (
     <>

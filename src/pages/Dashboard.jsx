@@ -21,15 +21,12 @@ import OutstationCabTable from "../components/dashboardHomeTable/OutstationCabTa
 import DestinationWeddingTable from "../components/dashboardHomeTable/DestinationWeddingTable.jsx";
 import { ExtraDetailController } from "../api/extraDetailController.js";
 import ReactLoading from "react-loading";
-import { Button } from "@mui/material";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  // loading state to manage loader
   const [loading, setLoading] = useState(true);
 
-  // states for passing to tables data
   const [cabData, setCabData] = useState([]);
   const [selfDriveData, setSelfDriveData] = useState([]);
   const [helicopterData, setHelicopterData] = useState([]);
@@ -38,58 +35,55 @@ const Dashboard = () => {
   const [destinationWeddingData, setDestinationWeddingData] = useState([]);
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const [
-        activitiesRes,
-        cabsRes,
-        destinationWeddingRes,
-        helicopterRes,
-        outstationCabsRes,
-        selfDriveRes,
-      ] = await Promise.all([
-        ExtraDetailController.getExtraSerivce(Enquiry_Type.ACTIVITIE),
-        ExtraDetailController.getExtraSerivce(Enquiry_Type.CABS),
-        ExtraDetailController.getExtraSerivce(Enquiry_Type.DESTINATION_WEDDING),
-        ExtraDetailController.getExtraSerivce(Enquiry_Type.HELICOPTER),
-        ExtraDetailController.getExtraSerivce(Enquiry_Type.OUTSTATION_CABS),
-        ExtraDetailController.getExtraSerivce(Enquiry_Type.SELF_DRIVE),
-      ]);
+    const fetchData = async () => {
+      try {
+        const [
+          activitiesRes,
+          cabsRes,
+          destinationWeddingRes,
+          helicopterRes,
+          outstationCabsRes,
+          selfDriveRes,
+        ] = await Promise.all([
+          ExtraDetailController.getExtraSerivce(Enquiry_Type.ACTIVITIE),
+          ExtraDetailController.getExtraSerivce(Enquiry_Type.CABS),
+          ExtraDetailController.getExtraSerivce(Enquiry_Type.DESTINATION_WEDDING),
+          ExtraDetailController.getExtraSerivce(Enquiry_Type.HELICOPTER),
+          ExtraDetailController.getExtraSerivce(Enquiry_Type.OUTSTATION_CABS),
+          ExtraDetailController.getExtraSerivce(Enquiry_Type.SELF_DRIVE),
+        ]);
 
-      const parseData = (res) => {
-        const rawData = res?.data?.data;
-        return rawData && Array.isArray(rawData)
-          ? rawData
-              .map((item) => {
-                try {
-                  return JSON.parse(item?.enquiry_description || "{}");
-                } catch (e) {
-                  return null;
-                }
-              })
-              .filter((item) => item !== null)
-              .reverse()
-          : [];
-      };
+        const parseData = (res) => {
+          const rawData = res?.data?.data;
+          return rawData && Array.isArray(rawData)
+            ? rawData
+                .map((item) => {
+                  try {
+                    return JSON.parse(item?.enquiry_description || "{}");
+                  } catch (e) {
+                    return null;
+                  }
+                })
+                .filter((item) => item !== null)
+                .reverse()
+            : [];
+        };
 
-      setActivityData(parseData(activitiesRes));
-      setCabData(parseData(cabsRes));
-      setDestinationWeddingData(parseData(destinationWeddingRes));
-      setHelicopterData(parseData(helicopterRes));
-      setOutstationCabData(parseData(outstationCabsRes));
-      setSelfDriveData(parseData(selfDriveRes));
-    } catch (err) {
-      console.error("Error fetching dashboard data:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+        setActivityData(parseData(activitiesRes));
+        setCabData(parseData(cabsRes));
+        setDestinationWeddingData(parseData(destinationWeddingRes));
+        setHelicopterData(parseData(helicopterRes));
+        setOutstationCabData(parseData(outstationCabsRes));
+        setSelfDriveData(parseData(selfDriveRes));
+      } catch (err) {
+        console.error("Error fetching dashboard data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchData();
-}, []);
-
-
-  console.log("loading--------", loading);
+    fetchData();
+  }, []);
 
   const dashboardDataList = [
     {
@@ -106,7 +100,6 @@ const Dashboard = () => {
       bgColor: "#e91e63",
       href: "/dashboard/hotels",
     },
-
     {
       icon: <DomainDisabledIcon sx={{ fontSize: "50px" }} />,
       label: "Cancel Hotels",
@@ -151,18 +144,6 @@ const Dashboard = () => {
     },
   ];
 
-  function refresh() {
-    setLoading((prev) => ({
-      ...prev,
-      CabLoading: false,
-      ActivitiesLoading: false,
-      DestinationWeddingLoading: false,
-      HelicopterLoading: false,
-      OutstationLoading: false,
-      SelfDriveLoading: false,
-    }));
-  }
-
   return (
     <>
       <Box component="section" sx={{ py: 2 }}>
@@ -170,18 +151,16 @@ const Dashboard = () => {
           {dashboardDataList.map((item, index) => (
             <Grid
               size={{ xs: 12, sm: 6, md: 3 }}
+              key={index}
+              onClick={() => navigate(item.href)}
               sx={{
                 borderRadius: "4px",
                 backgroundColor: "var(--white-color)",
                 boxShadow: "0px 0px 8px #cac9c9",
                 cursor: "pointer",
               }}
-              key={index}
-              onClick={() => navigate(item.href)}
             >
-              <Box
-                sx={{ display: "flex", alignItems: "center", height: "90px" }}
-              >
+              <Box sx={{ display: "flex", alignItems: "center", height: "90px" }}>
                 <Box
                   sx={{
                     width: "40%",
@@ -192,10 +171,9 @@ const Dashboard = () => {
                     backgroundColor: item.bgColor,
                     color: "white",
                     borderRadius: "4px",
-                    m: "0px",
-                    mr: 2,
                     borderTopRightRadius: "0px",
                     borderBottomRightRadius: "0px",
+                    mr: 2,
                   }}
                 >
                   {item.icon}
@@ -221,14 +199,12 @@ const Dashboard = () => {
                     variant="body1"
                     sx={{ color: item.bgColor, fontWeight: 600 }}
                   >
-                    {" "}
                     <CountUp
                       start={0}
                       end={item.quantity}
                       duration={2}
                       separator=","
-                      onUpdate={(num) => Math.floor(num / 10) * 1000}
-                    />{" "}
+                    />
                   </Typography>
                 </Box>
               </Box>
@@ -237,25 +213,44 @@ const Dashboard = () => {
         </Grid>
       </Box>
 
-      {/* Tables  */}
-
       {loading ? (
         <Box component="section" sx={{ py: 2 }}>
-          <div
-            style={{
+          <Box
+            sx={{
               textAlign: "center",
-              marginTop: "50px",
+              mt: 6,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-           
             <ReactLoading type="bars" height={40} width={40} color="#dd800c" />
-          </div>
+          </Box>
         </Box>
       ) : (
         <Box component="section" sx={{ py: 2 }}>
+          {/* Show single message if all enquiry data is empty */}
+          {cabData.length === 0 &&
+            selfDriveData.length === 0 &&
+            helicopterData.length === 0 &&
+            activityData.length === 0 &&
+            outstationCabData.length === 0 &&
+            destinationWeddingData.length === 0 && (
+              <Box
+                sx={{
+                  textAlign: "center",
+                  mt: 4,
+                  backgroundColor: "#fff3e0",
+                  padding: 2,
+                  borderRadius: 2,
+                  color: "#ff6f00",
+                  fontWeight: 500,
+                }}
+              >
+                No enquiry data available for any service.
+              </Box>
+            )}
+
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <CabTable data={cabData} />

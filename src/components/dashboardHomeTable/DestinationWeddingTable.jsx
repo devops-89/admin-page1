@@ -27,15 +27,11 @@ const DestinationWeddingTable = ({data}) => {
     { key: "destination", value: "Destination" },
   ];
 
- 
-
   if (!data || data.length === 0) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <p>No Destination Wedding enquiry data available.</p>
-      </div>
-    );
+    return null;
   }
+
+ 
 
   return (
     <>

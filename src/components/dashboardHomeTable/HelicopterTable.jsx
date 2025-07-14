@@ -24,13 +24,12 @@ const HelicopterTable = ({data}) => {
 
   
 
-  if (!data || data.length === 0) {
-      return (
-          <div style={{ textAlign: "center", marginTop: "50px" }}>
-              <p>No helicopter enquiry data available.</p>
-          </div>
-      );
+   if (!data || data.length === 0) {
+    return null;
   }
+
+
+
 
   return (
     <>

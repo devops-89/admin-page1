@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { HotlierValidationSchema } from "../../utils/validationSchema";
+import { HotlierController } from "../../api/hotlier.controller";
 import { Form, Formik } from "formik";
 import { Link } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
@@ -104,6 +105,11 @@ const AddHoteliers = () => {
 
       <Formik initialValues={initialValue} validationSchema={HotlierValidationSchema} onSubmit={(values,{resetForm})=>{
           console.log("Form values are:",values);
+          HotlierController.addHotlier(values).then((response)=>{
+
+          }).catch((error)=>{
+            console.log(error);
+          })
           resetForm();
       }}  >
         {
