@@ -179,7 +179,7 @@ const AddPackage = () => {
             });
           //   main image logic end
 
-          // banner image logic start
+          // banner   image logic start
 
           const {
             getRootProps: bannerRootProps,
