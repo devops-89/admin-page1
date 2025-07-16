@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid2";
+import { setToast } from "../../redux/reducers/toast";
+import ToastBar from "../../components/ToastBar";
+import { TOAST_STATUS } from "../../utils/enum";
+import { useDispatch } from "react-redux";
 import { useDropzone } from "react-dropzone";
 import {
   Box,
@@ -25,6 +29,7 @@ import { PackageController } from "../../api/package.controller";
 import ReactLoading from "react-loading";
 
 const AddPackage = () => {
+  const dispatch=useDispatch();
   const [loading, setLoading] = useState(false);
 
   const [amenities, setAmenities] = useState([]);
@@ -73,7 +78,6 @@ const AddPackage = () => {
     short_description: "",
     description: "",
     package_day: "",
-    package_no_of_person: 1,
     package_price: 0.0,
     selling_price: 0.0,
     package_destination: "",
@@ -131,21 +135,38 @@ const AddPackage = () => {
       <Formik
         initialValues={initialState}
         enableReinitialize
-        onSubmit={(values) => {
+        onSubmit={(values,{resetForm}) => {
           // setLoading(true);
           console.log("creating package:", values);
           PackageController.createPackage(values)
             .then((response) => {
               console.log("response: ", response);
+                dispatch(
+                        setToast({
+                          open: true,
+                          message: "Package Created Successfully.",
+                          severity: TOAST_STATUS.SUCCESS,
+                        })
+                      );
+
+                      
               // if(response.status==200){
               //     alert("Package Added Successfully.");
               // }
             })
             .catch((error) => {
               console.log("error:", error);
+                dispatch(
+                        setToast({
+                          open: true,
+                          message: "Error in Creating Package!",
+                          severity: TOAST_STATUS.ERROR,
+                        })
+                      );
             })
             .finally(() => {
               setLoading(false);
+              resetForm();
             });
         }}
       >
@@ -392,40 +413,9 @@ const AddPackage = () => {
                       gap: "10px",
                     }}
                   >
-                    <Grid size={{ sx: 12, sm: 3 }} sx={{ width: "100%" }}>
-                      <FormLabel
-                        htmlFor="package_no_of_person"
-                        sx={{ fontWeight: 500 }}
-                      >
-                        Number Of Persons
-                      </FormLabel>
-                      <Select
-                        id="package_no_of_person"
-                        name="package_no_of_person"
-                        value={values.package_no_of_person}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                          marginTop: 1,
-                          color: "var(--black-color)",
-                          "& .MuiOutlinedInput-root": {
-                            "&.Mui-focused fieldset": {
-                              borderColor: "var(--orange-color)",
-                            },
-                          },
-                        }}
-                      >
-                        {[...Array(20)].map((_, index) => (
-                          <MenuItem key={index} value={index + 1}>
-                            {index + 1} Person
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </Grid>
+                   
 
-                    <Grid size={{ sx: 12, sm: 5 }} sx={{ width: "100%" }}>
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormLabel htmlFor="package_day" sx={{ fontWeight: 500 }}>
                         Trip Duration
                       </FormLabel>
@@ -463,7 +453,7 @@ const AddPackage = () => {
                       </Grid>
                     </Grid>
 
-                    <Grid size={{ sx: 12, sm: 4 }} sx={{ width: "100%" }}>
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -532,7 +522,7 @@ const AddPackage = () => {
                         onBlur={handleBlur}
                         fullWidth
                         type="number"
-                        inputProps={{ min: 0, max: 100 }}
+                        inputProps={{ min: 0}}
                         required
                         sx={{
                           marginTop: 1,
@@ -562,7 +552,7 @@ const AddPackage = () => {
                         value={values.package_price}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        inputProps={{ min: 0, max: 100 }}
+                        inputProps={{ min: 0}}
                         required
                         sx={{
                           marginTop: 1,
@@ -576,7 +566,7 @@ const AddPackage = () => {
                       />
                     </Grid>
 
-                    <Grid item size={{ xs: 12, sm: 3 }} sx={{ width: "100%" }}>
+                    <Grid item size={{ xs: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormLabel htmlFor="amenities" sx={{ fontWeight: 500 }}>
                         Select Amenities
                       </FormLabel>
@@ -1286,10 +1276,13 @@ const AddPackage = () => {
                     </Grid>
                   </Box>
                 </Grid>
+                     {/* for toast rendering */}
+        <ToastBar/>
               </Grid>
             </Form>
           );
         }}
+   
       </Formik>
     </>
   );
