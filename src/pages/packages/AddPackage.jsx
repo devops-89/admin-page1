@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid2";
 import { useDropzone } from "react-dropzone";
 import {
@@ -6,7 +6,6 @@ import {
   Button,
   Checkbox,
   FormControl,
-  
   FormLabel,
   IconButton,
   MenuItem,
@@ -25,15 +24,12 @@ import { Form, Formik } from "formik";
 import { PackageController } from "../../api/package.controller";
 import ReactLoading from "react-loading";
 
-
 const AddPackage = () => {
   const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState(2);
+
   const [amenities, setAmenities] = useState([]);
   const [categories, setCategories] = useState([]);
   const [packageDuration, setPackageDuration] = useState([]);
-
-
 
   useEffect(() => {
     // fetching amenities start
@@ -86,7 +82,6 @@ const AddPackage = () => {
     state: "",
     country: "",
     zip: "",
-    monthYear: dayjs(),
     package_type: "",
     near_by_location: "",
     highlight: "",
@@ -94,6 +89,7 @@ const AddPackage = () => {
     main_image: [],
     banner_image: [],
     gallery_image: [],
+    rating: 1,
   };
 
   return (
@@ -156,8 +152,6 @@ const AddPackage = () => {
         {({ values, handleChange, handleBlur, setFieldValue }) => {
           // main image logic start
 
-         
-
           const { getRootProps: mainRootProps, getInputProps: mainInputProps } =
             useDropzone({
               onDrop: (acceptedFiles) => {
@@ -166,7 +160,6 @@ const AddPackage = () => {
                 );
 
                 setFieldValue("main_image", [filePreviews[0]]);
-               
               },
               accept: {
                 "image/jpeg": [],
@@ -191,7 +184,6 @@ const AddPackage = () => {
               );
 
               setFieldValue("banner_image", [filePreviews[0]]);
-          
             },
             accept: {
               "image/jpeg": [],
@@ -210,17 +202,16 @@ const AddPackage = () => {
             getRootProps: galleryRootProps,
             getInputProps: galleryInputProps,
           } = useDropzone({
-           onDrop: (acceptedFiles) => {
-  const filePreviews = acceptedFiles.map((file) =>
-    Object.assign(file, { preview: URL.createObjectURL(file) })
-  );
+            onDrop: (acceptedFiles) => {
+              const filePreviews = acceptedFiles.map((file) =>
+                Object.assign(file, { preview: URL.createObjectURL(file) })
+              );
 
- 
-  setFieldValue("gallery_image", [
-    ...(values.gallery_image || []),
-    ...filePreviews,
-  ]);
-},
+              setFieldValue("gallery_image", [
+                ...(values.gallery_image || []),
+                ...filePreviews,
+              ]);
+            },
             accept: {
               "image/jpeg": [],
               "image/png": [],
@@ -459,7 +450,7 @@ const AddPackage = () => {
                               },
                             }}
                           >
-                            {packageDuration.map((item,index) => (
+                            {packageDuration.map((item, index) => (
                               <MenuItem
                                 key={index}
                                 value={item.pkgday_duration}
@@ -593,10 +584,6 @@ const AddPackage = () => {
                         id="amenities"
                         name="amenities"
                         multiple
-                        value={values.amenities} // ✅ make sure spelling matches initialValues
-                        onChange={(event) => {
-                          setFieldValue("amenities", event.target.value);
-                        }}
                         variant="outlined"
                         fullWidth
                         sx={{
@@ -608,23 +595,24 @@ const AddPackage = () => {
                             },
                           },
                         }}
+                        value={values.amenities} // an array of full objects
+                        onChange={(event) => {
+                          const {
+                            target: { value },
+                          } = event;
+
+                          // value is array of selected amenity objects
+                          setFieldValue("amenities", value);
+                        }}
                         renderValue={(selected) =>
-                          amenities
-                            .filter((item) =>
-                              selected.includes(item.amenite_name)
-                            )
-                            .map((item) => item.amenite_name)
-                            .join(", ")
+                          selected.map((item) => item.amenite_name).join(", ")
                         }
                       >
-                        {amenities.map((item,index) => (
-                          <MenuItem
-                            key={index}
-                            value={item.amenite_name}
-                          >
+                        {amenities.map((item) => (
+                          <MenuItem key={item.amenite_id} value={item}>
                             <Checkbox
-                              checked={values.amenities.includes(
-                                item.amenite_name
+                              checked={values.amenities.some(
+                                (a) => a.amenite_id === item.amenite_id
                               )}
                             />
                             <Typography>{item.amenite_name}</Typography>
@@ -633,26 +621,7 @@ const AddPackage = () => {
                       </Select>
                     </Grid>
 
-                    <Grid item size={{ xs: 12, sm: 3 }} sx={{ width: "100%" }}>
-                      <FormLabel htmlFor="monthYear" sx={{ fontWeight: 500 }}>
-                        Month & Year
-                      </FormLabel>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={["DatePicker"]}>
-                          <DatePicker
-                            id="monthYear"
-                            value={values.monthYear}
-                            onChange={(newValue) =>
-                              setFieldValue("monthYear", newValue)
-                            }
-                            views={["month", "year"]}
-                            renderInput={(params) => (
-                              <TextField {...params} fullWidth />
-                            )}
-                          />
-                        </DemoContainer>
-                      </LocalizationProvider>
-                    </Grid>
+              
                   </Grid>
 
                   {/* third section start */}
@@ -666,7 +635,7 @@ const AddPackage = () => {
                       gap: "10px",
                     }}
                   >
-   <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -710,7 +679,7 @@ const AddPackage = () => {
                       </FormControl>
                     </Grid>
 
-                     <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -754,8 +723,7 @@ const AddPackage = () => {
                       </FormControl>
                     </Grid>
 
-
-                     <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -799,7 +767,7 @@ const AddPackage = () => {
                       </FormControl>
                     </Grid>
 
-          <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -842,7 +810,7 @@ const AddPackage = () => {
                         />
                       </FormControl>
                     </Grid>
-                              <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -885,9 +853,8 @@ const AddPackage = () => {
                         />
                       </FormControl>
                     </Grid>
-                             
-                             
-                              <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -907,7 +874,7 @@ const AddPackage = () => {
                             },
                           }}
                         >
-                           Near Location
+                          Near Location
                         </FormLabel>
                         <TextField
                           id="near_by_location"
@@ -930,8 +897,8 @@ const AddPackage = () => {
                         />
                       </FormControl>
                     </Grid>
-                    
-                     <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -974,7 +941,7 @@ const AddPackage = () => {
                         />
                       </FormControl>
                     </Grid>
-                     <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
+                    <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormControl
                         fullWidth
                         sx={{
@@ -1017,8 +984,6 @@ const AddPackage = () => {
                         />
                       </FormControl>
                     </Grid>
-                    
-
                   </Grid>
 
                   {/* Third section end */}
@@ -1285,9 +1250,9 @@ const AddPackage = () => {
                       <Rating
                         id="rating"
                         name="rating"
-                        value={value}
+                        value={values.rating}
                         onChange={(event, newValue) => {
-                          setValue(newValue);
+                          setFieldValue("rating", newValue);
                         }}
                         sx={{ marginTop: 1 }}
                       />
