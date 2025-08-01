@@ -30,7 +30,15 @@ export const PackageController = {
   },
   addAmenity:async (data)=>{
   try{
-    const result=await packagePublicApi.post("/package/amenities/add",data);
+    const isFormData=data instanceof FormData;
+
+    const config={
+      headers: isFormData
+       ? { "Content-Type": "multipart/form-data" }
+        : { "Content-Type": "application/json" },
+    }
+
+    const result=await packagePublicApi.post("/package/amenities/add",data,config);
     return result;
     
   }
@@ -67,19 +75,30 @@ export const PackageController = {
       throw error;
     }
   },
- addCategory: async (data) => {
+  
+addCategory: async (data) => {
   try {
-    const config = {};
-    // If data is FormData, let axios send multipart/form-data
-    if (data instanceof FormData) {
-      config.headers = { "Content-Type": "multipart/form-data" };
-    }
-    const result = await packagePublicApi.post("/package/category/add", data, config);
-    return result;
+    const isFormData = data instanceof FormData;
+
+    const config = {
+      headers: isFormData
+        ? { "Content-Type": "multipart/form-data" }
+        : { "Content-Type": "application/json" },
+    };
+
+    const response = await packagePublicApi.post(
+      "/package/category/add",
+      data,
+      config
+    );
+
+    return response;
   } catch (error) {
+    console.error("Add Category API Error:", error);
     throw error;
   }
 },
+
   createPackage:async (data)=>{
     try{
       const result=await packagePublicApi.post("package/create",data);

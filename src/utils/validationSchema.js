@@ -15,12 +15,22 @@ export const categoryValidationSchema = Yup.object().shape({
     .required("Category name is required")
     .min(2, "Too short")
     .max(50, "Too long"),
+
   category_image: Yup.array()
     .of(
       Yup.object().shape({
-        preview: Yup.string().required(),
-        path: Yup.string().required(),
-        relativePath: Yup.string().required(),
+        preview: Yup.string().required("Preview is required"),
+        path: Yup.string().required("Path is required"),
+        relativePath: Yup.string().required("Relative path is required"),
+        file: Yup.mixed()
+          .required("File is missing")
+          .test(
+            "fileType",
+            "Unsupported file format",
+            (value) =>
+              value && ["image/jpeg", "image/png", "image/webp", "image/jpg"].includes(value.type)
+          )
+          .test("fileSize", "File is too large", (value) => value && value.size <= 2 * 1024 * 1024), // 2MB
       })
     )
     .min(1, "Category image is required"),

@@ -26,7 +26,7 @@ const AddAmenity = ({ onAddSuccess }) => {
   };
 
   return (
-    <Paper sx={{ height: "auto", padding: "20px" }}>
+    <Paper sx={{ height: "auto", padding: "33px" }}>
       <Typography
         variant="h4"
         sx={{
@@ -46,8 +46,15 @@ const AddAmenity = ({ onAddSuccess }) => {
         initialValues={initialValues}
         validationSchema={amenityValidationSchema}
         onSubmit={(values, { resetForm }) => {
+          const formData=new FormData();
+          formData.append("amenite_name",values.amenite_name);
+          
+          if(values.amenite_image.length>0 && values.amenite_image[0].file){
+            formData.append("amenite_image",values.amenite_image[0].file);
+          }
+
           setLoading(true);
-          PackageController.addAmenity(values)
+          PackageController.addAmenity(formData)
             .then((response) => {
               console.log("response coming: ", response);
               onAddSuccess(response.data.data);
@@ -71,6 +78,7 @@ const AddAmenity = ({ onAddSuccess }) => {
               if (file) {
                 const previewFile = {
                   preview: URL.createObjectURL(file),
+                  file,
                   path: file.path || file.name,
                   relativePath: file.path || file.name,
                 };

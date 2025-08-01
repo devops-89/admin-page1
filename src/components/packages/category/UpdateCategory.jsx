@@ -264,7 +264,7 @@ export default function UpdateCategory({ categoryData }) {
                       color="white"
                     />
                   ) : (
-                    "Add Category"
+                    "Update Category"
                   )}
                 </Button>
               </Grid>

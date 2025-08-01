@@ -11,13 +11,14 @@ import {
   Paper,
   TablePagination,
   Button,
+  Typography,
   Box,
 } from "@mui/material";
 import ReactLoading from "react-loading";
 import { COLORS } from "../../../utils/colors";
 const CategoryList = ({ data, loading }) => {
   const [page, setPage] = useState(0);
-  const rowsPerPage = 5;
+  const rowsPerPage = 4;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -25,6 +26,23 @@ const CategoryList = ({ data, loading }) => {
 
   const currentRows =
     data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) || [];
+
+    if(data.length<=0){
+      return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: 300,
+        }}
+      >
+        <Typography variant="h6" sx={{ color: COLORS.RED }}>
+          No Package Categories Available!
+        </Typography>
+      </Box>
+    );
+    }
 
   if (loading) {
     return (
@@ -68,7 +86,18 @@ const CategoryList = ({ data, loading }) => {
           <TableBody>
             {currentRows.map((row, index) => (
               <TableRow key={index}>
-                <TableCell>{row.category_id}</TableCell>
+               <TableCell>
+                <img
+                  src={row.category_image}
+                  alt={row.category_name}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                  }}
+                />
+              </TableCell>
                 <TableCell>{row.category_name}</TableCell>
                 <TableCell align="center" sx={{ padding: "0px" }}>
                   <Box

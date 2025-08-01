@@ -26,7 +26,7 @@ const AddCategory = ({ onAddSuccess }) => {
   };
 
   return (
-    <Paper sx={{ height: "auto", padding: "20px" }}>
+    <Paper sx={{ height: "auto", padding: "34px" }}>
       <Typography
         variant="h4"
         sx={{
@@ -45,24 +45,29 @@ const AddCategory = ({ onAddSuccess }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={categoryValidationSchema}
-        onSubmit={(values, { resetForm }) => {
-          console.log(values.category_image[0].file instanceof File); // should print: true
-console.log(values.category_image[0].file); // Should show a full File object with size, type, etc.
+       onSubmit={(values, { resetForm }) => {
+  const formData = new FormData();
+  formData.append("category_name", values.category_name);
 
-          // setLoading(true);
-          // PackageController.addCategory(values)
-          //   .then((response) => {
-          //     console.log("response coming: ", response);
-          //     onAddSuccess(response.data.data);
-          //   })
-          //   .catch((error) => {
-          //     console.log(error);
-          //   })
-          //   .finally(() => {
-          //     resetForm();
-          //     setLoading(false);
-          //   });
-        }}
+  if (values.category_image.length > 0) {
+    formData.append("category_image", values.category_image[0].file);
+  }
+
+  setLoading(true);
+  PackageController.addCategory(formData)
+    .then((response) => {
+      console.log("response coming: ", response);
+      onAddSuccess(response.data.data);
+    })
+    .catch((error) => {
+      console.log("Category Add Error:", error);
+    })
+    .finally(() => {
+      resetForm();
+      setLoading(false);
+    });
+}}
+
       >
         {({ values, handleChange, handleBlur, setFieldValue, errors }) => {
           const {

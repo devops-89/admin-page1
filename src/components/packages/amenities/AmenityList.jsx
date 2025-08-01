@@ -11,7 +11,8 @@ import {
   Paper,
   TablePagination,
   Button,
-  Box
+  Box,
+  Typography,
 } from "@mui/material";
 import { COLORS } from "../../../utils/colors.js";
 import ReactLoading from "react-loading";
@@ -19,7 +20,7 @@ import UpdateAmenity from "./UpdateAmenity.jsx";
 
 const AmenityList = ({ data, loading }) => {
   const [page, setPage] = useState(0);
-  const rowsPerPage = 5;
+  const rowsPerPage = 4;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -30,7 +31,7 @@ const AmenityList = ({ data, loading }) => {
     page * rowsPerPage + rowsPerPage
   );
 
-  if (loading) {
+  if (data.length <= 0) {
     return (
       <Box
         sx={{
@@ -38,6 +39,23 @@ const AmenityList = ({ data, loading }) => {
           justifyContent: "center",
           alignItems: "center",
           height: 300,
+        }}
+      >
+        <Typography variant="h6" sx={{ color: COLORS.RED }}>
+          No Amenities Available
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: 350,
         }}
       >
         <ReactLoading
@@ -56,24 +74,34 @@ const AmenityList = ({ data, loading }) => {
         width: "100%",
         overflow: "hidden",
         position: "relative",
-        height: 394,
-        
+        height: 420,
       }}
     >
-      <TableContainer >
+      <TableContainer>
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: "black" }}>
-               <TableCell sx={{ color: "white" }}>Amenity ID</TableCell>
-                <TableCell sx={{ color: "white" }}>Amenity Name</TableCell>
-                <TableCell sx={{ color: "white" }}>Actions</TableCell>
-              </TableRow>
+              <TableCell sx={{ color: "white" }}>Amenity ID</TableCell>
+              <TableCell sx={{ color: "white" }}>Amenity Name</TableCell>
+              <TableCell sx={{ color: "white" }}>Actions</TableCell>
+            </TableRow>
           </TableHead>
           <TableBody>
             {currentRows.map((row, index) => (
               <TableRow key={index}>
-                 <TableCell>{row.amenite_id}</TableCell>
-                  <TableCell>{row.amenite_name}</TableCell>
+                <TableCell>
+                <img
+                  src={row.amenite_image}
+                  alt={row.amenite_name}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                  }}
+                />
+              </TableCell>
+                <TableCell>{row.amenite_name}</TableCell>
 
                 <TableCell align="center" sx={{ padding: "0px" }}>
                   <Box
@@ -86,7 +114,6 @@ const AmenityList = ({ data, loading }) => {
                     }}
                   >
                     <UpdateAmenity amenityData={row} />
-                    
                   </Box>
                 </TableCell>
               </TableRow>
