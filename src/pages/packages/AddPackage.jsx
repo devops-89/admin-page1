@@ -29,7 +29,7 @@ import { PackageController } from "../../api/package.controller";
 import ReactLoading from "react-loading";
 
 const AddPackage = () => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const [amenities, setAmenities] = useState([]);
@@ -135,34 +135,66 @@ const AddPackage = () => {
       <Formik
         initialValues={initialState}
         enableReinitialize
-        onSubmit={(values,{resetForm}) => {
-          // setLoading(true);
-          console.log("creating package:", values);
-          PackageController.createPackage(values)
+        onSubmit={(values, { resetForm }) => {
+          setLoading(true);
+          const formData = new FormData();
+
+          // Append all text fields
+          for (const key in values) {
+            if (
+              key !== "main_image" &&
+              key !== "banner_image" &&
+              key !== "gallery_image" &&
+              key !== "amenities"
+         
+            ) {
+              formData.append(key, values[key]);
+            }
+          }
+
+// amenities data
+            formData.append("amenities", JSON.stringify(values.amenities));
+     
+
+          // Append single image files
+          if (  values.main_image.length>0 && values.main_image[0].file) {
+            formData.append("main_image", values.main_image[0].file);
+          }
+          if ( values.banner_image.length>0 && values.banner_image[0].file) {
+            formData.append("banner_image", values.banner_image[0].file);
+          }
+
+        if (values.gallery_image?.length > 0) {
+  const galleryArray = values.gallery_image.map((previewFile) => previewFile.file);
+  galleryArray.forEach((file) => {
+    formData.append("gallery_image", file); 
+  });
+}
+
+          PackageController.createPackage(formData)
             .then((response) => {
               console.log("response: ", response);
-                dispatch(
-                        setToast({
-                          open: true,
-                          message: "Package Created Successfully.",
-                          severity: TOAST_STATUS.SUCCESS,
-                        })
-                      );
+              dispatch(
+                setToast({
+                  open: true,
+                  message: "Package Created Successfully.",
+                  severity: TOAST_STATUS.SUCCESS,
+                })
+              );
 
-                      
               // if(response.status==200){
               //     alert("Package Added Successfully.");
               // }
             })
             .catch((error) => {
               console.log("error:", error);
-                dispatch(
-                        setToast({
-                          open: true,
-                          message: "Error in Creating Package!",
-                          severity: TOAST_STATUS.ERROR,
-                        })
-                      );
+              dispatch(
+                setToast({
+                  open: true,
+                  message: "Error in Creating Package!",
+                  severity: TOAST_STATUS.ERROR,
+                })
+              );
             })
             .finally(() => {
               setLoading(false);
@@ -176,11 +208,20 @@ const AddPackage = () => {
           const { getRootProps: mainRootProps, getInputProps: mainInputProps } =
             useDropzone({
               onDrop: (acceptedFiles) => {
-                const filePreviews = acceptedFiles.map((file) =>
-                  Object.assign(file, { preview: URL.createObjectURL(file) })
-                );
+                const file = acceptedFiles[0];
+                console.log("file: ",file);
+                if (file) {
+                  console.log("file", file);
+                  const previewFile = {
+                    preview: URL.createObjectURL(file),
+                    file,
+                    path: file.path || file.name,
+                    relativePath: file.path || file.name,
+                  };
+                  console.log("preview File:",previewFile.file);
 
-                setFieldValue("main_image", [filePreviews[0]]);
+                  setFieldValue("main_image", [previewFile]);
+                }
               },
               accept: {
                 "image/jpeg": [],
@@ -200,11 +241,17 @@ const AddPackage = () => {
             getInputProps: bannerInputProps,
           } = useDropzone({
             onDrop: (acceptedFiles) => {
-              const filePreviews = acceptedFiles.map((file) =>
-                Object.assign(file, { preview: URL.createObjectURL(file) })
-              );
-
-              setFieldValue("banner_image", [filePreviews[0]]);
+             const file = acceptedFiles[0];
+                if (file) {
+                  console.log("file", file);
+                  const previewFile = {
+                    preview: URL.createObjectURL(file),
+                    file,
+                    path: file.path || file.name,
+                    relativePath: file.path || file.name,
+                  };
+                  setFieldValue("banner_image", [previewFile]);
+                }
             },
             accept: {
               "image/jpeg": [],
@@ -224,14 +271,22 @@ const AddPackage = () => {
             getInputProps: galleryInputProps,
           } = useDropzone({
             onDrop: (acceptedFiles) => {
-              const filePreviews = acceptedFiles.map((file) =>
-                Object.assign(file, { preview: URL.createObjectURL(file) })
-              );
+              // Optional: generate preview images if needed for UI
+              const previewFiles = acceptedFiles.map((file) => ({
+                preview: URL.createObjectURL(file),
+                file,
+                path: file.path || file.name,
+                relativePath: file.path || file.name,
+              }));
 
+              // ✅ Only send raw files to Formik state
               setFieldValue("gallery_image", [
                 ...(values.gallery_image || []),
-                ...filePreviews,
+                ...previewFiles,
               ]);
+
+              // Optional: if you need previewFiles for rendering, use useState to store them separately
+              // setGalleryPreviewImages([...galleryPreviewImages, ...previewFiles]);
             },
             accept: {
               "image/jpeg": [],
@@ -413,8 +468,6 @@ const AddPackage = () => {
                       gap: "10px",
                     }}
                   >
-                   
-
                     <Grid size={{ sx: 12, sm: 6 }} sx={{ width: "100%" }}>
                       <FormLabel htmlFor="package_day" sx={{ fontWeight: 500 }}>
                         Trip Duration
@@ -522,7 +575,7 @@ const AddPackage = () => {
                         onBlur={handleBlur}
                         fullWidth
                         type="number"
-                        inputProps={{ min: 0}}
+                        inputProps={{ min: 0 }}
                         required
                         sx={{
                           marginTop: 1,
@@ -552,7 +605,7 @@ const AddPackage = () => {
                         value={values.package_price}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        inputProps={{ min: 0}}
+                        inputProps={{ min: 0 }}
                         required
                         sx={{
                           marginTop: 1,
@@ -610,8 +663,6 @@ const AddPackage = () => {
                         ))}
                       </Select>
                     </Grid>
-
-              
                   </Grid>
 
                   {/* third section start */}
@@ -1276,13 +1327,12 @@ const AddPackage = () => {
                     </Grid>
                   </Box>
                 </Grid>
-                     {/* for toast rendering */}
-        <ToastBar/>
+                {/* for toast rendering */}
+                <ToastBar />
               </Grid>
             </Form>
           );
         }}
-   
       </Formik>
     </>
   );

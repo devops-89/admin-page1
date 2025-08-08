@@ -84,7 +84,9 @@ const AddCategory = ({ onAddSuccess }) => {
                   path: file.path || file.name,
                   relativePath: file.path || file.name,
                 };
-                setFieldValue("category_image", [previewFile]); // send as array
+                setFieldValue("category_image", [previewFile]);
+                console.log("preview File:",previewFile);
+                console.log("file:",previewFile.file) // send as array
               }
             },
             accept: {

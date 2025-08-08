@@ -101,7 +101,16 @@ addCategory: async (data) => {
 
   createPackage:async (data)=>{
     try{
-      const result=await packagePublicApi.post("package/create",data);
+
+          const isFormData = data instanceof FormData;
+
+    const config = {
+      headers: isFormData
+        ? { "Content-Type": "multipart/form-data" }
+        : { "Content-Type": "application/json" },
+    };
+
+      const result=await packagePublicApi.post("package/create",data,config);
       return result;
     }
     catch(error){
