@@ -22,7 +22,6 @@ const PackageList = ({ data }) => {
             <TableRow sx={{ backgroundColor: 'black' }}>
               <TableCell sx={{ color: 'white' }}>Package Name</TableCell>
               <TableCell sx={{ color: 'white' }}>Package Days</TableCell>
-              <TableCell sx={{ color: 'white' }}>Persons</TableCell>
               <TableCell sx={{ color: 'white' }}>Package Price</TableCell>
                 <TableCell sx={{ color: 'white' }}>PackageType</TableCell>
                   <TableCell sx={{ color: 'white' }}>Selling Price</TableCell>
@@ -35,7 +34,6 @@ const PackageList = ({ data }) => {
               <TableRow key={index}>
                 <TableCell>{row.package_name}</TableCell>
                 <TableCell>{row.package_day}</TableCell>
-                <TableCell>{row.package_no_of_person}</TableCell>
                 <TableCell>{row.package_price}</TableCell>
                   <TableCell>{row.package_type}</TableCell>
                   <TableCell>{row.selling_price}</TableCell>

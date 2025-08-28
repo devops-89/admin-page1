@@ -32,6 +32,7 @@ const Navbar = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
 
   const handleMenuToggle = () => {
     setMenuOpen(!open);
@@ -68,7 +69,7 @@ const Navbar = ({
 
 
 
-  const navigate = useNavigate();
+
 
   return (
     <AppBar
