@@ -120,6 +120,7 @@ const Navbar = ({
             <Avatar alt="User">N</Avatar>
           </IconButton>
 
+        
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
