@@ -4,7 +4,7 @@
 
 const authenticationBaseUrl="https://dev.page1travels.com/auth";
 const packageBaseUrl="https://dev.page1travels.com/admin";
-const baseURL = "https://dev.page1travels.com";
+const baseURL = "https://api.dev.page1travels.com";
 const comissionBaseUrl="https://dev.page1travels.com/admin"
 const hotlierUrl="https://dev.page1travels.com/admin";
 
