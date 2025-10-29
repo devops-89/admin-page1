@@ -9,7 +9,6 @@ const comissionBaseUrl="https://dev.page1travels.com/admin"
 const hotlierUrl="https://dev.page1travels.com/admin";
 
 
-
 export const APIURL={
     authenticationUrl:`${authenticationBaseUrl}/api`,
     packageUrl:`${packageBaseUrl}/api`,
