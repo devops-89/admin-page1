@@ -2,11 +2,11 @@
 // const authenticationBaseUrl="http://192.168.1.21:3000";
 // const packageBaseUrl="http://192.168.1.21:3005";
 
-const authenticationBaseUrl="https://dev.page1travels.com/auth";
-const packageBaseUrl="https://dev.page1travels.com/admin";
+const authenticationBaseUrl="https://api.uat.page1travels.com/auth";
+const packageBaseUrl="https://api.uat.page1travels.com/admin";
 const baseURL = "https://api.uat.page1travels.com";
-const comissionBaseUrl="https://dev.page1travels.com/admin"
-const hotlierUrl="https://dev.page1travels.com/admin";
+const comissionBaseUrl="https://api.uat.page1travels.com/admin"
+const hotlierUrl="https://api.uat.page1travels.com/admin";
 
 
 export const APIURL={
