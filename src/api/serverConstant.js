@@ -4,6 +4,7 @@
 
 const authenticationBaseUrl = "https://api.uat.page1travels.com/auth";
 
+
 const packageBaseUrl = "https://api.uat.page1travels.com/admin";
 const baseURL = "https://api.uat.page1travels.com";
 const comissionBaseUrl = "https://api.uat.page1travels.com/admin";
