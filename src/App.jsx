@@ -4,13 +4,10 @@ import Login from "./pages/Login.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 import PackageSettings from "./pages/packages/PackageSettings.jsx";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HotelsList from "./pages/HotelsList.jsx";
 import CabsList from "./pages/CabsList.jsx";
-import FlightsList from "./pages/FlightsList.jsx";
+import FlightsTabs from "./pages/FlightsTabs.jsx";
 import ProtectedRoute from "./components/auth/ProtectedRoute.jsx";
 import CustomersTab from "./pages/customers/CustomersTab.jsx";
 import CustomerDetails from "./pages/customers/CustomerDetails.jsx";
@@ -19,7 +16,7 @@ import AllPackage from "./pages/packages/AllPackage.jsx";
 
 import AddStaff from "./pages/staff/AddStaff.jsx";
 import AddHoteliers from "./pages/hoteliers/AddHoteliers.jsx";
-import Profile from './pages/profile/Profile.jsx';
+import Profile from "./pages/profile/Profile.jsx";
 import HotelierDetails from "./pages/hoteliers/HotelierDetails.jsx";
 import HoteliersTab from "./pages/hoteliers/HoteliersTab.jsx";
 import Home from "./pages/website/Home.jsx";
@@ -29,8 +26,6 @@ import SelfDriveList from "./pages/SelfDriveList.jsx";
 import ComissionSettings from "./pages/comission/ComissionSettings.jsx";
 import Activities from "./pages/Activities.jsx";
 import OutstationCabs from "./pages/OutstationCabs.jsx";
-
-
 
 function App() {
   const router = createBrowserRouter([
@@ -46,14 +41,13 @@ function App() {
         </ProtectedRoute>
       ),
       children: [
-
-        // dashboard 
+        // dashboard
         {
           path: "/dashboard/",
           element: <Dashboard />,
         },
 
-        // customers 
+        // customers
         {
           path: "/dashboard/customers",
           element: <CustomersTab />,
@@ -63,7 +57,7 @@ function App() {
           element: <CustomerDetails />,
         },
 
-        // hotelers 
+        // hotelers
         {
           path: "/dashboard/hoteliers",
           element: <HoteliersTab />,
@@ -88,7 +82,7 @@ function App() {
         },
         {
           path: "/dashboard/flights",
-          element: <FlightsList />,
+          element: <FlightsTabs />,
         },
         {
           path: "/dashboard/helicopters",
@@ -102,16 +96,16 @@ function App() {
           path: "/dashboard/self-drive",
           element: <SelfDriveList />,
         },
-         {
+        {
           path: "/dashboard/outstation-cabs",
           element: <OutstationCabs />,
         },
-         {
+        {
           path: "/dashboard/activities",
           element: <Activities />,
         },
 
-        // package 
+        // package
         {
           path: "/dashboard/packages",
           element: <AllPackage />,
@@ -120,15 +114,15 @@ function App() {
           path: "/dashboard/add-packages",
           element: <AddPackage />,
         },
-         {
-          path:"/dashboard/package-settings",
-          element:<PackageSettings />
+        {
+          path: "/dashboard/package-settings",
+          element: <PackageSettings />,
         },
         {
           path: "/dashboard/profile",
           element: <Profile />,
         },
-          {
+        {
           path: "/dashboard/comission",
           element: <ComissionSettings />,
         },

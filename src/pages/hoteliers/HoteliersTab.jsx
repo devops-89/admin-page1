@@ -7,11 +7,10 @@ import { CustomerController } from "../../api/customerController";
 import { useDebounce } from "../../hooks/debounce";
 import { hoteler_list } from "../../assets/data";
 import { HotlierController } from "../../api/hotlier.controller";
-import {COLORS} from "../../utils/colors.js";
+import { COLORS } from "../../utils/colors.js";
 import ReactLoading from "react-loading";
 
 const HoteliersTab = () => {
-  
   const [activeTab, setActiveTab] = useState(0);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -19,130 +18,153 @@ const HoteliersTab = () => {
   const [totalDoc, setTotalDoc] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const debounceSearchTerm = useDebounce(searchTerm, 500);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const columns = [
     { key: "avatar", label: "Profile" },
     { key: "full_name", label: "Name" },
-  
+
     { key: "email", label: "Email" },
     { key: "phone_number", label: "Phone No." },
-   
+
     { key: "country_code", label: "Country Code" },
     { key: "status", label: "Status" },
-     { key: "verify_status", label: "Verify Status" },
-
-
+    { key: "verify_status", label: "Verify Status" },
   ];
-  
 
   const totalPages = Math.ceil(totalDoc / pageSize);
 
-  useEffect(()=>{
-         HotlierController.getHotlier().then((response)=>{
-              console.log("Hotliers:",response.data.data);
-            setData(response.data.data.docs);
-        setTotalDoc(response.data.data.totalDocs);
-         }).catch((error)=>{
-          console.log(error);
-         })
-  },[]);
-
-
+  useEffect(() => {
+    HotlierController.getHotlier()
+      .then((response) => {
+        if (response.data.data) {
+          setData(response.data.data.docs);
+          setTotalDoc(response.data.data.totalDocs);
+        } else {
+          setData([]);
+          setTotalDoc(0);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+        setData([]);
+        setTotalDoc(0);
+      });
+  }, []);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
 
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: 300,
+        }}
+      >
+        <ReactLoading
+          type="bars"
+          width={40}
+          height={40}
+          color={COLORS.PRIMARY}
+        />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "50px", color: "red" }}>
+        <p>Error loading data: {error.message || "Unknown error"}</p>
+      </div>
+    );
+  }
+  if (!data || data.length === 0) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <p>No Data Found</p>
+      </div>
+    );
+  }
   return (
     <>
-      {data.length > 0 ? (
-        <Box>
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
-            centered
-            sx={{
-              "& .MuiTabs-indicator": {
-                display: "none",
-              },
-              "& .Mui-selected": {
-                color: "var(--white-color)!important",
-                backgroundColor: "var(--orange-color)",
-              },
-            }}
-          >
-            <Tab label="All Hoteliers" />
-            <Tab label="Active Hoteliers" />
-            <Tab label="Inactive Hoteliers" />
-          </Tabs>
+      <Box>
+        <Tabs
+          value={activeTab}
+          onChange={handleTabChange}
+          centered
+          sx={{
+            "& .MuiTabs-indicator": {
+              display: "none",
+            },
+            "& .Mui-selected": {
+              color: "var(--white-color)!important",
+              backgroundColor: "var(--orange-color)",
+            },
+          }}
+        >
+          <Tab label="All Hoteliers" />
+          <Tab label="Active Hoteliers" />
+          <Tab label="Inactive Hoteliers" />
+        </Tabs>
 
-          <Box sx={{ marginTop: 3 }}>
-            {activeTab === 0 && (
-              <AllHoteliers
-                data={data}
-                setPageSize={setPageSize}
-                pageSize={pageSize}
-                totalDoc={totalDoc}
-                setTotalDoc={setTotalDoc}
-                setPage={setPage}
-                columns={columns}
-                setSearchTerm={setSearchTerm}
-                searchTerm={searchTerm}
-                debounceSearchTerm={debounceSearchTerm}
-                totalPages={totalPages}
-              />
-            )}
+        <Box sx={{ marginTop: 3 }}>
+          {activeTab === 0 && (
+            <AllHoteliers
+              data={data}
+              setPageSize={setPageSize}
+              pageSize={pageSize}
+              totalDoc={totalDoc}
+              setTotalDoc={setTotalDoc}
+              setPage={setPage}
+              columns={columns}
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+              debounceSearchTerm={debounceSearchTerm}
+              totalPages={totalPages}
+            />
+          )}
 
-            {activeTab === 1 && (
-              <ActiveHoteliers
-                data={data}
-                setPageSize={setPageSize}
-                pageSize={pageSize}
-                totalDoc={totalDoc}
-                setTotalDoc={setTotalDoc}
-                setPage={setPage}
-                columns={columns}
-                setSearchTerm={setSearchTerm}
-                searchTerm={searchTerm}
-                debounceSearchTerm={debounceSearchTerm}
-                totalPages={totalPages}
-              />
-            )}
+          {activeTab === 1 && (
+            <ActiveHoteliers
+              data={data}
+              setPageSize={setPageSize}
+              pageSize={pageSize}
+              totalDoc={totalDoc}
+              setTotalDoc={setTotalDoc}
+              setPage={setPage}
+              columns={columns}
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+              debounceSearchTerm={debounceSearchTerm}
+              totalPages={totalPages}
+            />
+          )}
 
-            {activeTab === 2 && (
-              <InactiveHoteliers
-                data={data}
-                setPageSize={setPageSize}
-                pageSize={pageSize}
-                totalDoc={totalDoc}
-                setTotalDoc={setTotalDoc}
-                setPage={setPage}
-                columns={columns}
-                setSearchTerm={setSearchTerm}
-                searchTerm={searchTerm}
-                debounceSearchTerm={debounceSearchTerm}
-                totalPages={totalPages}
-              />
-            )}
-          </Box>
+          {activeTab === 2 && (
+            <InactiveHoteliers
+              data={data}
+              setPageSize={setPageSize}
+              pageSize={pageSize}
+              totalDoc={totalDoc}
+              setTotalDoc={setTotalDoc}
+              setPage={setPage}
+              columns={columns}
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+              debounceSearchTerm={debounceSearchTerm}
+              totalPages={totalPages}
+            />
+          )}
         </Box>
-      ) : (
-        <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              height: 300,
-                            }}
-                          >
-                            <ReactLoading
-                              type="bars"
-                              width={40}
-                              height={40}
-                              color={COLORS.PRIMARY}
-                            />
-                          </Box>
-      )}
+      </Box>
     </>
   );
 };

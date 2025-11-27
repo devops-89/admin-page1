@@ -45,6 +45,11 @@ export const publicApi = axios.create({
   baseURL: APIURL.authenticationUrl,
 });
 
+export const bookingPublicApi=axios.create({
+  baseURL:APIURL.bookingUrl
+})
+
+
 // export = {
 // //   securedApi,
 //   publicApi,

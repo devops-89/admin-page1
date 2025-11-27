@@ -10,7 +10,7 @@ import {
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import CategoryIcon from "@mui/icons-material/Category";
-import RowingIcon from '@mui/icons-material/Rowing';
+import RowingIcon from "@mui/icons-material/Rowing";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import EventNoteIcon from "@mui/icons-material/EventNote";
@@ -22,7 +22,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import DomainAddIcon from "@mui/icons-material/DomainAdd";
-import TaxiAlertIcon from '@mui/icons-material/TaxiAlert';
+import TaxiAlertIcon from "@mui/icons-material/TaxiAlert";
 import { useTheme, useMediaQuery } from "@mui/material";
 import HikingIcon from "@mui/icons-material/Hiking";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
@@ -60,31 +60,77 @@ const Sidebar = ({ open, onClose }) => {
 
   const bookingSubItems = [
     { label: "Hotel Booking", icon: <HotelIcon />, path: "/dashboard/hotels" },
-    { label: "Flight Booking", icon: <FlightIcon />, path: "/dashboard/flights" },
-    { label: "Cab Booking", icon: <LocalTaxiIcon />, path: "/dashboard/cabs" },
-    { label: "Helicopter Booking", icon: <PublicIcon />, path: "/dashboard/helicopters" },
-    { label: "Destination Wedding", icon: <AddLocationIcon />, path: "/dashboard/destination-wedding" },
-    { label: "Self Drive", icon: <BluetoothDriveIcon />, path: "/dashboard/self-drive" },
-    { label: "Outstation Cabs", icon: <TaxiAlertIcon />, path: "/dashboard/outstation-cabs" },
-    { label: "Activities", icon: <RowingIcon />, path: "/dashboard/activities" },
+    {
+      label: "Flight Booking",
+      icon: <FlightIcon />,
+      path: "/dashboard/flights",
+    },
   ];
 
   const packagesSubItems = [
-    { label: "All Packages", icon: <HikingIcon />, path: "/dashboard/packages" },
-    { label: "Add Packages", icon: <AddBoxIcon />, path: "/dashboard/add-packages" },
-    { label: "Package Settings", icon: <CategoryIcon />, path: "/dashboard/package-settings" },
+    {
+      label: "All Packages",
+      icon: <HikingIcon />,
+      path: "/dashboard/packages",
+    },
+    {
+      label: "Add Packages",
+      icon: <AddBoxIcon />,
+      path: "/dashboard/add-packages",
+    },
+    {
+      label: "Package Settings",
+      icon: <CategoryIcon />,
+      path: "/dashboard/package-settings",
+    },
   ];
 
   const hoteliersSubItems = [
-    { label: "All Hoteliers", icon: <GroupAddIcon />, path: "/dashboard/hoteliers" },
-    { label: "Add Hotelier", icon: <DomainAddIcon />, path: "/dashboard/hotelier/add-hotelier" },
+    {
+      label: "All Hoteliers",
+      icon: <GroupAddIcon />,
+      path: "/dashboard/hoteliers",
+    },
+    {
+      label: "Add Hotelier",
+      icon: <DomainAddIcon />,
+      path: "/dashboard/hotelier/add-hotelier",
+    },
   ];
 
-  const websiteSubItems = [
-    { label: "Home", icon: <HomeIcon />, path: "/dashboard/home" },
+  const enquirysSubItems = [
+    { label: "Cab Booking", icon: <LocalTaxiIcon />, path: "/dashboard/cabs" },
+    {
+      label: "Helicopter Booking",
+      icon: <PublicIcon />,
+      path: "/dashboard/helicopters",
+    },
+    {
+      label: "Destination Wedding",
+      icon: <AddLocationIcon />,
+      path: "/dashboard/destination-wedding",
+    },
+    {
+      label: "Self Drive",
+      icon: <BluetoothDriveIcon />,
+      path: "/dashboard/self-drive",
+    },
+    {
+      label: "Outstation Cabs",
+      icon: <TaxiAlertIcon />,
+      path: "/dashboard/outstation-cabs",
+    },
+    {
+      label: "Activities",
+      icon: <RowingIcon />,
+      path: "/dashboard/activities",
+    },
   ];
 
-  
+  // website
+  // const websiteSubItems = [
+  //   { label: "Home", icon: <HomeIcon />, path: "/dashboard/home" },
+  // ];
 
   const itemStyles = {
     color: "var(--white-color)",
@@ -116,27 +162,48 @@ const Sidebar = ({ open, onClose }) => {
       anchor="left"
     >
       <List sx={{ padding: 0 }}>
-        <ListItem button onClick={() => handleNavigation("/dashboard")} sx={itemStyles}>
-          <ListItemIcon sx={{ color: "var(--white-color)" }}><DashboardIcon /></ListItemIcon>
+        <ListItem
+          button
+          onClick={() => handleNavigation("/dashboard")}
+          sx={itemStyles}
+        >
+          <ListItemIcon sx={{ color: "var(--white-color)" }}>
+            <DashboardIcon />
+          </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
 
-        <ListItem button onClick={() => handleNavigation("/dashboard/customers")} sx={itemStyles}>
-          <ListItemIcon sx={{ color: "var(--white-color)" }}><GroupAddIcon /></ListItemIcon>
+        <ListItem
+          button
+          onClick={() => handleNavigation("/dashboard/customers")}
+          sx={itemStyles}
+        >
+          <ListItemIcon sx={{ color: "var(--white-color)" }}>
+            <GroupAddIcon />
+          </ListItemIcon>
           <ListItemText primary="Customers" />
         </ListItem>
 
         {/* Hoteliers */}
         <ListItem button onClick={handleToggleHoteliers} sx={itemStyles}>
-          <ListItemIcon sx={{ color: "var(--white-color)" }}><ApartmentIcon /></ListItemIcon>
+          <ListItemIcon sx={{ color: "var(--white-color)" }}>
+            <ApartmentIcon />
+          </ListItemIcon>
           <ListItemText primary="Hoteliers" />
           {openHoteliers ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={openHoteliers} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {hoteliersSubItems.map((item, index) => (
-              <ListItem button key={index} sx={{ pl: 5, ...itemStyles }} onClick={() => handleNavigation(item.path)}>
-                <ListItemIcon sx={{ color: "var(--white-color)" }}>{item.icon}</ListItemIcon>
+              <ListItem
+                button
+                key={index}
+                sx={{ pl: 5, ...itemStyles }}
+                onClick={() => handleNavigation(item.path)}
+              >
+                <ListItemIcon sx={{ color: "var(--white-color)" }}>
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
@@ -145,15 +212,24 @@ const Sidebar = ({ open, onClose }) => {
 
         {/* Booking */}
         <ListItem button onClick={handleToggleBooking} sx={itemStyles}>
-          <ListItemIcon sx={{ color: "var(--white-color)" }}><EventNoteIcon /></ListItemIcon>
+          <ListItemIcon sx={{ color: "var(--white-color)" }}>
+            <EventNoteIcon />
+          </ListItemIcon>
           <ListItemText primary="Booking" />
           {openBooking ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={openBooking} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {bookingSubItems.map((item, index) => (
-              <ListItem button key={index} sx={{ pl: 5, ...itemStyles }} onClick={() => handleNavigation(item.path)}>
-                <ListItemIcon sx={{ color: "var(--white-color)" }}>{item.icon}</ListItemIcon>
+              <ListItem
+                button
+                key={index}
+                sx={{ pl: 5, ...itemStyles }}
+                onClick={() => handleNavigation(item.path)}
+              >
+                <ListItemIcon sx={{ color: "var(--white-color)" }}>
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
@@ -162,15 +238,24 @@ const Sidebar = ({ open, onClose }) => {
 
         {/* Packages */}
         <ListItem button onClick={handleTogglePackages} sx={itemStyles}>
-          <ListItemIcon sx={{ color: "var(--white-color)" }}><ReviewsIcon /></ListItemIcon>
+          <ListItemIcon sx={{ color: "var(--white-color)" }}>
+            <ReviewsIcon />
+          </ListItemIcon>
           <ListItemText primary="Packages" />
           {openPackages ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={openPackages} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {packagesSubItems.map((item, index) => (
-              <ListItem button key={index} sx={{ pl: 5, ...itemStyles }} onClick={() => handleNavigation(item.path)}>
-                <ListItemIcon sx={{ color: "var(--white-color)" }}>{item.icon}</ListItemIcon>
+              <ListItem
+                button
+                key={index}
+                sx={{ pl: 5, ...itemStyles }}
+                onClick={() => handleNavigation(item.path)}
+              >
+                <ListItemIcon sx={{ color: "var(--white-color)" }}>
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
@@ -178,15 +263,22 @@ const Sidebar = ({ open, onClose }) => {
         </Collapse>
 
         {/* Comission */}
-        <ListItem button onClick={() => handleNavigation("/dashboard/comission")} sx={itemStyles}>
-          <ListItemIcon sx={{ color: "var(--white-color)" }}><DashboardIcon /></ListItemIcon>
+        <ListItem
+          button
+          onClick={() => handleNavigation("/dashboard/comission")}
+          sx={itemStyles}
+        >
+          <ListItemIcon sx={{ color: "var(--white-color)" }}>
+            <DashboardIcon />
+          </ListItemIcon>
           <ListItemText primary="Comission" />
         </ListItem>
-        
 
-        {/* Website */}
-        <ListItem button onClick={handleToggleWebsite} sx={itemStyles}>
-          <ListItemIcon sx={{ color: "var(--white-color)" }}><EditNoteIcon /></ListItemIcon>
+        {/* Website enquiry*/}
+        {/* <ListItem button onClick={handleToggleWebsite} sx={itemStyles}>
+          <ListItemIcon sx={{ color: "var(--white-color)" }}>
+            <EditNoteIcon />
+          </ListItemIcon>
           <ListItemText primary="Website" />
           {openWebsite ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
@@ -195,6 +287,31 @@ const Sidebar = ({ open, onClose }) => {
             {websiteSubItems.map((item, index) => (
               <ListItem button key={index} sx={{ pl: 5, ...itemStyles }} onClick={() => handleNavigation(item.path)}>
                 <ListItemIcon sx={{ color: "var(--white-color)" }}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItem>
+            ))}
+          </List>
+        </Collapse> */}
+
+        <ListItem button onClick={handleToggleWebsite} sx={itemStyles}>
+          <ListItemIcon sx={{ color: "var(--white-color)" }}>
+            <EditNoteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Enquiry" />
+          {openWebsite ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={openWebsite} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {enquirysSubItems.map((item, index) => (
+              <ListItem
+                button
+                key={index}
+                sx={{ pl: 5, ...itemStyles }}
+                onClick={() => handleNavigation(item.path)}
+              >
+                <ListItemIcon sx={{ color: "var(--white-color)" }}>
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}

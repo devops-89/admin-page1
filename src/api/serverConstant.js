@@ -17,4 +17,5 @@ export const APIURL = {
   hotlierUrl: `${hotlierUrl}/api`,
   comissionUrl: `${comissionBaseUrl}/api`,
   customerUrl: `${hotlierUrl}/api`,
+  bookingUrl : `${baseURL}/user/api/`
 };

@@ -19,31 +19,33 @@ import {
 import Select from "@mui/material/Select";
 import { useDebounce } from "../hooks/debounce";
 import { useNavigate } from "react-router-dom";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => {
- 
-  const navigate=useNavigate();
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+const DataTable = ({
+  data,
+  columns,
+  table_heading,
+  actionPath = "/dashboard",
+}) => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const debounceSearchTerm=useDebounce(searchTerm,500);
-  
+  const debounceSearchTerm = useDebounce(searchTerm, 500);
+
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = data.filter((item) =>
     columns.some((column) =>
-      String(item[column.key]).toLowerCase().includes(debounceSearchTerm.toLowerCase())
+      String(item[column.key])
+        .toLowerCase()
+        .includes(debounceSearchTerm.toLowerCase())
     )
   );
-
-  
 
   const totalPages = Math.ceil(filteredData.length / entriesPerPage);
   const displayedData = filteredData.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
-
-  
 
   return (
     <Box>
@@ -60,13 +62,13 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
           <Typography
             variant="h4"
             sx={{
-              fontSize: "18px",
+              fontSize: "20px",
               fontWeight: "600",
               marginBottom: "5px",
               textAlign: { xs: "center", sm: "center", md: "start" },
-              '@media (min-width: 831px) and (max-width: 900px)': {
-            textAlign: 'start', 
-          },
+              "@media (min-width: 831px) and (max-width: 900px)": {
+                textAlign: "start",
+              },
             }}
           >
             {table_heading.heading}
@@ -78,16 +80,16 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
               fontWeight: "400",
               marginBottom: "5px",
               textAlign: { xs: "center", sm: "center", md: "start" },
-              '@media (min-width: 831px) and (max-width: 900px)': {
-            textAlign: 'start', 
-          },
+              "@media (min-width: 831px) and (max-width: 900px)": {
+                textAlign: "start",
+              },
             }}
           >
             {table_heading.para}
           </Typography>
         </Box>
 
-        <Box sx={{display:'flex'}}>
+        <Box sx={{ display: "flex" }}>
           <FormControl size="small" sx={{ minWidth: 120 }}>
             {/* <InputLabel id="entries-per-page-label">Entries</InputLabel> */}
             <Select
@@ -128,7 +130,7 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
                     fontSize: "16px",
                     fontWeight: "500",
                     color: "var(--white-color)",
-                    textAlign:'center'
+                    textAlign: "center",
                   }}
                   key={column.key}
                 >
@@ -136,7 +138,6 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
                 </TableCell>
               ))}
               <TableCell
-             
                 sx={{
                   fontSize: "16px",
                   fontWeight: "500",
@@ -161,30 +162,29 @@ const DataTable = ({ data, columns, table_heading,actionPath="/dashboard" }) => 
                   }}
                 >
                   {columns.map((column) => (
-                    <TableCell key={column.key} sx={{textAlign:'center'}}>
-                    {column.key === "avatar" ? (
-                      <Avatar
-                        src={item[column.key] || <AccountCircleIcon/>} 
-                      />
-                    ) : (
-                      item[column.key] || "-" 
-                    )}
-                  </TableCell>
+                    <TableCell key={column.key} sx={{ textAlign: "center" }}>
+                      {column.key === "avatar" ? (
+                        <Avatar
+                          src={item[column.key] || <AccountCircleIcon />}
+                        />
+                      ) : (
+                        item[column.key] ?? "-"
+                      )}
+                    </TableCell>
                   ))}
                   <TableCell>
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={(_,id=item.id)=>{
-                          
-                         navigate(actionPath);
+                      onClick={(_, id = item.id) => {
+                        navigate(actionPath);
                       }}
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
-                        "&:hover":{
-                          backgroundColor:'var(--blue-color)'
-                        }
+                        "&:hover": {
+                          backgroundColor: "var(--blue-color)",
+                        },
                       }}
                     >
                       View

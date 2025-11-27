@@ -20,12 +20,26 @@ import ActivitiesTable from "../components/dashboardHomeTable/ActivitiesTable.js
 import OutstationCabTable from "../components/dashboardHomeTable/OutstationCabTable.jsx";
 import DestinationWeddingTable from "../components/dashboardHomeTable/DestinationWeddingTable.jsx";
 import { ExtraDetailController } from "../api/extraDetailController.js";
+import { bookingController } from "../api/bookingController.js";
 import ReactLoading from "react-loading";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
+  const [statsLoading, setStatsLoading] = useState(true);
+  const [statsError, setStatsError] = useState("");
+
+  const [stats, setStats] = useState({
+    users: 0,
+    hotels: 0,
+    cancelHotels: 0,
+    cancelFlights: 0,
+    packages: 0,
+    cabs: 0,
+    flights: 0,
+    hotelers: 0,
+  });
 
   const [cabData, setCabData] = useState([]);
   const [selfDriveData, setSelfDriveData] = useState([]);
@@ -33,6 +47,39 @@ const Dashboard = () => {
   const [activityData, setActivityData] = useState([]);
   const [outstationCabData, setOutstationCabData] = useState([]);
   const [destinationWeddingData, setDestinationWeddingData] = useState([]);
+
+  // --- Fetch dashboard stats ---
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setStatsLoading(true);
+      setStatsError("");
+      try {
+        const res = await bookingController.getStats();
+        const result = res?.data;
+        const next = {
+          users: Number(result.totalUsers),
+          hotels: Number(result.totalHotels),
+          cancelHotels: Number(result.totalCancelHotels),
+          cancelFlights: Number(result.totalCancelFlights),
+          packages: Number(result.totalPackages),
+          cabs: Number(result.totalCabs),
+          flights: Number(result.totalFlights),
+          hotelers: Number(result.totalHoteliers),
+        };
+        if (!cancelled) setStats(next);
+      } catch (e) {
+        if (!cancelled) setStatsError(e?.message || "Failed to load stats");
+      } finally {
+        if (!cancelled) setStatsLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  //fetched enquiry data
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +94,9 @@ const Dashboard = () => {
         ] = await Promise.all([
           ExtraDetailController.getExtraSerivce(Enquiry_Type.ACTIVITIE),
           ExtraDetailController.getExtraSerivce(Enquiry_Type.CABS),
-          ExtraDetailController.getExtraSerivce(Enquiry_Type.DESTINATION_WEDDING),
+          ExtraDetailController.getExtraSerivce(
+            Enquiry_Type.DESTINATION_WEDDING
+          ),
           ExtraDetailController.getExtraSerivce(Enquiry_Type.HELICOPTER),
           ExtraDetailController.getExtraSerivce(Enquiry_Type.OUTSTATION_CABS),
           ExtraDetailController.getExtraSerivce(Enquiry_Type.SELF_DRIVE),
@@ -89,56 +138,56 @@ const Dashboard = () => {
     {
       icon: <GroupIcon sx={{ fontSize: "50px" }} />,
       label: "Users",
-      quantity: 15305,
+      quantity: stats.users,
       bgColor: "#304ffe",
       href: "/dashboard/users",
     },
     {
       icon: <ApartmentIcon sx={{ fontSize: "50px" }} />,
       label: "Hotels",
-      quantity: 12453,
+      quantity: stats.hotels,
       bgColor: "#e91e63",
       href: "/dashboard/hotels",
     },
     {
       icon: <DomainDisabledIcon sx={{ fontSize: "50px" }} />,
       label: "Cancel Hotels",
-      quantity: 453,
+      quantity: stats.cancelHotels,
       bgColor: "#42a5f5",
       href: "/dashboard/cancel-hotels",
     },
     {
       icon: <AirplanemodeInactiveIcon sx={{ fontSize: "50px" }} />,
       label: "Cancel Flights",
-      quantity: 105,
+      quantity: stats.cancelFlights,
       bgColor: "#4a148c",
       href: "/dashboard/cancel-flights",
     },
     {
       icon: <AirlineSeatReclineNormalIcon sx={{ fontSize: "50px" }} />,
       label: "Packages",
-      quantity: 10405,
+      quantity: stats.packages,
       bgColor: "#4caf50",
       href: "/dashboard/packages",
     },
     {
       icon: <LocalTaxiIcon sx={{ fontSize: "50px" }} />,
       label: "Cabs",
-      quantity: 9665,
+      quantity: stats.cabs,
       bgColor: "#ff8f00",
       href: "/dashboard/cabs",
     },
     {
       icon: <LocalAirportIcon sx={{ fontSize: "50px" }} />,
       label: "Flights",
-      quantity: 11444,
+      quantity: stats.flights,
       bgColor: "#00bcd4",
       href: "/dashboard/flights",
     },
     {
       icon: <StoreMallDirectoryIcon sx={{ fontSize: "50px" }} />,
       label: "Hotelers",
-      quantity: 25334,
+      quantity: stats.hotelers,
       bgColor: "#ff5722",
       href: "/dashboard/hotelers",
     },
@@ -160,7 +209,9 @@ const Dashboard = () => {
                 cursor: "pointer",
               }}
             >
-              <Box sx={{ display: "flex", alignItems: "center", height: "90px" }}>
+              <Box
+                sx={{ display: "flex", alignItems: "center", height: "90px" }}
+              >
                 <Box
                   sx={{
                     width: "40%",
@@ -195,17 +246,33 @@ const Dashboard = () => {
                   >
                     {item.label}
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{ color: item.bgColor, fontWeight: 600 }}
-                  >
-                    <CountUp
-                      start={0}
-                      end={item.quantity}
-                      duration={2}
-                      separator=","
-                    />
-                  </Typography>
+                  {statsLoading ? (
+                    <Typography
+                      variant="body2"
+                      sx={{ color: item.bgColor, fontWeight: 600 }}
+                    >
+                      …
+                    </Typography>
+                  ) : statsError ? (
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#e53935", fontWeight: 600 }}
+                    >
+                      —
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      sx={{ color: item.bgColor, fontWeight: 600 }}
+                    >
+                      <CountUp
+                        start={0}
+                        end={Number(item.quantity || 0)}
+                        duration={1.2}
+                        separator=","
+                      />
+                    </Typography>
+                  )}
                 </Box>
               </Box>
             </Grid>
