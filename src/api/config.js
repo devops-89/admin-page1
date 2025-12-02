@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import { APIURL } from "./serverConstant";
 
 export const securedApi = axios.create({
@@ -29,26 +29,28 @@ export const flightPublicApi = axios.create({
   baseURL: APIURL.flightUrl,
 });
 
-export const packagePublicApi=axios.create({
-  baseURL:APIURL.packageUrl,
-})
+export const packagePublicApi = axios.create({
+  baseURL: APIURL.packageUrl,
+});
 
-export const hotlierPublicApi=axios.create({
-  baseURL:APIURL.hotlierUrl
-})
+export const hotlierPublicApi = axios.create({
+  baseURL: APIURL.hotlierUrl,
+});
 
-export const comissionPublicApi=axios.create({
-  baseURL:APIURL.comissionUrl
-})
+export const comissionPublicApi = axios.create({
+  baseURL: APIURL.comissionUrl,
+});
 
 export const publicApi = axios.create({
   baseURL: APIURL.authenticationUrl,
 });
 
-export const bookingPublicApi=axios.create({
-  baseURL:APIURL.bookingUrl
-})
-
+export const bookingPublicApi = axios.create({
+  baseURL: APIURL.bookingUrl,
+});
+export const profilePublicApi = axios.create({
+  baseURL: APIURL.profileUrl,
+});
 
 // export = {
 // //   securedApi,
