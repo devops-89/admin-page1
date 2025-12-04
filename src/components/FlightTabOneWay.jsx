@@ -157,6 +157,7 @@ const FlightTabOneWay = ({ onView }) => {
           //   const cabin = cabinClassText(seg0?.CabinClass);
 
           return {
+            ...b,
             journey_scope: b.journey,
             price_amount: b.amount,
             order_time: orderTime,
@@ -173,8 +174,8 @@ const FlightTabOneWay = ({ onView }) => {
 
         if (!cancel) {
           setRows(mapped);
-          const totalAll = res?.totalDocs;
-          setTotal(totalAll);
+          const totalAll = res?.data?.totalDocs;
+          setPageSize(totalAll);
         }
       } catch (e) {
         if (!cancel) setError(e?.message || "Failed to load flight bookings");
