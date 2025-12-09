@@ -10,4 +10,5 @@ export const Enquiry_Type={
   SELF_DRIVE: "Self Drive",
   OUTSTATION_CABS:"Outstation Cabs",
   ACTIVITIE:"Activities",
+  FOREX : "Forex"
 }

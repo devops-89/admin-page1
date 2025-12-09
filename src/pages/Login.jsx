@@ -112,7 +112,7 @@ const Login = () => {
             marginBottom: 2,
           }}
         >
-          Page 1 Travels Login
+          Login
         </Typography>
 
         <Formik

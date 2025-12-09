@@ -26,6 +26,8 @@ import SelfDriveList from "./pages/SelfDriveList.jsx";
 import ComissionSettings from "./pages/comission/ComissionSettings.jsx";
 import Activities from "./pages/Activities.jsx";
 import OutstationCabs from "./pages/OutstationCabs.jsx";
+import ForexList from "./pages/ForexList.jsx";
+import HolidayPackagesList from "./pages/HolidayPackages.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -103,6 +105,14 @@ function App() {
         {
           path: "/dashboard/activities",
           element: <Activities />,
+        },
+         {
+          path: "/dashboard/forex",
+          element: <ForexList/>
+        },
+          {
+          path: "/dashboard/holiday-packages",
+          element: <HolidayPackagesList/>
         },
 
         // package
