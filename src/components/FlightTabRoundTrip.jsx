@@ -155,6 +155,7 @@ const FlightTabRoundTrip = ({ onView }) => {
           //   const cabin = cabinClassText(seg0?.CabinClass);
 
           return {
+            ...b,
             journey_scope: b.journey,
             price_amount: b.amount,
             order_time: orderTime,
@@ -172,8 +173,8 @@ const FlightTabRoundTrip = ({ onView }) => {
         if (!cancel) {
           setRows(mapped);
           const totalAll =
-            res?.totalDocs ?? res?.total ?? res?.count ?? docs.length ?? 0;
-          setTotal(totalAll);
+            res?.data?.totalDocs ?? res?.total ?? res?.count ?? docs.length ?? 0;
+          setPageSize(totalAll);
         }
       } catch (e) {
         if (!cancel) setError(e?.message || "Failed to load flight bookings");

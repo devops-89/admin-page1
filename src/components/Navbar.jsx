@@ -15,7 +15,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 
 import { setToast } from "../redux/reducers/toast";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { TOAST_STATUS } from "../utils/enum";
 
 const Navbar = ({
@@ -35,7 +35,8 @@ const Navbar = ({
     setMenuOpen(!open);
     onToggleSidebar();
   };
-
+  const User = useSelector((state) => state.USER);
+  const firstLetter = User?.name?.charAt(0)?.toUpperCase() || "U";
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -113,7 +114,7 @@ const Navbar = ({
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            <Avatar alt="User">N</Avatar>
+            <Avatar alt="User">{firstLetter}</Avatar>
           </IconButton>
 
           <Menu

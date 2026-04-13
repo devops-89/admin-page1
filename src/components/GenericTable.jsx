@@ -18,20 +18,22 @@ import {
 } from "@mui/material";
 import Select from "@mui/material/Select";
 import { useDebounce } from "../hooks/debounce";
-import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import BookingDetailsDialog from "./BookingDetailsDialog";
+import { refundController } from "../api/refundController";
 const DataTable = ({
   data,
   columns,
   table_heading,
-  actionPath = "/dashboard",
 }) => {
-  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const debounceSearchTerm = useDebounce(searchTerm, 500);
 
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const filteredData = data.filter((item) =>
     columns.some((column) =>
@@ -46,6 +48,42 @@ const DataTable = ({
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
+  const handleOpenDialog = (row) => {
+    setSelectedRow(row);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedRow(null);
+  };
+
+const handleRefund = async ({ orderId, refundAmount, row }) => {
+  console.log("Refund initiated:", { orderId, refundAmount, row });
+
+  try {
+    const res = await refundController.initiateRefund({
+      orderId,
+      amount: refundAmount,
+    });
+
+    console.log("Refund API success", res);
+
+    if (res?.message) {
+      alert(res.message); 
+    } else {
+      alert("Refund processed successfully");
+    }
+
+    setOpenDialog(false); 
+  } catch (err) {
+    console.error("Refund API failed:", err);
+
+    const msg = err?.message || err?.error || "Refund failed";
+    alert(msg);
+  }
+};
+
 
   return (
     <Box>
@@ -176,9 +214,10 @@ const DataTable = ({
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={(_, id = item.id) => {
-                        navigate(actionPath);
-                      }}
+                      // onClick={(_, id = item.id) => {
+                      //   navigate(actionPath);
+                      // }}
+                      onClick={() => handleOpenDialog(item)}
                       sx={{
                         backgroundColor: "var(--orange-color)",
                         marginRight: "5px",
@@ -187,7 +226,7 @@ const DataTable = ({
                         },
                       }}
                     >
-                      View
+                      View Details
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -219,6 +258,13 @@ const DataTable = ({
           }}
         />
       </Box>
+      <BookingDetailsDialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        row={selectedRow}
+        onRefund={handleRefund}
+      />
+
     </Box>
   );
 };

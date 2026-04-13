@@ -14,42 +14,34 @@ const safeParse = (maybeJson) => {
     return {};
   }
 };
-const formatOrderTime = (isoString) => {
-  if (!isoString) return "-";
-  const date = new Date(isoString);
+// const formatOrderTime = (isoString) => {
+//   if (!isoString) return "-";
+//   const date = new Date(isoString);
 
-  const fmt = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kolkata",
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+//   const fmt = new Intl.DateTimeFormat("en-GB", {
+//     timeZone: "Asia/Kolkata",
+//     day: "2-digit",
+//     month: "short",
+//     year: "numeric",
+//     hour: "2-digit",
+//     minute: "2-digit",
+//     hour12: true,
+//   });
 
-  const parts = fmt.formatToParts(date).reduce((acc, p) => {
-    acc[p.type] = p.value;
-    return acc;
-  }, {});
+//   const parts = fmt.formatToParts(date).reduce((acc, p) => {
+//     acc[p.type] = p.value;
+//     return acc;
+//   }, {});
 
-  // Ensure uppercase AM/PM
-  const day = parts.day ?? "";
-  const month = parts.month ?? "";
-  const year = parts.year ?? "";
-  const hour = parts.hour ?? "";
-  const minute = parts.minute ?? "";
-  const dayPeriod = (parts.dayPeriod || "").toUpperCase();
+//   // Ensure uppercase AM/PM
+//   const day = parts.day ?? "";
+//   const month = parts.month ?? "";
+//   const year = parts.year ?? "";
+//   const hour = parts.hour ?? "";
+//   const minute = parts.minute ?? "";
+//   const dayPeriod = (parts.dayPeriod || "").toUpperCase();
 
-  return `${day} ${month} ${year}, ${hour}:${minute} ${dayPeriod}`;
-};
-// const getCityFromAddress = (addr) => {
-//   if (!addr || typeof addr !== "string") return "-";
-//   const parts = addr
-//     .split(",")
-//     .map((s) => s.trim())
-//     .filter(Boolean);
-//   return parts.length ? parts[parts.length - 1] : "-";
+//   return `${day} ${month} ${year}, ${hour}:${minute} ${dayPeriod}`;
 // };
 
 const HotelsList = () => {
@@ -57,7 +49,7 @@ const HotelsList = () => {
     // { key: "id", label: "ID" },
     // { key: "city", label: "City" },
     { key: "hotel_name", label: "Hotel Name" },
-    { key: "order_time", label: "Order Time" },
+    // { key: "order_time", label: "Order Time" },
     { key: "room", label: "Room" },
     { key: "check_in", label: "Check In" },
     { key: "check_out", label: "Check Out" },
@@ -104,8 +96,9 @@ const HotelsList = () => {
           // const req1 = safeParse(b.order_request);
 
           return {
+            ...b,
             hotel_name: req2.hotelName ?? "-",
-            order_time: formatOrderTime(b.created_at),
+            // order_time: formatOrderTime(b.created_at),
             room: req2.roomType ?? "-",
             check_in: req2.checkIn ?? "-",
             check_out: req2.checkOut ?? "-",
@@ -116,8 +109,8 @@ const HotelsList = () => {
         if (!cancel) {
           setRows(mapped);
           const computedTotal =
-            res?.totalDocs ?? res?.total ?? res?.count ?? docs.length ?? 0;
-          setTotal(computedTotal);
+            res?.data?.totalDocs ?? res?.total ?? res?.count ?? docs.length ?? 0;
+          setPageSize(computedTotal);  
         }
       } catch (e) {
         if (!cancel) setError(e?.message || "Failed to load hotel bookings");

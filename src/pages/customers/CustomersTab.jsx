@@ -19,7 +19,7 @@ const CustomersTab = () => {
     { key: "avatar", label: "Profile" },
     { key: "full_name", label: "Name" },
     { key: "email", label: "Email" },
-    { key: "phone_number", label: "Phone" },
+    // { key: "phone_number", label: "Phone" },
     { key: "status", label: "Status" },
     { key: "created_at", label: "Created At" },
     { key: "last_login", label: "Last Login" },

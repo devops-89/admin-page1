@@ -33,7 +33,7 @@ const AllCustomers = ({
   const navigate = useNavigate();
   const table_heading = {
     heading: "Customer Details",
-    para: "Manage your personal details, bookings, and preferences.",
+    para: "View your personal information and customer details.",
   };
   const filteredData = data.filter((item) =>
     columns.some((column) =>
@@ -126,7 +126,7 @@ const AllCustomers = ({
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell
+              {/* <TableCell
                 sx={{
                   fontSize: "16px",
                   fontWeight: "500",
@@ -134,7 +134,7 @@ const AllCustomers = ({
                 }}
               >
                 Action
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -173,7 +173,7 @@ const AllCustomers = ({
                       })()}
                     </TableCell>
                   ))}
-                  <TableCell>
+                  {/* <TableCell>
                     <Button
                       variant="contained"
                       size="small"
@@ -190,7 +190,7 @@ const AllCustomers = ({
                     >
                       View
                     </Button>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))
             ) : (

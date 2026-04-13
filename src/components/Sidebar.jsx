@@ -125,6 +125,16 @@ const Sidebar = ({ open, onClose }) => {
       icon: <RowingIcon />,
       path: "/dashboard/activities",
     },
+     {
+      label: "Forex",
+      icon: <RowingIcon />,
+      path: "/dashboard/forex",
+    },
+     {
+      label: "Holiday Pacakges",
+      icon: <RowingIcon />,
+      path: "/dashboard/holiday-packages",
+    },
   ];
 
   // website
