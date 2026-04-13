@@ -7,7 +7,8 @@ import AirlineSeatReclineNormalIcon from "@mui/icons-material/AirlineSeatRecline
 import LocalTaxiIcon from "@mui/icons-material/LocalTaxi";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import LocalAirportIcon from "@mui/icons-material/LocalAirport";
-import StoreMallDirectoryIcon from "@mui/icons-material/StoreMallDirectory";
+// import StoreMallDirectoryIcon from "@mui/icons-material/StoreMallDirectory";
+import {Helicopter} from "lucide-react";
 import CountUp from "react-countup";
 import { useNavigate } from "react-router-dom";
 import AirplanemodeInactiveIcon from "@mui/icons-material/AirplanemodeInactive";
@@ -35,10 +36,10 @@ const Dashboard = () => {
     hotels: 0,
     cancelHotels: 0,
     cancelFlights: 0,
-    packages: 0,
+    selfdrive:0,
     cabs: 0,
     flights: 0,
-    hotelers: 0,
+    helicopters: 0,
   });
 
   const [cabData, setCabData] = useState([]);
@@ -62,10 +63,10 @@ const Dashboard = () => {
           hotels: Number(result.totalHotels),
           cancelHotels: Number(result.totalCancelHotels),
           cancelFlights: Number(result.totalCancelFlights),
-          packages: Number(result.totalPackages),
+          selfdrive: Number(result.totalSelfDrive),
           cabs: Number(result.totalCabs),
           flights: Number(result.totalFlights),
-          hotelers: Number(result.totalHoteliers),
+          helicopters: Number(result.totalHelicopters),
         };
         if (!cancelled) setStats(next);
       } catch (e) {
@@ -165,10 +166,10 @@ const Dashboard = () => {
     },
     {
       icon: <AirlineSeatReclineNormalIcon sx={{ fontSize: "50px" }} />,
-      label: "Packages",
-      quantity: stats.packages,
+      label: "Self Drive",
+      quantity: stats.selfdrive,
       bgColor: "#4caf50",
-      href: "/dashboard/packages",
+      href: "/dashboard/self-drive",
     },
     {
       icon: <LocalTaxiIcon sx={{ fontSize: "50px" }} />,
@@ -185,11 +186,11 @@ const Dashboard = () => {
       href: "/dashboard/flights",
     },
     {
-      icon: <StoreMallDirectoryIcon sx={{ fontSize: "50px" }} />,
-      label: "Hotelers",
-      quantity: stats.hotelers,
+      icon: <Helicopter size={"50px"} />,
+      label: "Helicopters",
+      quantity: stats.helicopters,
       bgColor: "#ff5722",
-      href: "/dashboard/hotelers",
+      href: "/dashboard/helicopters",
     },
   ];
 

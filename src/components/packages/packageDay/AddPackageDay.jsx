@@ -7,7 +7,7 @@ import {
   
   Button,
   FormLabel,
-
+  Box,
   Typography,
   Paper,
   TextField,
@@ -20,7 +20,8 @@ const AddPackageDay= ({onAddSuccess}) => {
   const [loading,setLoading]=useState(false);
 
   const initialValues = {
-   pkgday_duration:""
+   days:1,
+      nights:0
   };
 
 
@@ -39,7 +40,7 @@ const AddPackageDay= ({onAddSuccess}) => {
           },
         }}
       >
-        Add Package Day Details
+          Add Trip Duration
       </Typography>
 
       <Formik
@@ -67,26 +68,66 @@ const AddPackageDay= ({onAddSuccess}) => {
         
           return (
             <Form>
-         <Grid item xs={12} sx={{ width: "100%", marginBlock: "10px" }}>
-                <FormLabel htmlFor="category_name" sx={{ fontWeight: 500 }}>
-                 Add Trip Duration
-                </FormLabel>
-                <TextField
-                  id="pkgday_duration"
-                  size="small"
-                  variant="outlined"
-                  name="pkgday_duration"
-                  placeholder="Enter Trip Duration"
-                  value={values.pkgday_duration}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  fullWidth
-                  error={Boolean(errors.pkgday_duration)}
-                  helperText={errors.pkgday_duration}
-                />
-              </Grid>
+                <Grid item xs={12} sx={{ width: "100%" }}>
+                    <Box sx={{ display: "flex", gap: 2, mt: 1 }}>
 
-              <Grid item xs={12} sx={{ width: "100%", marginBlock: "10px" }}>
+                        {/* Days */}
+                        <Box>
+                            <Typography sx={{margin:1}}>Days</Typography>
+                            <TextField
+                                id="days"
+                                name="days"
+                                select
+                                size="small"
+                                variant="outlined"
+                                fullWidth
+                                value={values.days}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={Boolean(errors.days)}
+                                helperText={errors.days}
+                                SelectProps={{ native: true }}
+                            >
+                                <option value="">Select Days</option>
+                                <option value={1}>1 Day</option>
+                                <option value={2}>2 Days</option>
+                                <option value={3}>3 Days</option>
+                                <option value={4}>4 Days</option>
+                            </TextField>
+                        </Box>
+
+                        {/* Nights */}
+                        <Box>
+                            <Typography sx={{margin:1}}>Nights</Typography>
+                            <TextField
+                                id="nights"
+                                name="nights"
+                                select
+                                size="small"
+                                variant="outlined"
+                                fullWidth
+                                value={values.nights}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={Boolean(errors.nights)}
+                                helperText={errors.nights}
+                                SelectProps={{ native: true }}
+                            >
+                                <option value="">Select Nights</option>
+                                <option value={0}>0 Nights</option>
+                                <option value={1}>1 Night</option>
+                                <option value={2}>2 Nights</option>
+                                <option value={3}>3 Nights</option>
+                                <option value={4}>4 Nights</option>
+                            </TextField>
+                        </Box>
+
+                    </Box>
+                </Grid>
+
+
+
+                <Grid item xs={12} sx={{ width: "100%", marginBlock: "10px" }}>
                 <Button
                   type="submit"
                   size="small"
